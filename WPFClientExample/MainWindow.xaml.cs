@@ -16,7 +16,7 @@ namespace WPFClientExample
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(MainVeiwModel viewModel)
+        public MainWindow(MainViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

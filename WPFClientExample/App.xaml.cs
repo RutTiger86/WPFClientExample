@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using WPFClientExample.Repositories;
 using WPFClientExample.Services;
 using WPFClientExample.ViewModels;
 using WPFClientExample.Views;
@@ -38,13 +39,17 @@ namespace WPFClientExample
             hostBuilder.ConfigureServices((context, services) =>
             {
                 //ViewModel 등록
-                services.AddSingleton<MainVeiwModel>();
+                services.AddSingleton<MainViewModel>();
+
+                //Repository 등록
+                services.AddSingleton<IUserRepository, UserRepository>();
 
                 //Service 등록 
                 services.AddSingleton<INavigationService, NavigationService>();
+                services.AddSingleton<IAuthService, AuthService>();
 
                 // ViewModel 등록
-                services.AddSingleton<LoginViewModel>();
+                services.AddSingleton<ILoginViewModel,LoginViewModel>();
                 services.AddSingleton<SearchViewModel>();
                 services.AddSingleton<DetailViewModel>();
                 services.AddSingleton<ReportViewModel>();

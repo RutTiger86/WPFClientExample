@@ -7,12 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using WPFClientExample.Services;
+using WPFClientExample.ViewModels;
 
 namespace WPFClientExample
 {
-    public partial class MainVeiwModel :ObservableObject
+    public partial class MainViewModel :ObservableObject
     {
         private readonly INavigationService navigationService;
+        private readonly ILoginViewModel loginViewModel;
 
         [ObservableProperty]
         private UserControl? currentView;
@@ -20,14 +22,24 @@ namespace WPFClientExample
         [ObservableProperty]
         private bool isAuthenticated = false;
 
-
         private const string loginViewName = "Login";
 
-        public MainVeiwModel(INavigationService navigationService)
+        public MainViewModel(INavigationService navigationService, ILoginViewModel loginViewModel)
         {
             this.navigationService = navigationService;
+            this.loginViewModel = loginViewModel;
+
             CurrentView = navigationService.GetView(loginViewName);
+            loginViewModel.OnLoginSuccess += HandleLoginSuccess;
             navigationService.OnViewChanged += view => CurrentView = view;
+        }
+        private void HandleLoginSuccess(bool success)
+        {
+            if (success)
+            {
+                IsAuthenticated = true; 
+                navigationService.NavigateTo("Search"); 
+            }
         }
 
         [RelayCommand]
@@ -37,13 +49,6 @@ namespace WPFClientExample
             {
                 navigationService.NavigateTo(viewName);
             }
-        }
-
-        [RelayCommand]
-        private void CompleteLogin()
-        {
-            IsAuthenticated = true;
-            navigationService.NavigateTo("Search");
         }
 
         [RelayCommand]
