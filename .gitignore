@@ -1,0 +1,87 @@
+# 기본 .NET 빌드 출력 제외
+bin/
+obj/
+out/
+*.exe
+*.dll
+*.pdb
+*.log
+*.cache
+*.ilk
+*.map
+*.exp
+
+# Visual Studio 관련 파일 제외
+.vs/
+*.user
+*.suo
+*.ncb
+*.sdf
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+
+# 프로젝트 설정 및 빌드 파일 제외
+*.csproj.user
+*.csproj.DotSettings.user
+*.csproj.vspscc
+*.csproj.vssscc
+*.sln.metaproj
+*.csproj.metaproj
+
+# Resharper, Rider, CodeMaid 등의 IDE 설정 파일 제외
+.idea/
+*.DotSettings
+*.DotSettings.user
+resharper.xml
+# Rider workspace
+/.idea/workspace.xml
+
+# NuGet 관련 파일 제외
+*.nupkg
+packages/
+project.lock.json
+project.assets.json
+.nuget/
+
+# .NET Core 및 .NET 5+ 관련 파일 제외
+.DS_Store
+*.db-shm
+*.db-wal
+.vscode/
+
+# WPF 디자인 파일 관련 제외
+obj/**/*.cache
+obj/**/*.g.cs
+obj/**/*.g.i.cs
+obj/**/*.AssemblyInfo.cs
+obj/**/*.csproj.FileListAbsolute.txt
+obj/**/*.csprojAssemblyReference.cache
+
+# Application Insights 관련 제외
+*.diagsession
+
+# 로그 및 빌드 출력 제외
+*.tlog
+*.log
+*.lastcodeanalysissucceeded
+*.codeanalysis
+
+# Windows 관련 파일 제외
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# 기타 IDE 및 도구 관련 제외
+node_modules/
+dist/
+tmp/
+logs/
+
+# Rider & Resharper 관련 설정 제외
+.idea/
+*.DotSettings.user
+
+# 패키지 매니저 관련 파일
+npm-debug.log
+yarn-error.log
