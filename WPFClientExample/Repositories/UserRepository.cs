@@ -10,8 +10,9 @@ namespace WPFClientExample.Repositories
 {
     public interface IUserRepository
     {
-        string GetStoredPasswordHash(string userName);
-        string GetSalt(string userName);
+        UserInfo? GetUserInfo(string userId);
+        string GetStoredPasswordHash(string userId);
+        string GetSalt(string userId);
     }
     public class UserRepository : IUserRepository
     {
@@ -27,18 +28,23 @@ namespace WPFClientExample.Repositories
             }
         ];
 
-        public string GetStoredPasswordHash(string username)
+        public UserInfo? GetUserInfo(string userId)
         {
-            if (hardcodedUserInfo.Any(p => p.UserId.Equals(username)))
+            return hardcodedUserInfo.FirstOrDefault(p => p.UserId.Equals(userId));
+        }
+
+        public string GetStoredPasswordHash(string userId)
+        {
+            if (hardcodedUserInfo.Any(p => p.UserId.Equals(userId)))
             {
-                return hardcodedUserInfo.Where(p=> p.UserId.Equals(username)).First().Password;
+                return hardcodedUserInfo.Where(p=> p.UserId.Equals(userId)).First().Password;
             }
             return string.Empty;
         }
 
-        public string GetSalt(string username)
+        public string GetSalt(string userId)
         {
-            return hardcodedUserInfo.Any(p=> p.UserId.Equals(username)) ? hardcodedSalt : string.Empty;
+            return hardcodedUserInfo.Any(p=> p.UserId.Equals(userId)) ? hardcodedSalt : string.Empty;
         }
 
     }

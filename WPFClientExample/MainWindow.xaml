@@ -4,24 +4,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFClientExample"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"     
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+        Title="MainWindow" Height="600" Width="1000" WindowState="Maximized">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding WindowClosedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <Grid>
-        <!-- 로그인 후에만 메뉴와 로그아웃 버튼 표시 -->
-        <StackPanel Orientation="Horizontal" Visibility="{Binding IsAuthenticated, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Button Content="Search" Command="{Binding NavigateToCommand}" CommandParameter="Search"/>
-            <Button Content="Detail" Command="{Binding NavigateToCommand}" CommandParameter="Detail"/>
-            <Button Content="Report" Command="{Binding NavigateToCommand}" CommandParameter="Report"/>
-            <Button Content="Settings" Command="{Binding NavigateToCommand}" CommandParameter="Settings"/>
-            <Button Content="Notification Log" Command="{Binding NavigateToCommand}" CommandParameter="NotificationLog"/>
-            <Button Content="Admin" Command="{Binding NavigateToCommand}" CommandParameter="Admin"/>
+        <!-- 2열 그리드 -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <!-- 로그아웃 버튼 -->
-            <Button Content="Logout" Command="{Binding LogoutCommand}" Foreground="Red" Margin="10,0,0,0"/>
-        </StackPanel>
+        <!-- 왼쪽 메뉴 (TreeView) -->
+        <TreeView ItemsSource="{Binding TreeViewItems}" SelectedItemChanged="TreeView_SelectedItemChanged">
+        </TreeView>
 
-        <!-- 현재 View -->
-        <ContentControl Content="{Binding CurrentView}" Grid.Row="1"/>
-
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- 상단 사용자 정보 및 로그아웃 -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <TextBlock Text="{Binding LoginUser.UserId}" FontWeight="Bold" Margin="0,0,10,0"/>
+                <Button Content="Logout" Command="{Binding LogoutCommand}" Foreground="Red"/>
+            </StackPanel>
+            
+            <!-- 메인 컨텐츠 영역 -->
+            <ContentControl Grid.Row="1" Content="{Binding CurrentView}" Grid.Column="1"/>
+        </Grid>
     </Grid>
 </Window>

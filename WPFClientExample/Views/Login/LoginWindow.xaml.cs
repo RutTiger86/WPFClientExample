@@ -10,22 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPFClientExample.ViewModels;
+using WPFClientExample.ViewModels.Login;
 
-namespace WPFClientExample.Views
+namespace WPFClientExample.Views.Login
 {
     /// <summary>
-    /// LoginView.xaml에 대한 상호 작용 논리
+    /// LoginWindow.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class LoginView : UserControl
+    public partial class LoginWindow : Window
     {
-        public LoginView(ILoginViewModel viewModel)
+        public LoginWindow(ILoginWindowModel windowModel)
         {
             InitializeComponent();
-            DataContext = viewModel;
+            this.DataContext = windowModel;
         }
-
     }
 }

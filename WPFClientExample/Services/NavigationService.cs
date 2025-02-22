@@ -1,67 +1,92 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using WPFClientExample.Models;
+using WPFClientExample.Repositories;
 using WPFClientExample.Views;
 
 namespace WPFClientExample.Services
 {
     public interface INavigationService
     {
-        void NavigateTo(string viewName);
-        UserControl? GetCurrentView();
+        ObservableCollection<TreeViewItem> TreeViewItems { get; }
+        void NavigateTo(int menuId);
 
-        UserControl? GetView(string viewName);
-        
         event Action<UserControl?>? OnViewChanged;
     }
 
     public class NavigationService : INavigationService
     {
         private readonly IServiceProvider serviceProvider;
-        private readonly Dictionary<string, UserControl> views;
-        private UserControl? currentView;
+        private readonly IMenuRepository menuRepository;
+
+        private readonly Dictionary<int, UserControl> views;
+        private Dictionary<int, TreeViewItem> treeViews ;
+
+        public ObservableCollection<TreeViewItem> TreeViewItems { get; } = new();
+
 
         public event Action<UserControl?>? OnViewChanged;
 
-        public NavigationService(IServiceProvider serviceProvider)
+        public NavigationService(IServiceProvider serviceProvider, IMenuRepository menuRepository)
         {
             this.serviceProvider = serviceProvider;
-            views = new Dictionary<string, UserControl>
+            this.menuRepository = menuRepository;
+            views = new Dictionary<int, UserControl>
             {
-                { "Login", serviceProvider.GetRequiredService<LoginView>() },
-                { "Search", serviceProvider.GetRequiredService<SearchView>() },
-                { "Detail", serviceProvider.GetRequiredService<DetailView>() },
-                { "Report", serviceProvider.GetRequiredService<ReportView>() },
-                { "Settings", serviceProvider.GetRequiredService<SettingsView>() },
-                { "NotificationLog", serviceProvider.GetRequiredService<NotificationLogView>() },
-                { "Admin", serviceProvider.GetRequiredService<AdminView>() }
+                { 1, serviceProvider.GetRequiredService<SearchView>() },
+                { 2, serviceProvider.GetRequiredService<ReportView>() },
+                { 3, serviceProvider.GetRequiredService<SettingsView>() },
+                { 5, serviceProvider.GetRequiredService<NotificationLogView>() },
+                { 6, serviceProvider.GetRequiredService<AdminView>() }
             };
-
+            treeViews = [];
+            InitializeTreeViewItems();
         }
 
-        public UserControl? GetView(string viewName)
+        private void InitializeTreeViewItems()
         {
-            return views[viewName];
-        }
-
-        public void NavigateTo(string viewName)
-        {
-            if (views.ContainsKey(viewName))
+            var menuItems = menuRepository.GetMenuItems();
+            TreeViewItems.Clear();
+            foreach (var menuItem in menuItems)
             {
-                currentView = views[viewName];
-                OnViewChanged?.Invoke(currentView);
+                TreeViewItems.Add(CreateTreeViewItem(menuItem));
             }
         }
 
-        public UserControl? GetCurrentView()
+        private TreeViewItem CreateTreeViewItem(MenuItemModel menuItem)
         {
-            return currentView;
+            var treeViewItem = new TreeViewItem
+            {
+                Header = menuItem.Title,
+                Tag = menuItem.Id               
+            };
+            treeViews.Add(menuItem.Id, treeViewItem);
+            foreach (var child in menuItem.Children)
+            {
+                treeViewItem.Items.Add(CreateTreeViewItem(child));
+            }
+
+            return treeViewItem;
         }
 
+        public void NavigateTo(int menuId)
+        {
+            if(menuId == 0)
+            {
+                treeViews[views.FirstOrDefault().Key].IsSelected = true;
+                OnViewChanged?.Invoke(views.FirstOrDefault().Value);
+            } else if (views.ContainsKey(menuId))
+            {
+                treeViews[menuId].IsSelected = true;
+                OnViewChanged?.Invoke(views[menuId]);
+            }
+        }
     }
 }

@@ -1,61 +1,78 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CSharp.WPF.MVVM.Messages;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using WPFClientExample.Commons.Messages;
+using WPFClientExample.Models;
+using WPFClientExample.Repositories;
 using WPFClientExample.Services;
 using WPFClientExample.ViewModels;
 
 namespace WPFClientExample
 {
-    public partial class MainViewModel :ObservableObject
+    public partial class MainViewModel :ObservableObject, IRecipient<LoginMessage>
     {
         private readonly INavigationService navigationService;
-        private readonly ILoginViewModel loginViewModel;
 
         [ObservableProperty]
         private UserControl? currentView;
 
         [ObservableProperty]
-        private bool isAuthenticated = false;
+        private UserInfo? loginUser;
 
-        private const string loginViewName = "Login";
+        public ObservableCollection<TreeViewItem> TreeViewItems => navigationService.TreeViewItems;
 
-        public MainViewModel(INavigationService navigationService, ILoginViewModel loginViewModel)
+        [ObservableProperty]
+        private MenuItemModel? selectedMenuItem; // 선택된 메뉴 항목
+
+        
+        public MainViewModel(INavigationService navigationService, IMenuRepository menuRepository)
         {
             this.navigationService = navigationService;
-            this.loginViewModel = loginViewModel;
-
-            CurrentView = navigationService.GetView(loginViewName);
-            loginViewModel.OnLoginSuccess += HandleLoginSuccess;
-            navigationService.OnViewChanged += view => CurrentView = view;
-        }
-        private void HandleLoginSuccess(bool success)
-        {
-            if (success)
-            {
-                IsAuthenticated = true; 
-                navigationService.NavigateTo("Search"); 
-            }
+            navigationService.OnViewChanged += NavigationService_OnViewChanged;
+            SettingMessage();
         }
 
-        [RelayCommand]
-        private void NavigateTo(string viewName)
+        private void NavigationService_OnViewChanged(UserControl? obj)
         {
-            if (IsAuthenticated)
-            {
-                navigationService.NavigateTo(viewName);
-            }
+            CurrentView = obj;
+        }
+
+        private void SettingMessage()
+        {
+            WeakReferenceMessenger.Default.Register<LoginMessage>(this);
+        }
+
+        public void Receive(LoginMessage message)
+        {            
+            LoginUser = message.Value;
+            NavigateTo(0);
         }
 
         [RelayCommand]
         private void Logout()
         {
-            IsAuthenticated = false; 
-            navigationService.NavigateTo("Login");
+            LoginUser = null;
+            WeakReferenceMessenger.Default.Send(new LogoutMessage(true));
+        }
+
+        [RelayCommand]
+        private void WindowClosed()
+        {
+            WeakReferenceMessenger.Default.Send(new ProgramShutDownMessage(true));
+        }
+
+        [RelayCommand]
+        private void NavigateTo(int menuId)
+        {
+            navigationService.NavigateTo(menuId);
         }
     }
    

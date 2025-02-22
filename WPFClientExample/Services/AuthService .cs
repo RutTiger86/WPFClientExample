@@ -4,13 +4,14 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using WPFClientExample.Models;
 using WPFClientExample.Repositories;
 
 namespace WPFClientExample.Services
 {
     public interface IAuthService
     {
-        bool Authenticate(string username, string password);
+        (bool AuthResult, UserInfo? User) Authenticate(string userId, string password);
     }
 
     public class AuthService : IAuthService
@@ -22,16 +23,16 @@ namespace WPFClientExample.Services
             this.userRepository = userRepository;
         }
 
-        public bool Authenticate(string username, string password)
+        public (bool AuthResult, UserInfo? User) Authenticate(string userId, string password)
         {
-            string storedSalt = userRepository.GetSalt(username);
-            string storedHash = userRepository.GetStoredPasswordHash(username);
+            string storedSalt = userRepository.GetSalt(userId);
+            string storedHash = userRepository.GetStoredPasswordHash(userId);
 
             if (string.IsNullOrEmpty(storedSalt) || string.IsNullOrEmpty(storedHash))
-                return false;
+                return (false, null);
 
             string inputHash = HashPassword(password, storedSalt);
-            return inputHash == storedHash;
+            return (inputHash == storedHash, inputHash == storedHash?userRepository.GetUserInfo(userId):null);
         }
 
         private static string HashPassword(string password, string salt)
