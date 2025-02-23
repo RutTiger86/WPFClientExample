@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WPFClientExample.Views
 {
     /// <summary>
-    /// SearchView.xaml에 대한 상호 작용 논리
+    /// ProductInfoView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class SearchView : UserControl
+    public partial class ProductInfoView : UserControl
     {
-        public SearchView()
+        public ProductInfoView()
         {
             InitializeComponent();
         }

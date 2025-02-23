@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace WPFClientExample.ViewModels
 {
-    public partial class AdminViewModel:ObservableObject
+    public interface IChatLogViewModel
     {
-        [ObservableProperty]
-        private string title = "Admin Page";
+
+    }
+    public partial class ChatLogViewModel:ObservableObject, IChatLogViewModel
+    {
     }
 }

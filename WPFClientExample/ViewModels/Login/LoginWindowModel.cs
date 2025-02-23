@@ -6,14 +6,14 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using WPFClientExample.Commons.Messages;
-using WPFClientExample.Models;
+using WPFClientExample.Models.DataBase;
 using WPFClientExample.Services;
 
 namespace WPFClientExample.ViewModels.Login
 {
     public interface ILoginWindowModel
     {
-        string Username { get; set; }
+        string AuthUserId { get; set; }
         IRelayCommand<PasswordBox> LoginCommand { get; }
         IRelayCommand WindowClosedCommand { get; }
     }
@@ -23,7 +23,7 @@ namespace WPFClientExample.ViewModels.Login
         private readonly IAuthService authService;
 
         [ObservableProperty]
-        private string username = "";
+        private string authUserId = "";
 
         public LoginWindowModel(IAuthService authService)
         {
@@ -34,7 +34,7 @@ namespace WPFClientExample.ViewModels.Login
         private void Login(PasswordBox param)
         {
 
-            (bool authResult , UserInfo? user ) = authService.Authenticate(Username, param.Password);
+            (bool authResult , AuthAccount? user ) = authService.Authenticate(AuthUserId, param.Password);
             if (authResult)
             {
                 WeakReferenceMessenger.Default.Send(new LoginMessage(user));
@@ -43,7 +43,7 @@ namespace WPFClientExample.ViewModels.Login
             {
                 MessageBox.Show("Invalid Username or Password!", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            Username = string.Empty;
+            AuthUserId = string.Empty;
             param.Password = string.Empty;
         }
 

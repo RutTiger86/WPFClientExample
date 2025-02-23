@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace WPFClientExample.ViewModels
 {
-    public interface ISettingsViewModel
+    public interface IRegionInfoViewModel
     {
 
     }
 
-    public partial class SettingsViewModel:ObservableObject, ISettingsViewModel
+    public partial class RegionInfoViewModel: ObservableObject, IRegionInfoViewModel
     {
-        [ObservableProperty]
-        private string title = "Settings Page";
     }
 }

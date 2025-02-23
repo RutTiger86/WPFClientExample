@@ -17,6 +17,7 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Login Page" FontSize="24" HorizontalAlignment="Center"/>
+            <TextBlock Text="(admin / 1234)" FontSize="12" HorizontalAlignment="Center"/>
             <Grid >
                 <Grid.RowDefinitions >
                     <RowDefinition Height="*"/>
@@ -27,7 +28,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="ID :" HorizontalAlignment="Right"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Width="200" Height="30" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Width="200" Height="30" Text="{Binding AuthUserId, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="PW :" HorizontalAlignment="Right"/>
                 <PasswordBox Grid.Row="1" Grid.Column="1" x:Name="pb_LoginPassword" Width="200" Height="30" VerticalContentAlignment="Center"/>                

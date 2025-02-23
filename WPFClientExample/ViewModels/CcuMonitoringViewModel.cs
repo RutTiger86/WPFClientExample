@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace WPFClientExample.ViewModels
 {
-    public partial class NotificationLogViewModel : ObservableObject
+    public interface ICcuMonitoringViewModel
     {
-        [ObservableProperty]
-        private string title = "MotificationLog Page";
+
+    }
+
+    public partial class CcuMonitoringViewModel:ObservableObject, ICcuMonitoringViewModel
+    {
     }
 }

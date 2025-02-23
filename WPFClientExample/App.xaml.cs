@@ -6,13 +6,15 @@ using System.Configuration;
 using System.Data;
 using System.Windows;
 using WPFClientExample.Commons.Messages;
-using WPFClientExample.Models;
+using WPFClientExample.Models.DataBase;
 using WPFClientExample.Repositories;
 using WPFClientExample.Services;
 using WPFClientExample.ViewModels;
 using WPFClientExample.ViewModels.Login;
+using WPFClientExample.ViewModels.UserInfo;
 using WPFClientExample.Views;
 using WPFClientExample.Views.Login;
+using WPFClientExample.Views.UserInfo;
 
 namespace WPFClientExample
 {
@@ -44,33 +46,45 @@ namespace WPFClientExample
         {
             hostBuilder.ConfigureServices((context, services) =>
             {
-                //ViewModel 등록
-                services.AddSingleton<MainViewModel>();
 
                 //Repository 등록
-                services.AddSingleton<IUserRepository, UserRepository>();
-                services.AddSingleton<IMenuRepository, MenuRepository>();
+                services.AddScoped<IAuthRepository, AuthRepository>();
+                services.AddScoped<IMenuRepository, MenuRepository>();
+                services.AddScoped<IUserRepository, UserReository>();
 
                 //Service 등록 
-                services.AddSingleton<INavigationService, NavigationService>();
-                services.AddSingleton<IAuthService, AuthService>();
+                services.AddScoped<INavigationService, NavigationService>();
+                services.AddScoped<IAuthService, AuthService>();
+                services.AddScoped<IGameLogService, GameLogService>();
 
                 // ViewModel 등록
-                services.AddSingleton<ILoginWindowModel, LoginWindowModel>();
-                services.AddSingleton<SearchViewModel>();
-                services.AddSingleton<DetailViewModel>();
-                services.AddSingleton<ReportViewModel>();
-                services.AddSingleton<SettingsViewModel>();
-                services.AddSingleton<NotificationLogViewModel>();
-                services.AddSingleton<AdminViewModel>();
+                services.AddSingleton<IAdminSettingViewModel, AdminSettingViewModel>();
+                services.AddSingleton<IBillHistoryViewModel, BillHistoryViewModel>();
+                services.AddSingleton<ICcuMonitoringViewModel, CcuMonitoringViewModel>();
+                services.AddSingleton<IChatLogViewModel, ChatLogViewModel>();
+                services.AddSingleton<IProductInfoViewModel, ProductInfoViewModel>();
+                services.AddSingleton<IRegionInfoViewModel, RegionInfoViewModel>();
+                services.AddSingleton<IUserInfoViewModel, UserInfoViewModel>();
+                services.AddSingleton<ISettingsViewModel, SettingsViewModel>();
+                services.AddSingleton<ICharacterInfoViewModel, CharacterInfoViewModel>();
+                services.AddSingleton<IInventoryLogViewModel, InventoryLogViewModel>();
 
-                // View 등록 (싱글톤)
-                services.AddSingleton<SearchView>();
-                services.AddSingleton<DetailView>();
-                services.AddSingleton<ReportView>();
+                // View 등록 
+                services.AddSingleton<AdminSettingView>();
+                services.AddSingleton<BillHistoryView>();
+                services.AddSingleton<CcuMonitoringView>();
+                services.AddSingleton<ChatLogView>();
+                services.AddSingleton<ProductInfoView>();
+                services.AddSingleton<RegionInfoView>();
                 services.AddSingleton<SettingsView>();
-                services.AddSingleton<NotificationLogView>();
-                services.AddSingleton<AdminView>();
+                services.AddSingleton<UserInfoView>();
+                services.AddSingleton<CharacterInfoView>();
+                services.AddSingleton<InventoryLogView>();
+
+
+                //WindowModel 등록
+                services.AddSingleton<IMainWindowModel,MainWindowModel>();
+                services.AddSingleton<ILoginWindowModel, LoginWindowModel>();
 
                 //Window 등록
                 services.AddSingleton<MainWindow>();
@@ -114,7 +128,7 @@ namespace WPFClientExample
             LogInProcess(message.Value);
         }
 
-        private void LogInProcess(UserInfo? userInfo)
+        private void LogInProcess(AuthAccount? userInfo)
         {
             host.Services.GetRequiredService<LoginWindow>().Hide();
             host.Services.GetRequiredService<MainWindow>().Visibility = Visibility.Visible;

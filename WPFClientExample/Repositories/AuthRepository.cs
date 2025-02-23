@@ -4,47 +4,47 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using WPFClientExample.Models;
+using WPFClientExample.Models.DataBase;
 
 namespace WPFClientExample.Repositories
 {
-    public interface IUserRepository
+    public interface IAuthRepository
     {
-        UserInfo? GetUserInfo(string userId);
+        AuthAccount? GetAuthInfo(string userId);
         string GetStoredPasswordHash(string userId);
         string GetSalt(string userId);
     }
-    public class UserRepository : IUserRepository
+    public class AuthRepository : IAuthRepository
     {
         private static readonly string hardcodedSalt = "ucZpbywROXXRD9xMW2bvBw==";
 
-        private List<UserInfo> hardcodedUserInfo =
+        private List<AuthAccount> hardcodedUserInfo =
         [
-            new UserInfo()
+            new AuthAccount()
             {
                  Id = 1,
-                 UserId = "admin",
+                 AuthId = "admin",
                  Password = "fY5qnfEZcadyCX6A+jWQSxaW3lRoKi35PpQdM0lEDAg=" //1234
             }
         ];
 
-        public UserInfo? GetUserInfo(string userId)
+        public AuthAccount? GetAuthInfo(string userId)
         {
-            return hardcodedUserInfo.FirstOrDefault(p => p.UserId.Equals(userId));
+            return hardcodedUserInfo.FirstOrDefault(p => p.AuthId.Equals(userId));
         }
 
         public string GetStoredPasswordHash(string userId)
         {
-            if (hardcodedUserInfo.Any(p => p.UserId.Equals(userId)))
+            if (hardcodedUserInfo.Any(p => p.AuthId.Equals(userId)))
             {
-                return hardcodedUserInfo.Where(p=> p.UserId.Equals(userId)).First().Password;
+                return hardcodedUserInfo.Where(p=> p.AuthId.Equals(userId)).First().Password;
             }
             return string.Empty;
         }
 
         public string GetSalt(string userId)
         {
-            return hardcodedUserInfo.Any(p=> p.UserId.Equals(userId)) ? hardcodedSalt : string.Empty;
+            return hardcodedUserInfo.Any(p=> p.AuthId.Equals(userId)) ? hardcodedSalt : string.Empty;
         }
 
     }

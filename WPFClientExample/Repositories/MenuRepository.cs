@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using WPFClientExample.Models;
+using WPFClientExample.Models.DataBase;
 
 namespace WPFClientExample.Repositories
 {
@@ -17,23 +17,48 @@ namespace WPFClientExample.Repositories
     {
         public ObservableCollection<MenuItemModel> GetMenuItems()
         {
-            return new ObservableCollection<MenuItemModel>
-            {
-                new MenuItemModel { Id = 1, Title = "Search", ViewName = "Search"},
-                new MenuItemModel { Id = 2, Title = "Report", ViewName = "Report" },
-                new MenuItemModel { Id = 3, Title = "Notifications", ViewName = "NotificationLog" },
+            return
+            [
+                new MenuItemModel
+                {
+                    Id = 1,
+                    Title = "Game Logs",
+                    Children =
+                    [
+                        new() { Id = 2, Title = "User Info", ViewName = "UserInfo" },
+                        new() { Id = 3, Title = "Region Info", ViewName = "RegionInfo" }
+                    ]
+                },
                 new MenuItemModel
                 {
                     Id = 4,
-                    Title = "Settings",
-                    Children = new ObservableCollection<MenuItemModel>
-                    {
-                        new MenuItemModel { Id = 5, Title = "General", ViewName = "Settings" },
-                        new MenuItemModel { Id = 6, Title = "Admin", ViewName = "Admin" }
-                    }
+                    Title = "Monitoring",
+                    Children =
+                    [
+                        new () { Id = 5, Title = "ChatLog", ViewName = "ChatLog" },
+                        new () { Id = 6, Title = "CCU", ViewName = "CCUMonitoring" }
+                    ]
+                },
+                new MenuItemModel
+                {
+                    Id = 7,
+                    Title = "Billing",
+                    Children =
+                    [
+                        new() { Id = 8, Title = "Bill History", ViewName = "BillHistory" },
+                        new() { Id = 9, Title = "Product Info", ViewName = "ProductInfo" }
+                    ]
+                },new MenuItemModel
+                {
+                    Id = 10,
+                    Title = "Setting",
+                    Children =
+                    [
+                        new() { Id = 11, Title = "Client Setting", ViewName = "Setting" },
+                        new() { Id = 12, Title = "Admin Setting", ViewName = "AdminSetting" }
+                    ]
                 }
-            };
+            ];
         }
-
     }
 }

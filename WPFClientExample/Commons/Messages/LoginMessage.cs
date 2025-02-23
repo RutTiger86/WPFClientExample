@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPFClientExample.Models;
+using WPFClientExample.Models.DataBase;
 
 namespace WPFClientExample.Commons.Messages
 {
-    public class LoginMessage(UserInfo? loginUserInfo) : ValueChangedMessage<UserInfo?>(loginUserInfo)
+    public class LoginMessage(AuthAccount? loginUserInfo) : ValueChangedMessage<AuthAccount?>(loginUserInfo)
     {
     }
 }

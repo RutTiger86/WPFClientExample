@@ -6,10 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFClientExample.ViewModels
-{
-    public partial class SearchViewModel:ObservableObject
+{   
+    public interface IProductInfoViewModel
     {
-        [ObservableProperty]
-        private string title = "Search Page";
+
+    }
+
+    public partial class ProductInfoViewModel:ObservableObject, IProductInfoViewModel
+    {
     }
 }

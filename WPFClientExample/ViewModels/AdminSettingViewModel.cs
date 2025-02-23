@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace WPFClientExample.ViewModels
 {
-    public partial class DetailViewModel : ObservableObject
+    public interface IAdminSettingViewModel
     {
-            [ObservableProperty]
-            private string title = "Detail Page";
+
+    }
+
+    public partial class AdminSettingViewModel:ObservableObject, IAdminSettingViewModel
+    {
+
     }
 }

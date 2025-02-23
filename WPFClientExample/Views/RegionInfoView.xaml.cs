@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WPFClientExample.Views
 {
     /// <summary>
-    /// AdminVeiw.xaml에 대한 상호 작용 논리
+    /// RegionInfoView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class AdminView : UserControl
+    public partial class RegionInfoView : UserControl
     {
-        public AdminView()
+        public RegionInfoView()
         {
             InitializeComponent();
         }

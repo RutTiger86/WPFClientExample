@@ -2,15 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WPFClientExample.ViewModels
 {
-    public partial class ReportViewModel:ObservableObject
+    public interface IBillHistoryViewModel
     {
-        [ObservableProperty]
-        private string title = "Report Page";
+
+    }
+
+    public partial class BillHistoryViewModel:ObservableObject, IBillHistoryViewModel
+    {
     }
 }

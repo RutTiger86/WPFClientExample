@@ -10,14 +10,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using WPFClientExample.Commons.Messages;
-using WPFClientExample.Models;
+using WPFClientExample.Models.DataBase;
 using WPFClientExample.Repositories;
 using WPFClientExample.Services;
 using WPFClientExample.ViewModels;
 
 namespace WPFClientExample
 {
-    public partial class MainViewModel :ObservableObject, IRecipient<LoginMessage>
+    public interface IMainWindowModel
+    { 
+        UserControl? CurrentView { get; set; }
+
+        AuthAccount? LoginAuthUser { get; set; }
+
+        ObservableCollection<TreeViewItem> TreeViewItems { get; }
+
+        MenuItemModel? SelectedMenuItem { get; set; }
+
+        IRelayCommand LogoutCommand { get; }
+
+        IRelayCommand WindowClosedCommand { get; }
+
+        IRelayCommand<int> NavigateToCommand { get; }
+
+        void Receive(LoginMessage message);
+
+    }
+
+    public partial class MainWindowModel : ObservableObject, IMainWindowModel, IRecipient<LoginMessage>
     {
         private readonly INavigationService navigationService;
 
@@ -25,15 +45,14 @@ namespace WPFClientExample
         private UserControl? currentView;
 
         [ObservableProperty]
-        private UserInfo? loginUser;
+        private AuthAccount? loginAuthUser;
 
         public ObservableCollection<TreeViewItem> TreeViewItems => navigationService.TreeViewItems;
 
         [ObservableProperty]
         private MenuItemModel? selectedMenuItem; // 선택된 메뉴 항목
 
-        
-        public MainViewModel(INavigationService navigationService, IMenuRepository menuRepository)
+        public MainWindowModel(INavigationService navigationService, IMenuRepository menuRepository)
         {
             this.navigationService = navigationService;
             navigationService.OnViewChanged += NavigationService_OnViewChanged;
@@ -51,15 +70,15 @@ namespace WPFClientExample
         }
 
         public void Receive(LoginMessage message)
-        {            
-            LoginUser = message.Value;
+        {
+            LoginAuthUser = message.Value;
             NavigateTo(0);
         }
 
         [RelayCommand]
         private void Logout()
         {
-            LoginUser = null;
+            LoginAuthUser = null;
             WeakReferenceMessenger.Default.Send(new LogoutMessage(true));
         }
 
@@ -75,5 +94,5 @@ namespace WPFClientExample
             navigationService.NavigateTo(menuId);
         }
     }
-   
+
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFClientExample"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"     
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" WindowState="Maximized">
+        Title="MainWindow" Height="600" Width="1000" WindowState="Maximized" MinWidth="1000" MinHeight="500">
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -22,8 +22,8 @@
         </Grid.ColumnDefinitions>
 
         <!-- 왼쪽 메뉴 (TreeView) -->
-        <TreeView ItemsSource="{Binding TreeViewItems}" SelectedItemChanged="TreeView_SelectedItemChanged">
-        </TreeView>
+        <TreeView ItemsSource="{Binding TreeViewItems}" SelectedItemChanged="TreeView_SelectedItemChanged"/>
+
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
@@ -32,7 +32,7 @@
             </Grid.RowDefinitions>
             <!-- 상단 사용자 정보 및 로그아웃 -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                <TextBlock Text="{Binding LoginUser.UserId}" FontWeight="Bold" Margin="0,0,10,0"/>
+                <TextBlock Text="{Binding LoginAuthUser.AuthId}" FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center"/>
                 <Button Content="Logout" Command="{Binding LogoutCommand}" Foreground="Red"/>
             </StackPanel>
             

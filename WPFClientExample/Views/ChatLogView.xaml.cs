@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WPFClientExample.Views
 {
     /// <summary>
-    /// NotificationLogView.xaml에 대한 상호 작용 논리
+    /// ChatLogView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class NotificationLogView : UserControl
+    public partial class ChatLogView : UserControl
     {
-        public NotificationLogView()
+        public ChatLogView()
         {
             InitializeComponent();
         }

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using WPFClientExample.Models;
+using WPFClientExample.Models.DataBase;
 using WPFClientExample.Repositories;
 using WPFClientExample.Views;
 
@@ -40,11 +40,14 @@ namespace WPFClientExample.Services
             this.menuRepository = menuRepository;
             views = new Dictionary<int, UserControl>
             {
-                { 1, serviceProvider.GetRequiredService<SearchView>() },
-                { 2, serviceProvider.GetRequiredService<ReportView>() },
-                { 3, serviceProvider.GetRequiredService<SettingsView>() },
-                { 5, serviceProvider.GetRequiredService<NotificationLogView>() },
-                { 6, serviceProvider.GetRequiredService<AdminView>() }
+                { 2, serviceProvider.GetRequiredService<UserInfoView>() },
+                { 3, serviceProvider.GetRequiredService<RegionInfoView>() },
+                { 5, serviceProvider.GetRequiredService<ChatLogView>() },
+                { 6, serviceProvider.GetRequiredService<CcuMonitoringView>() },
+                { 8, serviceProvider.GetRequiredService<BillHistoryView>() },
+                { 9, serviceProvider.GetRequiredService<ProductInfoView>() },
+                { 11, serviceProvider.GetRequiredService<SettingsView>() },
+                { 12, serviceProvider.GetRequiredService<AdminSettingView>() },
             };
             treeViews = [];
             InitializeTreeViewItems();
@@ -80,13 +83,37 @@ namespace WPFClientExample.Services
         {
             if(menuId == 0)
             {
-                treeViews[views.FirstOrDefault().Key].IsSelected = true;
-                OnViewChanged?.Invoke(views.FirstOrDefault().Value);
+                var firstView = views.FirstOrDefault();
+                ExpandToRoot(treeViews[firstView.Key]);
+                treeViews[firstView.Key].IsSelected = true;
+                OnViewChanged?.Invoke(firstView.Value);
             } else if (views.ContainsKey(menuId))
             {
+                ExpandToRoot(treeViews[menuId]);
                 treeViews[menuId].IsSelected = true;
                 OnViewChanged?.Invoke(views[menuId]);
             }
+        }
+
+        private void ExpandToRoot(TreeViewItem? item)
+        {
+            while (item != null)
+            {
+                item.IsExpanded = true;
+                item = GetParent(item); // 부모 노드를 찾는 메서드
+            }
+        }
+
+        private TreeViewItem? GetParent(TreeViewItem item)
+        {
+            foreach (var parentItem in treeViews.Values)
+            {
+                if (parentItem.Items.Contains(item))
+                {
+                    return parentItem;
+                }
+            }
+            return null;
         }
     }
 }

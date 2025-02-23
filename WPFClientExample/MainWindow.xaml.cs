@@ -17,14 +17,14 @@ namespace WPFClientExample
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(MainViewModel viewModel)
+        public MainWindow(IMainWindowModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;
         }
         private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (e.NewValue is TreeViewItem selectedItem && selectedItem.Tag is int menuId && DataContext is MainViewModel viewModel)
+            if (e.NewValue is TreeViewItem selectedItem && selectedItem.Tag is int menuId && DataContext is MainWindowModel viewModel)
             {
                 viewModel.NavigateToCommand.Execute(menuId);
             }
