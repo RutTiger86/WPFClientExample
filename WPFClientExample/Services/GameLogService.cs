@@ -13,21 +13,24 @@ namespace WPFClientExample.Services
 {
     public interface IGameLogService
     {
-        public List<CharacterInfo> GetCharacterInfoList(UserSearchType searchType, string searchData);
+        public Task<AccountInfo?> GetAccountInfoAsync(UserSearchType searchType, string searchData);
+        public Task<List<CharacterInfo>> GetCharacterInfoListAsync(long accountId);
+        public Task<CharacterDetailInfo?> GetCharacterInfoDetailInfoAsync(long characterId);
     }
 
     public class GameLogService(IUserRepository userRepository) : IGameLogService
     {
         private readonly IUserRepository userRepository = userRepository;
 
-        public List<CharacterInfo> GetCharacterInfoList(UserSearchType searchType, string searchData)
+        public Task<AccountInfo?> GetAccountInfoAsync(UserSearchType searchType, string searchData)
         {
-
-            if(searchType == UserSearchType.AccountId)
+            if (searchType == UserSearchType.AccountId)
             {
-                if(long.TryParse(searchData, out long accountId))
+                if (long.TryParse(searchData, out long accountId))
                 {
-                    return userRepository.GetCharacterInfoList(searchType, accountId, string.Empty);
+                    var userinfo = userRepository.GetAccountInfo(searchType, accountId, string.Empty);
+
+                    return Task.FromResult(userinfo);
                 }
                 else
                 {
@@ -36,8 +39,26 @@ namespace WPFClientExample.Services
             }
             else
             {
-                return userRepository.GetCharacterInfoList(searchType, 0, searchData);
+                var userinfo = userRepository.GetAccountInfo(searchType, 0, searchData);
+
+                return Task.FromResult(userinfo);
             }
+
         }
+
+        public Task<List<CharacterInfo>> GetCharacterInfoListAsync(long accountId)
+        {
+            var characterInfoes = userRepository.GetCharacterInfoList(accountId);
+
+            return Task.FromResult(characterInfoes);
+        }
+
+        public Task<CharacterDetailInfo?> GetCharacterInfoDetailInfoAsync(long characterId)
+        {
+            var characterDetail = userRepository.GetCharacterDetailInfo(characterId);
+
+            return Task.FromResult(characterDetail);
+        }
+
     }
 }

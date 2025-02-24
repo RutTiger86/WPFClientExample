@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFClientExample"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"     
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000" WindowState="Maximized" MinWidth="1000" MinHeight="500">
+        Title="WPFClinetExample" Height="600" Width="1000" WindowState="Maximized" MinWidth="1000" MinHeight="500">
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">

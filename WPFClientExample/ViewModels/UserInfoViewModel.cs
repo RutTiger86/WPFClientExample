@@ -24,14 +24,13 @@ namespace WPFClientExample.ViewModels
     {
         KeyValuePair<UserSearchType, string>[]? SearchType { get; set; }
         UserSearchType SelectedSearchType { get; set; }
-
         ObservableCollection<CharacterInfo>? CharacterInfos { get; set; }
         string SearchText { get; set; }
-
         CharacterInfoView TabItemCharacterInfoView { get; set; }
         InventoryLogView TabItemInventoryLogView { get; set; }
+        AccountInfo? TargetAccountInfo { get; set; }
 
-        IRelayCommand SearchCommand { get; }
+        IAsyncRelayCommand SearchCommand { get; }
         IRelayCommand<CharacterInfo> CharcterSelectionChagedCommand { get; }
     }
 
@@ -57,8 +56,10 @@ namespace WPFClientExample.ViewModels
         private CharacterInfoView? tabItemCharacterInfoView; 
 
         [ObservableProperty]
-        private InventoryLogView? tabItemInventoryLogView; 
+        private InventoryLogView? tabItemInventoryLogView;
 
+        [ObservableProperty]
+        private AccountInfo? targetAccountInfo;
 
         public UserInfoViewModel(IGameLogService gameLogService, IServiceProvider serviceProvider)
         {
@@ -72,8 +73,8 @@ namespace WPFClientExample.ViewModels
         {
             SearchType =
             [
-                new(UserSearchType.AccountId, "계정 ID"),
-                new(UserSearchType.AccountName, "계정 명")
+                new(UserSearchType.AccountId, "Account ID"),
+                new(UserSearchType.AccountName, "Account Name")
             ];
 
             SelectedSearchType = SearchType.First().Key;
@@ -83,11 +84,17 @@ namespace WPFClientExample.ViewModels
         }
 
         [RelayCommand]
-        private void Search()
+        private async Task Search()
         {
             try
             {
-                CharacterInfos = new ObservableCollection<CharacterInfo>(gameLogService.GetCharacterInfoList(SelectedSearchType, SearchText));
+                TargetAccountInfo =  await gameLogService.GetAccountInfoAsync(SelectedSearchType, SearchText);
+
+                if(TargetAccountInfo != null)
+                {
+                    var charcterInfo = await gameLogService.GetCharacterInfoListAsync(TargetAccountInfo.AccountId);
+                    CharacterInfos = new ObservableCollection<CharacterInfo>(charcterInfo);
+                }
             }
             catch (Exception ex)
             {

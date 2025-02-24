@@ -11,6 +11,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
@@ -20,11 +22,53 @@
                       SelectedValuePath="Key" DisplayMemberPath="Value" SelectedValue="{Binding SelectedSearchType, Mode= TwoWay}">
             </ComboBox>
             <TextBox Width="200" Margin="5" x:Name="SearchTextBox" Text="{Binding SearchText}"/>
-            <Button Content="검색" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
+            <Button Content="Search" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
             <Label Content="(AccountID : 12345678, AccountName : TestAccount)" FontSize="12"/>
         </StackPanel>
 
-        <Grid Grid.Row="1" Margin="10">
+        <Grid Grid.Row="1" Margin="10" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Row="0" Grid.Column = "0" Content="Account ID : " FontSize="12"/>
+            <Label Grid.Row="0" Grid.Column = "1" Content="{Binding TargetAccountInfo.AccountId}" FontSize="12"/>
+            <Label Grid.Row="0" Grid.Column = "2" Content="Accoun tName : " FontSize="12"/>
+            <Label Grid.Row="0" Grid.Column = "3" Content="{Binding TargetAccountInfo.AccountName}" FontSize="12"/>
+            <Label Grid.Row="0" Grid.Column = "4" Content="Accoun tStatus : " FontSize="12"/>
+            <Label Grid.Row="0" Grid.Column = "5" Content="{Binding TargetAccountInfo.AccountStatus}" FontSize="12"/>
+
+            <Label Grid.Row="1" Grid.Column = "0" Content="Last LoginTime : " FontSize="12"/>
+            <Label Grid.Row="1" Grid.Column = "1" Content="{Binding TargetAccountInfo.LastLoginTime}" FontSize="12"/>
+            <Label Grid.Row="1" Grid.Column = "2" Content="IsOnLine : " FontSize="12"/>
+            <Label Grid.Row="1" Grid.Column = "3" Content="{Binding TargetAccountInfo.IsOnLine}" FontSize="12"/>
+            <Label Grid.Row="1" Grid.Column = "4" Content="Last Login IP : " FontSize="12"/>
+            <Label Grid.Row="1" Grid.Column = "5" Content="{Binding TargetAccountInfo.LastLoginIP}" FontSize="12"/>
+
+            <Label Grid.Row="2" Grid.Column = "0" Content="Last Known Location : " FontSize="12"/>
+            <Label Grid.Row="2" Grid.Column = "1" Content="{Binding TargetAccountInfo.LastLocation}" FontSize="12"/>
+            <Label Grid.Row="2" Grid.Column = "2" Content="Total Play Time : " FontSize="12"/>
+            <Label Grid.Row="2" Grid.Column = "3" Content="{Binding TargetAccountInfo.TotalPlayTime}" FontSize="12"/>
+            <Label Grid.Row="2" Grid.Column = "4" Content="JoinDate : " FontSize="12"/>
+            <Label Grid.Row="2" Grid.Column = "5" Content="{Binding TargetAccountInfo.CreateDate}" FontSize="12"/>
+        </Grid>
+
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Margin="5">
+            <Button  Content="Account Restriction"/>
+        </StackPanel>
+
+        <Grid Grid.Row="3" Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" MaxWidth="300"/>
                 <ColumnDefinition Width="3*"/>
@@ -34,10 +78,10 @@
             <DataGrid x:Name="CharacterDataGrid" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True"
                       Margin="5" Grid.Column="0" ItemsSource="{Binding CharacterInfos, Mode= OneWay}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="서버번호" Binding="{Binding ServerId}" Width="auto"/>
-                    <DataGridTextColumn Header="서버명" Binding="{Binding ServerName}" Width="auto"/>
-                    <DataGridTextColumn Header="캐릭터ID" Binding="{Binding CharacterId}" Width="auto"/>
-                    <DataGridTextColumn Header="캐릭터명" Binding="{Binding CharacterName}" Width="*"/>
+                    <DataGridTextColumn Header="Server ID" Binding="{Binding ServerId}" Width="auto"/>
+                    <DataGridTextColumn Header="Server Name" Binding="{Binding ServerName}" Width="auto"/>
+                    <DataGridTextColumn Header="Character ID" Binding="{Binding CharacterId}" Width="auto"/>
+                    <DataGridTextColumn Header="Character Name" Binding="{Binding CharacterName}" Width="*"/>
                 </DataGrid.Columns>
 
                 <i:Interaction.Triggers>
@@ -49,11 +93,11 @@
             </DataGrid>
 
             <TabControl Grid.Column="1">
-                <TabItem Header="캐릭터 정보">
-                    <ContentPresenter Content="{Binding CharacterInfoView}" />
+                <TabItem Header="Character Info">
+                    <ContentPresenter Content="{Binding TabItemCharacterInfoView}" />
                 </TabItem>
-                <TabItem Header="인벤토리 로그">
-                    <ContentPresenter Content="{Binding InventoryLogView}" />
+                <TabItem Header="Inventory Log">
+                    <ContentPresenter Content="{Binding TabItemInventoryLogView}" />
                 </TabItem>
             </TabControl>
         </Grid>

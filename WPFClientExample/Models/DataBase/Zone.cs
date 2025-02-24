@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace WPFClientExample.Models.DataBase
 {
-    public class Server
+    public class Zone
     {
-        public int Id { get; set; }
-        public required string ServerName { get; set; }
-        public bool IsLive { get; set; }
+        public long Id { get; set; }
+
+        public required string ZoneName { get; set; }
         public DateTime CreateDate { get; set; }
     }
 }

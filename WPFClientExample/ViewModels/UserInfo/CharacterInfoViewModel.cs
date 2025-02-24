@@ -9,21 +9,30 @@ using System.Threading.Tasks;
 using System.Windows;
 using WPFClientExample.Commons.Messages.UserInfo;
 using WPFClientExample.Models.GameLog;
+using WPFClientExample.Services;
 
 namespace WPFClientExample.ViewModels.UserInfo
 {
     public interface ICharacterInfoViewModel
     {
         CharacterInfo? SelectedCharacter { get; set; }
+
+        CharacterDetailInfo? TargetCharacterDetailInfo { get; set; }
     }
 
     public partial class CharacterInfoViewModel:ObservableObject, ICharacterInfoViewModel, IRecipient<SelectedCharacterMessage>
     {
+        private readonly IGameLogService gameLogService;
+
         [ObservableProperty]
         private CharacterInfo? selectedCharacter;
 
-        public CharacterInfoViewModel()
+        [ObservableProperty]
+        private CharacterDetailInfo? targetCharacterDetailInfo;
+
+        public CharacterInfoViewModel(IGameLogService gameLogService)
         {
+            this.gameLogService = gameLogService;
             SettingMessage();
         }
 
@@ -35,16 +44,41 @@ namespace WPFClientExample.ViewModels.UserInfo
 
         public void Receive(SelectedCharacterMessage message)
         {
-            MessageBox.Show(message.Value?.CharacterName);
+            SelectedCharacter = message.Value;
+            SetCharacterInfoAsync();
         }
 
-        partial void OnSelectedCharacterChanged(CharacterInfo? value)
+        private async void SetCharacterInfoAsync()
         {
-            if (value != null)
+            // Task.WhenAll을 이용하여 병렬 처리
+            await Task.WhenAll(
+                SetCharacterDetailInfo(),
+                SetEquippedItemsAsync(),
+                SetRecenChatAsync(),
+                SetQuestListAsync()
+            );
+        }
+
+        private async Task SetCharacterDetailInfo()
+        {
+            if (SelectedCharacter!= null)
             {
-                MessageBox.Show($"SelectedCharacter changed: {value.CharacterName}");
+                TargetCharacterDetailInfo = await gameLogService.GetCharacterInfoDetailInfoAsync(SelectedCharacter.CharacterId);
             }
         }
 
+        private async Task SetEquippedItemsAsync()
+        {
+
+        }
+        private async Task SetRecenChatAsync()
+        {
+
+        }
+
+        private async Task SetQuestListAsync()
+        {
+
+        }
     }
 }

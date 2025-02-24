@@ -22,33 +22,10 @@ namespace WPFClientExample.Views.UserInfo
     /// </summary>
     public partial class CharacterInfoView : UserControl
     {
-        public static readonly DependencyProperty SelectedCharacterProperty =
-            DependencyProperty.Register(
-        nameof(SelectedCharacter),
-                typeof(CharacterInfo),
-                typeof(CharacterInfoView),
-                new PropertyMetadata(null, OnSelectedCharacterChanged));
-
-        public object? SelectedCharacter
-        {
-            get => (CharacterInfo?)GetValue(SelectedCharacterProperty);
-            set => SetValue(SelectedCharacterProperty, value);
-
-        }
-
         public CharacterInfoView(ICharacterInfoViewModel viewModel)
         {
             InitializeComponent();
             this.DataContext = viewModel;
         }
-
-        private static void OnSelectedCharacterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is CharacterInfoView view && view.DataContext is CharacterInfoViewModel viewModel)
-            {
-                viewModel.SelectedCharacter = e.NewValue as CharacterInfo;
-            }
-        }
-
     }
 }
