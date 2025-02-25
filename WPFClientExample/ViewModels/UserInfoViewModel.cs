@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,7 @@ using System.Windows.Controls;
 using WPFClientExample.Commons.Enums;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Commons.Messages.UserInfo;
+using WPFClientExample.Models.DataBase;
 using WPFClientExample.Models.GameLog;
 using WPFClientExample.Services;
 using WPFClientExample.Views.UserInfo;
@@ -22,8 +24,8 @@ namespace WPFClientExample.ViewModels
 {
     public interface IUserInfoViewModel
     {
-        KeyValuePair<UserSearchType, string>[]? SearchType { get; set; }
-        UserSearchType SelectedSearchType { get; set; }
+        KeyValuePair<USER_SEARCH_TYPE, string>[]? SearchType { get; set; }
+        USER_SEARCH_TYPE SelectedSearchType { get; set; }
         ObservableCollection<CharacterInfo>? CharacterInfos { get; set; }
         string SearchText { get; set; }
         CharacterInfoView TabItemCharacterInfoView { get; set; }
@@ -31,26 +33,26 @@ namespace WPFClientExample.ViewModels
         AccountInfo? TargetAccountInfo { get; set; }
 
         IAsyncRelayCommand SearchCommand { get; }
+        IRelayCommand AccountRestrictionCommand { get; }
         IRelayCommand<CharacterInfo> CharcterSelectionChagedCommand { get; }
     }
 
-    public partial class UserInfoViewModel:ObservableObject, IUserInfoViewModel
+    public partial class UserInfoViewModel:ObservableObject, IUserInfoViewModel, IRecipient<LoginMessage>
     {
         private readonly IGameLogService gameLogService;
         private readonly IServiceProvider serviceProvider;
 
         [ObservableProperty]
-        private KeyValuePair<UserSearchType, string>[]? searchType;
+        private KeyValuePair<USER_SEARCH_TYPE, string>[]? searchType;
 
         [ObservableProperty]
-        private UserSearchType selectedSearchType;
+        private USER_SEARCH_TYPE selectedSearchType;
 
         [ObservableProperty]
         private string searchText = string.Empty;
 
         [ObservableProperty]
         private ObservableCollection<CharacterInfo>? characterInfos;
-
 
         [ObservableProperty]
         private CharacterInfoView? tabItemCharacterInfoView; 
@@ -66,15 +68,28 @@ namespace WPFClientExample.ViewModels
             this.gameLogService = gameLogService;
             this.serviceProvider = serviceProvider;
 
+            SettingMessage();
             Initialize();
+        }
+        private void SettingMessage()
+        {
+            WeakReferenceMessenger.Default.Register<LoginMessage>(this);
+        }
+
+        public void Receive(LoginMessage message)
+        {
+            CharacterInfos = null;
+            TargetAccountInfo = null;
+            SearchText = string.Empty;
+            SelectedSearchType = USER_SEARCH_TYPE.AccountId;
         }
 
         private void Initialize()
         {
             SearchType =
             [
-                new(UserSearchType.AccountId, "Account ID"),
-                new(UserSearchType.AccountName, "Account Name")
+                new(USER_SEARCH_TYPE.AccountId, "Account ID"),
+                new(USER_SEARCH_TYPE.AccountName, "Account Name")
             ];
 
             SelectedSearchType = SearchType.First().Key;
@@ -108,6 +123,19 @@ namespace WPFClientExample.ViewModels
             if(selectedValue!= null)
             {
                 WeakReferenceMessenger.Default.Send(new SelectedCharacterMessage(selectedValue));
+            }
+        }
+
+        [RelayCommand]
+        private void AccountRestriction()
+        {
+            if (TargetAccountInfo != null)
+            {
+                MessageBox.Show($"[ AccountId : {TargetAccountInfo.AccountId}]{Environment.NewLine}The account restriction view function is under development.");
+            }
+            else
+            {
+                MessageBox.Show($"Account Is Null, please Account Search First");
             }
         }
 

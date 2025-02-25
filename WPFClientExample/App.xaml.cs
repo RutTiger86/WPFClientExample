@@ -63,7 +63,6 @@ namespace WPFClientExample
                 services.AddSingleton<ICcuMonitoringViewModel, CcuMonitoringViewModel>();
                 services.AddSingleton<IChatLogViewModel, ChatLogViewModel>();
                 services.AddSingleton<IProductInfoViewModel, ProductInfoViewModel>();
-                services.AddSingleton<IRegionInfoViewModel, RegionInfoViewModel>();
                 services.AddSingleton<IUserInfoViewModel, UserInfoViewModel>();
                 services.AddSingleton<ISettingsViewModel, SettingsViewModel>();
                 services.AddSingleton<ICharacterInfoViewModel, CharacterInfoViewModel>();
@@ -75,7 +74,6 @@ namespace WPFClientExample
                 services.AddSingleton<CcuMonitoringView>();
                 services.AddSingleton<ChatLogView>();
                 services.AddSingleton<ProductInfoView>();
-                services.AddSingleton<RegionInfoView>();
                 services.AddSingleton<SettingsView>();
                 services.AddSingleton<UserInfoView>();
                 services.AddSingleton<CharacterInfoView>();

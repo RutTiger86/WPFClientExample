@@ -88,10 +88,10 @@
 
             <!-- Equipped Items -->
             <GroupBox Header="Equipped Items" Grid.Column="0" Margin="0,0,10,0">
-                <DataGrid ItemsSource="{Binding EquippedItems}" AutoGenerateColumns="False" Margin="3">
+                <DataGrid ItemsSource="{Binding TargetCharacterEquipeedInfo}" AutoGenerateColumns="False" Margin="3" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Slot" Binding="{Binding Slot}" Width="Auto"/>
-                        <DataGridTextColumn Header="Grade" Binding="{Binding Grade}" Width="Auto"/>
+                        <DataGridTextColumn Header="Slot" Binding="{Binding SlotType}" Width="Auto"/>
+                        <DataGridTextColumn Header="Grade" Binding="{Binding ItemGrade}" Width="Auto"/>
                         <DataGridTextColumn Header="Item ID" Binding="{Binding ItemId}" Width="Auto"/>
                         <DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" Width="Auto" />
 
@@ -99,8 +99,8 @@
                         <DataGridTemplateColumn Header="Item Detail" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="View Details" Command="{Binding DataContext.ShowItemDetailCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                            CommandParameter="{Binding}" Padding="5"/>
+                                    <Button Content="View Details" Command="{Binding DataContext.ItemDetailShowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding ItemId}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -134,23 +134,31 @@
         <!-- Recent Chat & Quest List -->
         <TabControl Grid.Row="2" Margin="0,10,0,0">
             <TabItem Header="Recent Chat">
-                <DataGrid>
+                <DataGrid ItemsSource="{Binding TargetChatLogInfo}" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Message Type" Binding="{Binding ServerId}" Width="Auto"/>
-                        <DataGridTextColumn Header="Target" Binding="{Binding ServerName}" Width="Auto"/>
-                        <DataGridTextColumn Header="Message Content" Binding="{Binding CharacterId}" Width="Auto"/>
-                        <DataGridTextColumn Header="Message Send Date" Binding="{Binding CharacterId}" Width="Auto"/>
+                        <DataGridTextColumn Header="Chat ID" Binding="{Binding Id}" Width="Auto"/>
+                        <DataGridTextColumn Header="Chat Type" Binding="{Binding ChatType}" Width="Auto"/>
+                        <DataGridTextColumn Header="Chat Room Id" Binding="{Binding ChatRoomId}" Width="Auto"/>
+                        <DataGridTextColumn Header="Receiver Character Id" Binding="{Binding ReceiverCharacterId}" Width="Auto"/>
+                        <DataGridTextColumn Header="Receiver Name" Binding="{Binding ReceiverName}" Width="Auto"/>
+                        <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="Auto"/>
+                        <DataGridTextColumn Header="Sent Time" Binding="{Binding SentTime}" Width="Auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
             <TabItem Header="Quest List">
-                <DataGrid>
+                <DataGrid ItemsSource="{Binding TargetCharacterQuestInfo}" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Quest Type" Binding="{Binding ServerId}" Width="Auto"/>
-                        <DataGridTextColumn Header="Quest ID" Binding="{Binding ServerName}" Width="Auto"/>
-                        <DataGridTextColumn Header="Quest Name" Binding="{Binding CharacterId}" Width="Auto"/>
-                        <DataGridTextColumn Header="Quest Step" Binding="{Binding CharacterId}" Width="Auto"/>
-                        <DataGridTextColumn Header="Quest Start Date" Binding="{Binding CharacterId}" Width="Auto"/>
+                        <DataGridTextColumn Header="Quest ID" Binding="{Binding QuestId}" Width="Auto"/>
+                        <DataGridTextColumn Header="Quest Name" Binding="{Binding QuestName}" Width="Auto"/>
+                        <DataGridTextColumn Header="Quest Type" Binding="{Binding QuestType}" Width="Auto"/>
+                        <DataGridTextColumn Header="Quest Status" Binding="{Binding QuestStatus}" Width="Auto"/>
+                        <DataGridTextColumn Header="Current Step" Binding="{Binding CurrentStep}" Width="Auto"/>
+                        <DataGridTextColumn Header="Current Count" Binding="{Binding CurrentCount}" Width="Auto"/>
+                        <DataGridTextColumn Header="Is Cancled" Binding="{Binding IsCancled}" Width="Auto"/>
+                        <DataGridTextColumn Header="Start Time" Binding="{Binding StartTime}" Width="Auto"/>
+                        <DataGridTextColumn Header="Completion Time" Binding="{Binding CompletionTime}" Width="Auto"/>
+                        <DataGridTextColumn Header="Cancled Time" Binding="{Binding CancledTime}" Width="Auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

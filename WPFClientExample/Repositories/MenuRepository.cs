@@ -26,7 +26,6 @@ namespace WPFClientExample.Repositories
                     Children =
                     [
                         new() { Id = 2, Title = "User Info", ViewName = "UserInfo" },
-                        new() { Id = 3, Title = "Region Info", ViewName = "RegionInfo" }
                     ]
                 },
                 new MenuItemModel

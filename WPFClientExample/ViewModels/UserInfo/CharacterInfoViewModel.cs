@@ -1,13 +1,17 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CSharp.WPF.MVVM.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.Pkcs;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WPFClientExample.Commons.Messages;
 using WPFClientExample.Commons.Messages.UserInfo;
+using WPFClientExample.Models;
 using WPFClientExample.Models.GameLog;
 using WPFClientExample.Services;
 
@@ -18,9 +22,14 @@ namespace WPFClientExample.ViewModels.UserInfo
         CharacterInfo? SelectedCharacter { get; set; }
 
         CharacterDetailInfo? TargetCharacterDetailInfo { get; set; }
+        List<CharacterEquipeedInfo>? TargetCharacterEquipeedInfo { get; set; }
+        List<ChatLogInfo>? TargetChatLogInfo { get; set; }
+        List<CharacterQuestInfo>? TargetCharacterQuestInfo { get; set; }
+
+        IRelayCommand<long> ItemDetailShowCommand { get; }
     }
 
-    public partial class CharacterInfoViewModel:ObservableObject, ICharacterInfoViewModel, IRecipient<SelectedCharacterMessage>
+    public partial class CharacterInfoViewModel:ObservableObject, ICharacterInfoViewModel, IRecipient<SelectedCharacterMessage>, IRecipient<LoginMessage>
     {
         private readonly IGameLogService gameLogService;
 
@@ -29,6 +38,15 @@ namespace WPFClientExample.ViewModels.UserInfo
 
         [ObservableProperty]
         private CharacterDetailInfo? targetCharacterDetailInfo;
+
+        [ObservableProperty]
+        private List<CharacterEquipeedInfo>? targetCharacterEquipeedInfo;
+
+        [ObservableProperty]
+        List<ChatLogInfo>? targetChatLogInfo;
+
+        [ObservableProperty]
+        List<CharacterQuestInfo>? targetCharacterQuestInfo;
 
         public CharacterInfoViewModel(IGameLogService gameLogService)
         {
@@ -39,7 +57,15 @@ namespace WPFClientExample.ViewModels.UserInfo
         private void SettingMessage()
         {
             WeakReferenceMessenger.Default.Register<SelectedCharacterMessage>(this);
+            WeakReferenceMessenger.Default.Register<LoginMessage>(this);
 
+        }
+        public void Receive(LoginMessage message)
+        {
+            SelectedCharacter = null;
+            TargetCharacterDetailInfo = null;
+            TargetCharacterEquipeedInfo = null;
+            TargetChatLogInfo = null;
         }
 
         public void Receive(SelectedCharacterMessage message)
@@ -69,16 +95,33 @@ namespace WPFClientExample.ViewModels.UserInfo
 
         private async Task SetEquippedItemsAsync()
         {
+            if (SelectedCharacter != null)
+            {
+                TargetCharacterEquipeedInfo = await gameLogService.GetCharacterEquipeedInfoAsync(SelectedCharacter.CharacterId);
+            }
 
         }
         private async Task SetRecenChatAsync()
         {
+            if (SelectedCharacter != null)
+            {
+                TargetChatLogInfo = await gameLogService.GetChatLogInfoByCharacterIdAsync(SelectedCharacter.CharacterId);
+            }
 
         }
 
         private async Task SetQuestListAsync()
         {
+            if (SelectedCharacter != null)
+            {
+                TargetCharacterQuestInfo = await gameLogService.GetCharacterQuestInfoByCharacterIdAsync(SelectedCharacter.CharacterId);
+            }
+        }
 
+        [RelayCommand] 
+        private  void ItemDetailShow(long itemID)
+        {
+            MessageBox.Show($"[ ItemID : {itemID}]{Environment.NewLine}The item details view function is under development.");
         }
     }
 }

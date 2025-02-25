@@ -41,7 +41,6 @@ namespace WPFClientExample.Services
             views = new Dictionary<int, UserControl>
             {
                 { 2, serviceProvider.GetRequiredService<UserInfoView>() },
-                { 3, serviceProvider.GetRequiredService<RegionInfoView>() },
                 { 5, serviceProvider.GetRequiredService<ChatLogView>() },
                 { 6, serviceProvider.GetRequiredService<CcuMonitoringView>() },
                 { 8, serviceProvider.GetRequiredService<BillHistoryView>() },

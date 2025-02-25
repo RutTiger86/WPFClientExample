@@ -12,7 +12,7 @@ namespace WPFClientExample.Models.GameLog
         public long AccountId { get; set; }
         public required string AccountName { get; set; }
 
-        public AccountStatus AccountStatus { get; set; }
+        public ACCOUNT_STATE AccountStatus { get; set; }
 
         public DateTime LastLoginTime { get; set; }
 

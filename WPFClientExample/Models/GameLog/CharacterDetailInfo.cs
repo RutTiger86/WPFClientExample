@@ -18,9 +18,9 @@ namespace WPFClientExample.Models.GameLog
 
         public int CharacterLevel { get; set; }
 
-        public CharacterClass CharacterClass { get; set; }
+        public CHARACTER_CLASS CharacterClass { get; set; }
 
-        public CharacterRace CharacterRace { get; set; }
+        public CHARACTER_RACE CharacterRace { get; set; }
         
         public long AttackPower { get; set; }
 

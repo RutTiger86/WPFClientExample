@@ -65,7 +65,7 @@
         </Grid>
 
         <StackPanel Grid.Row="2" HorizontalAlignment="Right" Margin="5">
-            <Button  Content="Account Restriction"/>
+            <Button  Content="Account Restriction" Command="{Binding AccountRestrictionCommand}"/>
         </StackPanel>
 
         <Grid Grid.Row="3" Margin="10">

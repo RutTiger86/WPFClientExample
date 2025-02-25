@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using WPFClientExample.Commons.Enums;
+using WPFClientExample.Models;
 using WPFClientExample.Models.DataBase;
 using WPFClientExample.Models.GameLog;
 using WPFClientExample.Repositories;
@@ -13,18 +14,21 @@ namespace WPFClientExample.Services
 {
     public interface IGameLogService
     {
-        public Task<AccountInfo?> GetAccountInfoAsync(UserSearchType searchType, string searchData);
+        public Task<AccountInfo?> GetAccountInfoAsync(USER_SEARCH_TYPE searchType, string searchData);
         public Task<List<CharacterInfo>> GetCharacterInfoListAsync(long accountId);
         public Task<CharacterDetailInfo?> GetCharacterInfoDetailInfoAsync(long characterId);
+        public Task<List<CharacterEquipeedInfo>?> GetCharacterEquipeedInfoAsync(long characterId);
+        public Task<List<ChatLogInfo>?> GetChatLogInfoByCharacterIdAsync(long characterId);
+        public Task<List<CharacterQuestInfo>?> GetCharacterQuestInfoByCharacterIdAsync(long characterId);
     }
 
     public class GameLogService(IUserRepository userRepository) : IGameLogService
     {
         private readonly IUserRepository userRepository = userRepository;
 
-        public Task<AccountInfo?> GetAccountInfoAsync(UserSearchType searchType, string searchData)
+        public Task<AccountInfo?> GetAccountInfoAsync(USER_SEARCH_TYPE searchType, string searchData)
         {
-            if (searchType == UserSearchType.AccountId)
+            if (searchType == USER_SEARCH_TYPE.AccountId)
             {
                 if (long.TryParse(searchData, out long accountId))
                 {
@@ -58,6 +62,27 @@ namespace WPFClientExample.Services
             var characterDetail = userRepository.GetCharacterDetailInfo(characterId);
 
             return Task.FromResult(characterDetail);
+        }
+
+        public Task<List<CharacterEquipeedInfo>?> GetCharacterEquipeedInfoAsync(long characterId)
+        {
+            var characterEquiped = userRepository.GetCharacterEquipeedInfo(characterId);
+
+            return Task.FromResult(characterEquiped);
+        }
+
+        public Task<List<ChatLogInfo>?> GetChatLogInfoByCharacterIdAsync(long characterId)
+        {
+            var chatLog = userRepository.GetChatLogInfosByCharacterId(characterId);
+
+            return Task.FromResult(chatLog);
+        }
+
+        public Task<List<CharacterQuestInfo>?> GetCharacterQuestInfoByCharacterIdAsync(long characterId)
+        {
+            var charQuestInfos = userRepository.GetCharacterQuestInfoByCharacterId(characterId);
+
+            return Task.FromResult(charQuestInfos);
         }
 
     }
