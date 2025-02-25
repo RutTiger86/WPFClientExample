@@ -81,15 +81,15 @@ namespace WPFClientExample.ViewModels
             CharacterInfos = null;
             TargetAccountInfo = null;
             SearchText = string.Empty;
-            SelectedSearchType = USER_SEARCH_TYPE.AccountId;
+            SelectedSearchType = USER_SEARCH_TYPE.Id;
         }
 
         private void Initialize()
         {
             SearchType =
             [
-                new(USER_SEARCH_TYPE.AccountId, "Account ID"),
-                new(USER_SEARCH_TYPE.AccountName, "Account Name")
+                new(USER_SEARCH_TYPE.Id, "Account ID"),
+                new(USER_SEARCH_TYPE.Name, "Account Name")
             ];
 
             SelectedSearchType = SearchType.First().Key;

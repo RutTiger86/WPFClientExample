@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Data;
 using System.Windows;
 using WPFClientExample.Commons.Messages;
+using WPFClientExample.Commons.Statics;
 using WPFClientExample.Models.DataBase;
 using WPFClientExample.Repositories;
 using WPFClientExample.Services;
@@ -51,11 +52,15 @@ namespace WPFClientExample
                 services.AddScoped<IAuthRepository, AuthRepository>();
                 services.AddScoped<IMenuRepository, MenuRepository>();
                 services.AddScoped<IUserRepository, UserReository>();
+                services.AddScoped<IServerRepository, ServerRepository>();
 
                 //Service 등록 
                 services.AddScoped<INavigationService, NavigationService>();
                 services.AddScoped<IAuthService, AuthService>();
                 services.AddScoped<IGameLogService, GameLogService>();
+                services.AddScoped<IMonitoringService, MonitoringService>();
+                services.AddScoped<IBillingService, BillingService>();
+                services.AddScoped<ISettingService, SettingService>();
 
                 // ViewModel 등록
                 services.AddSingleton<IAdminSettingViewModel, AdminSettingViewModel>();
@@ -93,6 +98,7 @@ namespace WPFClientExample
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            TestDataFactory.InitTestData();
             SettingMessage();
             LogOutProcess();
         }

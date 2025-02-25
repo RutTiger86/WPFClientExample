@@ -20,6 +20,7 @@ namespace WPFClientExample.Services
         public Task<List<CharacterEquipeedInfo>?> GetCharacterEquipeedInfoAsync(long characterId);
         public Task<List<ChatLogInfo>?> GetChatLogInfoByCharacterIdAsync(long characterId);
         public Task<List<CharacterQuestInfo>?> GetCharacterQuestInfoByCharacterIdAsync(long characterId);
+        public Task<List<InventoryHistoryLogInfo>?> GetInventoryHistoryLogAsync(long characterId, DateTime startDate, DateTime endDate);
     }
 
     public class GameLogService(IUserRepository userRepository) : IGameLogService
@@ -28,7 +29,7 @@ namespace WPFClientExample.Services
 
         public Task<AccountInfo?> GetAccountInfoAsync(USER_SEARCH_TYPE searchType, string searchData)
         {
-            if (searchType == USER_SEARCH_TYPE.AccountId)
+            if (searchType == USER_SEARCH_TYPE.Id)
             {
                 if (long.TryParse(searchData, out long accountId))
                 {
@@ -83,6 +84,17 @@ namespace WPFClientExample.Services
             var charQuestInfos = userRepository.GetCharacterQuestInfoByCharacterId(characterId);
 
             return Task.FromResult(charQuestInfos);
+        }
+
+        public Task<List<InventoryHistoryLogInfo>?> GetInventoryHistoryLogAsync(long characterId, DateTime startDate, DateTime endDate)
+        {
+            if (endDate < startDate)
+            {
+                throw new Exception("Invalid date range setting");
+            }
+
+            var InventoryInfos = userRepository.GetInventoryHistoryLog(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime());
+            return Task.FromResult(InventoryInfos);
         }
 
     }

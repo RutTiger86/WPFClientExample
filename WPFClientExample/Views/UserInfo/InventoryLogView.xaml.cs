@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPFClientExample.ViewModels.UserInfo;
 
 namespace WPFClientExample.Views.UserInfo
 {
@@ -20,9 +21,10 @@ namespace WPFClientExample.Views.UserInfo
     /// </summary>
     public partial class InventoryLogView : UserControl
     {
-        public InventoryLogView()
+        public InventoryLogView(IInventoryLogViewModel viewModel)
         {
             InitializeComponent();
+            this.DataContext = viewModel;
         }
     }
 }

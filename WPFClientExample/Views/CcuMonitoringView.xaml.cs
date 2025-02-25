@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPFClientExample.ViewModels;
 
 namespace WPFClientExample.Views
 {
@@ -20,9 +21,10 @@ namespace WPFClientExample.Views
     /// </summary>
     public partial class CcuMonitoringView : UserControl
     {
-        public CcuMonitoringView()
+        public CcuMonitoringView(ICcuMonitoringViewModel viewModel)
         {
             InitializeComponent();
+            this.DataContext = viewModel;
         }
     }
 }

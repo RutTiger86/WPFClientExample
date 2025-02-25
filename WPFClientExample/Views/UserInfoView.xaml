@@ -21,7 +21,7 @@
             <ComboBox Width="150" Margin="5" x:Name="SearchFilterComboBox" ItemsSource="{Binding SearchType}"
                       SelectedValuePath="Key" DisplayMemberPath="Value" SelectedValue="{Binding SelectedSearchType, Mode= TwoWay}">
             </ComboBox>
-            <TextBox Width="200" Margin="5" x:Name="SearchTextBox" Text="{Binding SearchText}"/>
+            <TextBox Width="200" Margin="5" x:Name="SearchTextBox" Text="{Binding SearchText}" VerticalContentAlignment="Center"/>
             <Button Content="Search" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
             <Label Content="(AccountID : 12345678, AccountName : TestAccount)" FontSize="12"/>
         </StackPanel>

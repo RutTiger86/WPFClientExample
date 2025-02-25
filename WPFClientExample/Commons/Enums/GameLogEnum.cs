@@ -8,9 +8,10 @@ namespace WPFClientExample.Commons.Enums
 {
     public enum USER_SEARCH_TYPE
     {
-        AccountId = 0,
-        AccountName = 1
+        Id = 0,
+        Name = 1
     }
+
 
     public enum ACCOUNT_STATE
     {
@@ -90,5 +91,14 @@ namespace WPFClientExample.Commons.Enums
         FAILED,
         CANCLE,
     }
+
+    public enum INVENTORY_CHANGE_TYPE
+    {
+        OBTAINED,
+        USED,
+        DELETED,
+        TRADED
+    }
+
 
 }
