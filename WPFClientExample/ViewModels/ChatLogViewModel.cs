@@ -15,6 +15,7 @@ using WPFClientExample.Models.GameLog;
 using WPFClientExample.Views.UserInfo;
 using WPFClientExample.Services;
 using System.Windows;
+using WPFClientExample.Models.Monitoring;
 
 namespace WPFClientExample.ViewModels
 {
@@ -22,13 +23,10 @@ namespace WPFClientExample.ViewModels
     {
         KeyValuePair<USER_SEARCH_TYPE, string>[]? SearchType { get; set; }
         USER_SEARCH_TYPE SelectedSearchType { get; set; }
-        string SearchText { get; set; }
-
-       
+        string SearchText { get; set; }               
         DateTime SearchStartDate { get; set; }
         DateTime SearchEndDate { get; set; }
         List<ChatLogInfo>? TargetChatLogInfo { get; set; }
-
         IAsyncRelayCommand SearchCommand { get; }
 
     }
@@ -79,8 +77,8 @@ namespace WPFClientExample.ViewModels
         {
             SearchType =
             [
-                new(USER_SEARCH_TYPE.Id, "Character ID"),
-                new(USER_SEARCH_TYPE.Name, "Character Name")
+                new(USER_SEARCH_TYPE.ID, "Character ID"),
+                new(USER_SEARCH_TYPE.NAME, "Character Name")
             ];
 
             SelectedSearchType = SearchType.First().Key;
@@ -91,7 +89,9 @@ namespace WPFClientExample.ViewModels
         {
             try
             {
-                TargetChatLogInfo = await monitoringService.GetChatLogInfosAsync(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate);
+                TargetChatLogInfo = null;
+                TargetChatLogInfo = await Task.Run(() => monitoringService.GetChatLogInfosAsync(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate)
+                ).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

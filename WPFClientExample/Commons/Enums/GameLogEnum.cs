@@ -8,8 +8,8 @@ namespace WPFClientExample.Commons.Enums
 {
     public enum USER_SEARCH_TYPE
     {
-        Id = 0,
-        Name = 1
+        ID = 0,
+        NAME = 1
     }
 
 

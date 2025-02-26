@@ -45,7 +45,6 @@ namespace WPFClientExample.Repositories
                     Children =
                     [
                         new() { Id = 8, Title = "Bill History", ViewName = "BillHistory" },
-                        new() { Id = 9, Title = "Product Info", ViewName = "ProductInfo" }
                     ]
                 },new MenuItemModel
                 {
@@ -54,7 +53,6 @@ namespace WPFClientExample.Repositories
                     Children =
                     [
                         new() { Id = 11, Title = "Client Setting", ViewName = "Setting" },
-                        new() { Id = 12, Title = "Admin Setting", ViewName = "AdminSetting" }
                     ]
                 }
             ];

@@ -77,7 +77,9 @@ namespace WPFClientExample.ViewModels.UserInfo
             {
                 if (selectedCharacterInfo != null)
                 {
-                    TargetInventoryHistory = await gameLogService.GetInventoryHistoryLogAsync(selectedCharacterInfo.CharacterId, SearchStartDate, SearchEndDate);
+                    TargetInventoryHistory = null;
+                    TargetInventoryHistory = await Task.Run(() => gameLogService.GetInventoryHistoryLogAsync(selectedCharacterInfo.CharacterId, SearchStartDate, SearchEndDate)
+                    ).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)

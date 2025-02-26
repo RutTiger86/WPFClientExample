@@ -8,26 +8,26 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
         <!-- Character Info & Stats -->
-        <Grid Grid.Row="0" Margin="0,0,0,10">
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Character Info -->
-            <GroupBox Header="Character Info" Margin="0,0,0,10">
+            <GroupBox Header="Character Info">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Margin="10">
+                    <StackPanel Grid.Column="0">
                         <TextBlock Text="Character Name: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.CharacterName}" />
                         <TextBlock Text="Level: " FontWeight="Bold"/>
@@ -37,7 +37,7 @@
                         <TextBlock Text="Race: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.CharacterRace}" />
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="10">
+                    <StackPanel Grid.Column="1">
                         <TextBlock Text="Server ID: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.ServerId}" />
                         <TextBlock Text="Server Name: " FontWeight="Bold"/>
@@ -49,13 +49,13 @@
             </GroupBox>
 
             <!-- Status -->
-            <GroupBox Header="Status" Grid.Column="1" Margin="0,0,0,10">
+            <GroupBox Header="Status" Grid.Column="1">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Margin="10">
+                    <StackPanel Grid.Column="0">
                         <TextBlock Text="Attack Power: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.AttackPower}" />
                         <TextBlock Text="Defense: " FontWeight="Bold"/>
@@ -65,7 +65,7 @@
                         <TextBlock Text="Accuracy: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.Defense}" />
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="10">
+                    <StackPanel Grid.Column="1">
                         <TextBlock Text="Health: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.Health}" />
                         <TextBlock Text="Mana: " FontWeight="Bold"/>
@@ -80,33 +80,50 @@
         </Grid>
 
         <!-- Equipped Items & Live Status -->
-        <Grid Grid.Row="1">
+        <Grid  Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <!-- Equipped Items -->
-            <GroupBox Header="Equipped Items" Grid.Column="0" Margin="0,0,10,0">
-                <DataGrid ItemsSource="{Binding TargetCharacterEquipeedInfo}" AutoGenerateColumns="False" Margin="3" IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Slot" Binding="{Binding SlotType}" Width="Auto"/>
-                        <DataGridTextColumn Header="Grade" Binding="{Binding ItemGrade}" Width="Auto"/>
-                        <DataGridTextColumn Header="Item ID" Binding="{Binding ItemId}" Width="Auto"/>
-                        <DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" Width="Auto" />
+            <GroupBox Header="Equipped Items" Grid.Column="0">
+                <Grid>
+                    <!-- RowDefinition을 사용하여 DataGrid가 GroupBox를 초과하지 않도록 설정 -->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <!-- DataGrid가 최대한 공간을 차지하되 GroupBox 내에서만 확장 -->
+                    </Grid.RowDefinitions>
 
-                        <!-- Detail Button -->
-                        <DataGridTemplateColumn Header="Item Detail" Width="Auto">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Content="View Details" Command="{Binding DataContext.ItemDetailShowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                            CommandParameter="{Binding ItemId}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                    <!-- DataGrid -->
+                    <DataGrid ItemsSource="{Binding TargetCharacterEquipeedInfo}" AutoGenerateColumns="False" Margin="3"
+                  IsReadOnly="True"
+                  ScrollViewer.CanContentScroll="True"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  MaxHeight="{Binding RelativeSource={RelativeSource AncestorType=GroupBox}, Path=ActualHeight, Converter={StaticResource SubtractValueConverter}, ConverterParameter=40}"
+                  VerticalAlignment="Stretch"
+                  Grid.Row="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Slot" Binding="{Binding SlotType}" Width="Auto"/>
+                            <DataGridTextColumn Header="Grade" Binding="{Binding ItemGrade}" Width="Auto"/>
+                            <DataGridTextColumn Header="Item ID" Binding="{Binding ItemId}" Width="Auto"/>
+                            <DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" Width="*" />
+
+                            <!-- Detail Button -->
+                            <DataGridTemplateColumn Header="Item Detail" Width="Auto">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="View Details"
+                                    Command="{Binding DataContext.ItemDetailShowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding ItemId}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </GroupBox>
+
 
             <!-- Live Status -->
             <GroupBox Header="Live Status" Grid.Column="1">
@@ -115,13 +132,13 @@
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Margin="10">
+                    <StackPanel Grid.Column="0">
                         <TextBlock Text="Last Position: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.ZoneName}" />
                         <TextBlock Text="Current Channel: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.CurrentChannel}" />
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="10">
+                    <StackPanel Grid.Column="1">
                         <TextBlock Text="Party ID: " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.PartyId}" />
                         <TextBlock Text="PvP Mode: " FontWeight="Bold"/>
@@ -132,7 +149,7 @@
         </Grid>
 
         <!-- Recent Chat & Quest List -->
-        <TabControl Grid.Row="2" Margin="0,10,0,0">
+        <TabControl Grid.Row="2">
             <TabItem Header="Recent Chat">
                 <DataGrid ItemsSource="{Binding TargetChatLogInfo}" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
                     <DataGrid.Columns>

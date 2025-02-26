@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WPFClientExample.Commons.Enums;
 using WPFClientExample.Models;
 using WPFClientExample.Models.DataBase;
@@ -29,26 +30,35 @@ namespace WPFClientExample.Services
 
         public Task<AccountInfo?> GetAccountInfoAsync(USER_SEARCH_TYPE searchType, string searchData)
         {
-            if (searchType == USER_SEARCH_TYPE.Id)
-            {
-                if (long.TryParse(searchData, out long accountId))
-                {
-                    var userinfo = userRepository.GetAccountInfo(searchType, accountId, string.Empty);
+            long accountID = 0;
 
-                    return Task.FromResult(userinfo);
+            if (!String.IsNullOrWhiteSpace(searchData))
+            {
+                if (searchType == USER_SEARCH_TYPE.NAME)
+                {
+                    var accountInfo = userRepository.GetAccountInfoByName(searchData);
+
+                    return Task.FromResult(accountInfo);
                 }
                 else
                 {
-                    throw new Exception("Account ID can only be numbers.");
+                    if (long.TryParse(searchData, out accountID))
+                    {
+                        var userinfo = userRepository.GetAccountInfo(accountID);
+
+                        return Task.FromResult(userinfo);
+                    }
+                    else
+                    {
+                        throw new Exception("Account ID can only be numbers.");
+                    }
                 }
             }
             else
             {
-                var userinfo = userRepository.GetAccountInfo(searchType, 0, searchData);
-
-                return Task.FromResult(userinfo);
+                MessageBox.Show("Need Account ID","Error",MessageBoxButton.OK, MessageBoxImage.Error);
+                return Task.FromResult< AccountInfo?>(null);
             }
-
         }
 
         public Task<List<CharacterInfo>> GetCharacterInfoListAsync(long accountId)

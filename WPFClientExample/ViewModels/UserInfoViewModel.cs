@@ -81,15 +81,15 @@ namespace WPFClientExample.ViewModels
             CharacterInfos = null;
             TargetAccountInfo = null;
             SearchText = string.Empty;
-            SelectedSearchType = USER_SEARCH_TYPE.Id;
+            SelectedSearchType = USER_SEARCH_TYPE.ID;
         }
 
         private void Initialize()
         {
             SearchType =
             [
-                new(USER_SEARCH_TYPE.Id, "Account ID"),
-                new(USER_SEARCH_TYPE.Name, "Account Name")
+                new(USER_SEARCH_TYPE.ID, "Account ID"),
+                new(USER_SEARCH_TYPE.NAME, "Account Name")
             ];
 
             SelectedSearchType = SearchType.First().Key;
@@ -103,11 +103,14 @@ namespace WPFClientExample.ViewModels
         {
             try
             {
-                TargetAccountInfo =  await gameLogService.GetAccountInfoAsync(SelectedSearchType, SearchText);
+                TargetAccountInfo = await Task.Run(() => gameLogService.GetAccountInfoAsync(SelectedSearchType, SearchText)
+                ).ConfigureAwait(false);
 
                 if(TargetAccountInfo != null)
                 {
-                    var charcterInfo = await gameLogService.GetCharacterInfoListAsync(TargetAccountInfo.AccountId);
+                    var charcterInfo = await Task.Run(() => gameLogService.GetCharacterInfoListAsync(TargetAccountInfo.AccountId)
+                    ).ConfigureAwait(false);
+
                     CharacterInfos = new ObservableCollection<CharacterInfo>(charcterInfo);
                 }
             }

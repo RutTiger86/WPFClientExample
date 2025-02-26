@@ -44,9 +44,7 @@ namespace WPFClientExample.Services
                 { 5, serviceProvider.GetRequiredService<ChatLogView>() },
                 { 6, serviceProvider.GetRequiredService<CcuMonitoringView>() },
                 { 8, serviceProvider.GetRequiredService<BillHistoryView>() },
-                { 9, serviceProvider.GetRequiredService<ProductInfoView>() },
-                { 11, serviceProvider.GetRequiredService<SettingsView>() },
-                { 12, serviceProvider.GetRequiredService<AdminSettingView>() },
+                { 11, serviceProvider.GetRequiredService<ClientSettingsView>() },
             };
             treeViews = [];
             InitializeTreeViewItems();

@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="BackgroundColor" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="ForegroundColor" Color="#FF000000"/>
+    <SolidColorBrush x:Key="BorderColor" Color="#FFCCCCCC"/>
+    <SolidColorBrush x:Key="AccentColor" Color="LightGray"/>
+    <SolidColorBrush x:Key="SelectedBackgroundColor" Color="#FFCCE5FF"/>
+    
+    <SolidColorBrush x:Key="MainColor" Color="DimGray"/>
+    <SolidColorBrush x:Key="MainColorLight" Color="LightGray"/>
+    <SolidColorBrush x:Key="MainColorDark" Color="DarkGray"/>
+    
+    <SolidColorBrush x:Key="BorderDarkMainBrush" Color="#C0C0C0"/>
+    
+    <SolidColorBrush x:Key="BackgroundGrayDark" Color="#FFEFEFEF"/>
+    <SolidColorBrush x:Key="BackgroundGrayLight" Color="#F5F5F5"/>
+
+    <SolidColorBrush x:Key="ForegroundDisabledBrush" Color="White"/>
+
+    <SolidColorBrush x:Key="SelectedForegroundColor" Color="#000000"/>
+    <SolidColorBrush x:Key="SelectedBorderColor" Color="#CCCCCC"/>
+    <SolidColorBrush x:Key="HoverBackgroundColor" Color="#AAAAFF"/>
+    <SolidColorBrush x:Key="HoverForegroundColor" Color="#000000"/>
+
+</ResourceDictionary>

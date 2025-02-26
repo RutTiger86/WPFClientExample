@@ -11,6 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -42,13 +43,35 @@
 
         </StackPanel>
 
-        <lvc:CartesianChart Grid.Row="1" Name="CCUChart" 
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <ComboBox Width="100" Margin="5" ItemsSource="{Binding Servers}" HorizontalAlignment="Left"
+                      SelectedValuePath="Key" DisplayMemberPath="Value" SelectedValue="{Binding SelectedServer, Mode= TwoWay}">
+            </ComboBox>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <TextBlock Text="Max CCU : " Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding SelectedServerMaxCcu}" Margin="0,0,10,0"/>
+                <TextBlock Text="Min CCU : " Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding SelectedServerMinCcu}" Margin="0,0,10,0"/>
+                <TextBlock Text="Last CCU : " Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding SelectedServerLastCcu}" Margin="0,0,10,0"/>
+                <TextBlock Text="Last Time : " Margin="10,0,0,0"/>
+                <TextBlock Text="{Binding SelectedServerLastTime}" Margin="0,0,10,0"/>
+            </StackPanel>
+
+        </Grid>
+
+        <lvc:CartesianChart Grid.Row="2" Name="CCUChart" 
                     Series="{Binding CcuSeries, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Time" Labels="{Binding TimeLables, Mode=OneWay}" />
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="CCU Count" />
+                <lvc:Axis Title="CCU Count"  MaxValue="12000" MinValue="0"/>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 

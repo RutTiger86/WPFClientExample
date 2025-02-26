@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFClientExample"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"     
         mc:Ignorable="d"
-        Title="WPFClinetExample" Height="600" Width="1000" WindowState="Maximized" MinWidth="1000" MinHeight="500">
+        Title="WPF Client Example" Height="600" Width="1000" WindowState="Maximized" MinWidth="1000" MinHeight="500">
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -15,28 +15,24 @@
     </i:Interaction.Triggers>
     
     <Grid>
-        <!-- 2열 그리드 -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- 왼쪽 메뉴 (TreeView) -->
         <TreeView ItemsSource="{Binding TreeViewItems}" SelectedItemChanged="TreeView_SelectedItemChanged"/>
 
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="45"/>
+                <RowDefinition Height="55"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <!-- 상단 사용자 정보 및 로그아웃 -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <TextBlock Text="{Binding LoginAuthUser.AuthId}" FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center"/>
                 <Button Content="Logout" Command="{Binding LogoutCommand}" Foreground="Red"/>
             </StackPanel>
             
-            <!-- 메인 컨텐츠 영역 -->
             <ContentControl Grid.Row="1" Content="{Binding CurrentView}" Grid.Column="1"/>
         </Grid>
     </Grid>

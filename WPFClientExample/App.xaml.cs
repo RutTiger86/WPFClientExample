@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using System.Windows.Media;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Commons.Statics;
 using WPFClientExample.Models.DataBase;
@@ -16,6 +17,7 @@ using WPFClientExample.ViewModels.UserInfo;
 using WPFClientExample.Views;
 using WPFClientExample.Views.Login;
 using WPFClientExample.Views.UserInfo;
+using static WPFClientExample.Commons.Enums.SettingEnum;
 
 namespace WPFClientExample
 {
@@ -53,6 +55,7 @@ namespace WPFClientExample
                 services.AddScoped<IMenuRepository, MenuRepository>();
                 services.AddScoped<IUserRepository, UserReository>();
                 services.AddScoped<IServerRepository, ServerRepository>();
+                services.AddScoped<IBillingRepository, BillingReposiotry>();
 
                 //Service 등록 
                 services.AddScoped<INavigationService, NavigationService>();
@@ -63,23 +66,19 @@ namespace WPFClientExample
                 services.AddScoped<ISettingService, SettingService>();
 
                 // ViewModel 등록
-                services.AddSingleton<IAdminSettingViewModel, AdminSettingViewModel>();
                 services.AddSingleton<IBillHistoryViewModel, BillHistoryViewModel>();
                 services.AddSingleton<ICcuMonitoringViewModel, CcuMonitoringViewModel>();
                 services.AddSingleton<IChatLogViewModel, ChatLogViewModel>();
-                services.AddSingleton<IProductInfoViewModel, ProductInfoViewModel>();
                 services.AddSingleton<IUserInfoViewModel, UserInfoViewModel>();
-                services.AddSingleton<ISettingsViewModel, SettingsViewModel>();
+                services.AddSingleton<IClientSettingsViewModel, ClientSettingsViewModel>();
                 services.AddSingleton<ICharacterInfoViewModel, CharacterInfoViewModel>();
                 services.AddSingleton<IInventoryLogViewModel, InventoryLogViewModel>();
 
                 // View 등록 
-                services.AddSingleton<AdminSettingView>();
                 services.AddSingleton<BillHistoryView>();
                 services.AddSingleton<CcuMonitoringView>();
                 services.AddSingleton<ChatLogView>();
-                services.AddSingleton<ProductInfoView>();
-                services.AddSingleton<SettingsView>();
+                services.AddSingleton<ClientSettingsView>();
                 services.AddSingleton<UserInfoView>();
                 services.AddSingleton<CharacterInfoView>();
                 services.AddSingleton<InventoryLogView>();
@@ -99,6 +98,7 @@ namespace WPFClientExample
         {
             base.OnStartup(e);
             TestDataFactory.InitTestData();
+            SettingClient();
             SettingMessage();
             LogOutProcess();
         }
@@ -108,6 +108,25 @@ namespace WPFClientExample
             mutex?.ReleaseMutex();
             await host.StopAsync();
             base.OnExit(e);
+        }
+        private void SettingClient()
+        {
+            // 저장된 설정을 불러와 적용
+            
+            ClientTheme savedTheme = JsonConfigurationManager.GetTheme();
+            if (savedTheme == ClientTheme.DARK)
+                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Resources/Themes/DarkTheme.xaml", UriKind.Relative) });
+            else
+                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Resources/Themes/DefaultTheme.xaml", UriKind.Relative) });
+
+            string savedFont = JsonConfigurationManager.GetFontFamily();
+
+            var dictionary = Application.Current.Resources.MergedDictionaries.FirstOrDefault(d => d.Source?.OriginalString == "Resources/Styles.xaml");
+            if (dictionary != null)
+            {
+                dictionary["GlobalFont"] = new FontFamily(savedFont);
+            }
+
         }
 
         private void SettingMessage()

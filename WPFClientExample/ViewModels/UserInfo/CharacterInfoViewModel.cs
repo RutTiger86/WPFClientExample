@@ -89,7 +89,8 @@ namespace WPFClientExample.ViewModels.UserInfo
         {
             if (SelectedCharacter!= null)
             {
-                TargetCharacterDetailInfo = await gameLogService.GetCharacterInfoDetailInfoAsync(SelectedCharacter.CharacterId);
+                TargetCharacterDetailInfo = await Task.Run(() => gameLogService.GetCharacterInfoDetailInfoAsync(SelectedCharacter.CharacterId)
+                ).ConfigureAwait(false);
             }
         }
 
@@ -97,24 +98,25 @@ namespace WPFClientExample.ViewModels.UserInfo
         {
             if (SelectedCharacter != null)
             {
-                TargetCharacterEquipeedInfo = await gameLogService.GetCharacterEquipeedInfoAsync(SelectedCharacter.CharacterId);
+                TargetCharacterEquipeedInfo = await Task.Run(() => gameLogService.GetCharacterEquipeedInfoAsync(SelectedCharacter.CharacterId)
+                ).ConfigureAwait(false);
             }
-
         }
         private async Task SetRecenChatAsync()
         {
             if (SelectedCharacter != null)
             {
-                TargetChatLogInfo = await gameLogService.GetChatLogInfoByCharacterIdAsync(SelectedCharacter.CharacterId);
+                TargetChatLogInfo = await Task.Run(() => gameLogService.GetChatLogInfoByCharacterIdAsync(SelectedCharacter.CharacterId)
+                ).ConfigureAwait(false);
             }
-
         }
 
         private async Task SetQuestListAsync()
         {
             if (SelectedCharacter != null)
             {
-                TargetCharacterQuestInfo = await gameLogService.GetCharacterQuestInfoByCharacterIdAsync(SelectedCharacter.CharacterId);
+                TargetCharacterQuestInfo = await Task.Run(() => gameLogService.GetCharacterQuestInfoByCharacterIdAsync(SelectedCharacter.CharacterId)
+                ).ConfigureAwait(false);
             }
         }
 

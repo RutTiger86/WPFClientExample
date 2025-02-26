@@ -14,6 +14,7 @@ namespace WPFClientExample.Services
 {
     public interface IMonitoringService
     {
+        Task<List<Server>> GetServers();
         Task<List<ChatLogInfo>?> GetChatLogInfosAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate);
         Task<List<CcuInfo>> GetCcuSeriesAsync(DateTime startDate, DateTime endDate);
     }
@@ -29,6 +30,10 @@ namespace WPFClientExample.Services
             this.serverRepository = serverRepository;
         }
 
+        public Task<List<Server>> GetServers()
+        {
+            return Task.FromResult(serverRepository.GetServers());
+        }
         public Task<List<ChatLogInfo>?> GetChatLogInfosAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate)
         {
             long characterId = 0;
@@ -40,7 +45,7 @@ namespace WPFClientExample.Services
 
             if (!String.IsNullOrWhiteSpace(searchData))
             {
-                if (searchType == USER_SEARCH_TYPE.Name)
+                if (searchType == USER_SEARCH_TYPE.NAME)
                 {
                     var characterInfo = userRepository.GetCharacterInfoByCharacterName(searchData);
 

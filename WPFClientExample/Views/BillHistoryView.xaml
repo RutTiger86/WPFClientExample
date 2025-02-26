@@ -7,6 +7,51 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 검색 필터 -->
+        <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
+            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding SearchStartDate, Mode=TwoWay}"/>
+            <Label Content="~" Margin="0,5,0,5"/>
+            <DatePicker VerticalAlignment="Center" SelectedDate="{Binding SearchEndDate, Mode=TwoWay}"/>
+
+            <ComboBox Width="150" Margin="5" x:Name="SearchFilterComboBox" ItemsSource="{Binding SearchType}"
+                      SelectedValuePath="Key" DisplayMemberPath="Value" SelectedValue="{Binding SelectedSearchType, Mode= TwoWay}">
+            </ComboBox>
+            <TextBox Width="200" Margin="5" x:Name="SearchTextBox" Text="{Binding SearchText}" VerticalContentAlignment="Center"/>
+            <Button Content="Search" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
+            <Label Content="(AccountID : 12345678, AccountName : TestAccount)" FontSize="12"/>
+        </StackPanel>
+
+
+        <DataGrid Grid.Row="1" ItemsSource="{Binding BillHistoryInfos}" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Bill Tx ID" Binding="{Binding BillTxId}" Width="Auto"/>
+                <DataGridTextColumn Header="Bill Tx Type" Binding="{Binding BillTxType}" Width="Auto"/>
+                <DataGridTextColumn Header="Bill Tx Status" Binding="{Binding BillTxStatus}" Width="Auto"/>
+                <DataGridTextColumn Header="Purchase Token" Binding="{Binding PurchaseToken}" Width="Auto"/>
+                <DataGridTextColumn Header="IsDone" Binding="{Binding IsDone}" Width="Auto"/>
+                <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="Auto"/>
+                <DataGridTextColumn Header="Account ID" Binding="{Binding AccountId}" Width="Auto"/>
+                <DataGridTextColumn Header="Char ID" Binding="{Binding CharId}" Width="Auto"/>
+                <DataGridTextColumn Header="CharName" Binding="{Binding CharName}" Width="Auto"/>
+                <DataGridTextColumn Header="BillProductType" Binding="{Binding BillProductType}" Width="Auto"/>
+                <DataGridTextColumn Header="CreateDate" Binding="{Binding CreateDate}" Width="Auto"/>
+                <DataGridTextColumn Header="UpdateDate" Binding="{Binding UpdateDate}" Width="Auto"/>
+                <DataGridTextColumn Header="Product Key" Binding="{Binding ProductKey}" Width="Auto"/>
+                <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="Auto"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="Auto"/>
+                <DataGridTextColumn Header="Product Types" Binding="{Binding ProductTypes}" Width="Auto"/>
+                <DataGridTextColumn Header="GameItem ID" Binding="{Binding GameItemId}" Width="Auto"/>
+                <DataGridTextColumn Header="GameItem Volume" Binding="{Binding GameItemVolume}" Width="Auto"/>
+                <DataGridTextColumn Header="ItemName" Binding="{Binding ItemName}" Width="Auto"/>
+                <DataGridTextColumn Header="Grade" Binding="{Binding Grade}" Width="Auto"/>
+                <DataGridTextColumn Header="Item Type" Binding="{Binding ItemType}" Width="Auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </UserControl>

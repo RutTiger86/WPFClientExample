@@ -16,7 +16,8 @@ namespace WPFClientExample.Repositories
 {
     public interface IUserRepository
     {
-        public AccountInfo? GetAccountInfo(USER_SEARCH_TYPE searchType, long accountID, string accountName);
+        public AccountInfo? GetAccountInfo( long accountID);
+        public AccountInfo? GetAccountInfoByName(string accountName);
         public List<CharacterInfo> GetCharacterInfoList(long accountId);
         public CharacterInfo? GetCharacterInfoByCharacterName(string charName);
         public CharacterDetailInfo? GetCharacterDetailInfo(long characterId);
@@ -61,21 +62,28 @@ namespace WPFClientExample.Repositories
                     }).FirstOrDefault();
         }
 
-        public AccountInfo? GetAccountInfo(USER_SEARCH_TYPE searchType, long accountID, string accountName)
+        public AccountInfo? GetAccountInfo(long accountID)
         {
-            IEnumerable<Account>? accounts;
-            if (searchType == USER_SEARCH_TYPE.Id)
-            {
-                accounts = TestDataFactory.TestAccounts?.Where(p => p.Id == accountID);
-            }
-            else
-            {
-                accounts = TestDataFactory.TestAccounts?.Where(p => p.AccountName.Equals(accountName));
-            }
+            return (from ac in TestDataFactory.TestAccounts
+                    where ac.Id == accountID
+                    select new AccountInfo()
+                    {
+                        AccountId = ac.Id,
+                        AccountName = ac.AccountName,
+                        AccountStatus = (ACCOUNT_STATE)ac.AccountStatus,
+                        CreateDate = ac.CreateDate,
+                        IsOnLine = ac.IsOnLine,
+                        LastLocation = ac.LastLocation,
+                        LastLoginIP = ac.LastLoginIP,
+                        LastLoginTime = DateTimeOffset.FromUnixTimeSeconds(ac.LastLoginTime).UtcDateTime,
+                        TotalPlayTime = TimeSpan.FromSeconds(ac.TotalPlayTime)
+                    }).FirstOrDefault();
+        }
 
-            return (from ac in accounts
-                    join tc in TestDataFactory.TestCharacters on ac.Id equals tc.AccountId
-                    join si in TestDataFactory.TestServers on tc.ServerID equals si.Id
+        public AccountInfo? GetAccountInfoByName(string accountName)
+        {
+            return (from ac in TestDataFactory.TestAccounts
+                    where ac.AccountName.Equals(accountName)
                     select new AccountInfo()
                     {
                         AccountId = ac.Id,
@@ -126,7 +134,7 @@ namespace WPFClientExample.Repositories
         public List<CharacterEquipeedInfo>? GetCharacterEquipeedInfo(long characterId)
         {
             return (from tce in TestDataFactory.TestCharEquipItems
-                    join ti in TestDataFactory.TestItems on tce.ItemId equals ti.Id
+                    join ti in TestDataFactory.TestGameItems on tce.ItemId equals ti.Id
                     where tce.CharacterId == characterId
                     select new CharacterEquipeedInfo()
                     {

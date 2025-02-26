@@ -31,7 +31,7 @@ namespace WPFClientExample.Repositories
                 result.Add(new CcuInfo()
                 {
                     ServerId = serverID,
-                    CcuValue = new KeyValuePair<DateTime, int>(targetDate, random.Next(500,1000))
+                    CcuValue = new KeyValuePair<DateTime, int>(targetDate, random.Next(1000,10000))
                 });
             }
 
