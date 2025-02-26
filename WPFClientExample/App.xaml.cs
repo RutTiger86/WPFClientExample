@@ -64,6 +64,8 @@ namespace WPFClientExample
                 services.AddScoped<IMonitoringService, MonitoringService>();
                 services.AddScoped<IBillingService, BillingService>();
                 services.AddScoped<ISettingService, SettingService>();
+                services.AddSingleton<ILocalizationService, LocalizationService>();
+
 
                 // ViewModel 등록
                 services.AddSingleton<IBillHistoryViewModel, BillHistoryViewModel>();
@@ -111,8 +113,10 @@ namespace WPFClientExample
         }
         private void SettingClient()
         {
-            // 저장된 설정을 불러와 적용
-            
+
+            var localizationService = host.Services.GetRequiredService<ILocalizationService>();
+            localizationService.ChangeLanguage("en-US");
+
             ClientTheme savedTheme = JsonConfigurationManager.GetTheme();
             if (savedTheme == ClientTheme.DARK)
                 this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Resources/Themes/DarkTheme.xaml", UriKind.Relative) });

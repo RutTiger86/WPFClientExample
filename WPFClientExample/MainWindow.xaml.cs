@@ -29,5 +29,6 @@ namespace WPFClientExample
                 viewModel.NavigateToCommand.Execute(menuId);
             }
         }
+
     }
 }

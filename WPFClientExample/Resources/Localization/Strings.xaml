@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+  <sys:String x:Key="Login">Login</sys:String>
+  <sys:String x:Key="LoginPage">Login Page</sys:String>
+  <sys:String x:Key="TestAuthAccount">(admin / 1234)</sys:String>
+  <sys:String x:Key="ID">ID</sys:String>
+  <sys:String x:Key="Password">PW</sys:String>
+  <sys:String x:Key="Username">Username</sys:String>
+  <sys:String x:Key="Submit">Submit</sys:String>
+</ResourceDictionary>
