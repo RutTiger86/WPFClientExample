@@ -8,9 +8,9 @@ namespace WPFClientExample.Services
 {
     public interface IMonitoringService
     {
-        Task<List<Server>> GetServers();
-        Task<List<ChatLogInfo>> GetChatLogInfosAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate);
-        Task<List<CcuInfo>> GetCcuSeriesAsync(DateTime startDate, DateTime endDate);
+        List<Server> GetServers();
+        List<ChatLogInfo> GetChatLogInfos(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate, CancellationToken token);
+        List<CcuInfo> GetCcuSeries(DateTime startDate, DateTime endDate);
     }
 
     public class MonitoringService(IUserRepository userRepository, IServerRepository serverRepository, ILocalizationService localizationService) : IMonitoringService
@@ -19,11 +19,12 @@ namespace WPFClientExample.Services
         private readonly IServerRepository serverRepository = serverRepository;
         private readonly ILocalizationService localizationService = localizationService;
 
-        public async Task<List<Server>> GetServers()
+        public List<Server> GetServers()
         {
-            return await Task.Run(() => serverRepository.GetServers());
+            return serverRepository.GetServers();
         }
-        public async Task<List<ChatLogInfo>> GetChatLogInfosAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate)
+
+        public List<ChatLogInfo> GetChatLogInfos(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate, CancellationToken token)
         {
             long characterId = 0;
 
@@ -57,10 +58,23 @@ namespace WPFClientExample.Services
                 }
             }
 
-            return await Task.Run(() => userRepository.GetChatLogInfosByCharacterId(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime()));
+            //비동기 테스트 Sleep
+            int asyncTest = 0;
+            while (asyncTest < 5)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    return [];
+                }
+                asyncTest++;
+                Thread.Sleep(1000);
+            }
+
+            Thread.Sleep(5000);//비동기 테스트 Sleep
+            return userRepository.GetChatLogInfosByCharacterId(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime());
         }
 
-        public async Task<List<CcuInfo>> GetCcuSeriesAsync(DateTime startDate, DateTime endDate)
+        public List<CcuInfo> GetCcuSeries(DateTime startDate, DateTime endDate)
         {
             List<Server> servers = serverRepository.GetServers();
 
@@ -68,7 +82,7 @@ namespace WPFClientExample.Services
 
             foreach (var server in servers)
             {
-                result.AddRange(await Task.Run(() => serverRepository.GetServerCcu(server.Id, startDate, endDate)));
+                result.AddRange(serverRepository.GetServerCcu(server.Id, startDate, endDate));
             }
             return result;
         }

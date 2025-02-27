@@ -8,13 +8,13 @@ namespace WPFClientExample.Services
 {
     public interface IGameLogService
     {
-        public Task<AccountInfo?> GetAccountInfoAsync(USER_SEARCH_TYPE searchType, string searchData);
-        public Task<CharacterDetailInfo?> GetCharacterInfoDetailInfoAsync(long characterId);
-        public Task<List<CharacterInfo>> GetCharacterInfoListAsync(long accountId);
-        public Task<List<CharacterEquipeedInfo>> GetCharacterEquipeedInfoAsync(long characterId);
-        public Task<List<ChatLogInfo>> GetChatLogInfoByCharacterIdAsync(long characterId);
-        public Task<List<CharacterQuestInfo>> GetCharacterQuestInfoByCharacterIdAsync(long characterId);
-        public Task<List<InventoryHistoryLogInfo>> GetInventoryHistoryLogAsync(long characterId, DateTime startDate, DateTime endDate);
+        public AccountInfo? GetAccountInfo(USER_SEARCH_TYPE searchType, string searchData);
+        public CharacterDetailInfo? GetCharacterInfoDetailInfo(long characterId);
+        public List<CharacterInfo> GetCharacterInfoList(long accountId);
+        public List<CharacterEquipeedInfo> GetCharacterEquipeedInfo(long characterId);
+        public List<ChatLogInfo> GetChatLogInfoByCharacterId(long characterId);
+        public List<CharacterQuestInfo> GetCharacterQuestInfoByCharacterId(long characterId);
+        public List<InventoryHistoryLogInfo> GetInventoryHistoryLog(long characterId, DateTime startDate, DateTime endDate);
     }
 
     public class GameLogService(IUserRepository userRepository, ILocalizationService localizationService) : IGameLogService
@@ -22,7 +22,7 @@ namespace WPFClientExample.Services
         private readonly IUserRepository userRepository = userRepository;
         private readonly ILocalizationService localizationService = localizationService;
 
-        public async Task<AccountInfo?> GetAccountInfoAsync(USER_SEARCH_TYPE searchType, string searchData)
+        public AccountInfo? GetAccountInfo(USER_SEARCH_TYPE searchType, string searchData)
         {
             long accountID = 0;
 
@@ -30,13 +30,13 @@ namespace WPFClientExample.Services
             {
                 if (searchType == USER_SEARCH_TYPE.NAME)
                 {
-                    return await Task.Run(() => userRepository.GetAccountInfoByName(searchData));
+                    return userRepository.GetAccountInfoByName(searchData);
                 }
                 else
                 {
                     if (long.TryParse(searchData, out accountID))
                     {
-                        return await Task.Run(() => userRepository.GetAccountInfo(accountID));
+                        return userRepository.GetAccountInfo(accountID);
                     }
                     else
                     {
@@ -51,39 +51,38 @@ namespace WPFClientExample.Services
             }
         }
 
-        public async Task<List<CharacterInfo>> GetCharacterInfoListAsync(long accountId)
+        public List<CharacterInfo> GetCharacterInfoList(long accountId)
         {
-            return await Task.Run(() => userRepository.GetCharacterInfoList(accountId));
+            return userRepository.GetCharacterInfoList(accountId);
         }
 
-        public async Task<CharacterDetailInfo?> GetCharacterInfoDetailInfoAsync(long characterId)
+        public CharacterDetailInfo? GetCharacterInfoDetailInfo(long characterId)
         {
-            return await Task.Run(() => userRepository.GetCharacterDetailInfo(characterId));
+            return userRepository.GetCharacterDetailInfo(characterId);
         }
 
-        public async Task<List<CharacterEquipeedInfo>> GetCharacterEquipeedInfoAsync(long characterId)
+        public List<CharacterEquipeedInfo> GetCharacterEquipeedInfo(long characterId)
         {
-            return await Task.Run(() => userRepository.GetCharacterEquipeedInfo(characterId));
+            return userRepository.GetCharacterEquipeedInfo(characterId);
         }
 
-        public async Task<List<ChatLogInfo>> GetChatLogInfoByCharacterIdAsync(long characterId)
+        public List<ChatLogInfo> GetChatLogInfoByCharacterId(long characterId)
         {
-            return await Task.Run(() => userRepository.GetChatLogInfosByCharacterId(characterId));
+            return userRepository.GetChatLogInfosByCharacterId(characterId);
         }
 
-        public async Task<List<CharacterQuestInfo>> GetCharacterQuestInfoByCharacterIdAsync(long characterId)
+        public List<CharacterQuestInfo> GetCharacterQuestInfoByCharacterId(long characterId)
         {
-            return await Task.Run(() => userRepository.GetCharacterQuestInfoByCharacterId(characterId));
+            return userRepository.GetCharacterQuestInfoByCharacterId(characterId);
         }
 
-        public async Task<List<InventoryHistoryLogInfo>> GetInventoryHistoryLogAsync(long characterId, DateTime startDate, DateTime endDate)
+        public List<InventoryHistoryLogInfo> GetInventoryHistoryLog(long characterId, DateTime startDate, DateTime endDate)
         {
             if (endDate < startDate)
             {
                 throw new Exception(localizationService.GetString("MessageInvalidDateRange"));
             }
-
-            return await Task.Run(() => userRepository.GetInventoryHistoryLog(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime()));
+            return userRepository.GetInventoryHistoryLog(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime());
         }
 
     }

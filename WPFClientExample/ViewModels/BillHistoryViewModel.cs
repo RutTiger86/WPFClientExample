@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.Windows;
 using WPFClientExample.Commons.Enums;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Models.Billing;
@@ -20,7 +21,7 @@ namespace WPFClientExample.ViewModels
         string SearchText { get; set; }
     }
 
-    public partial class BillHistoryViewModel : ObservableObject, IBillHistoryViewModel, IRecipient<LoginMessage>
+    public partial class BillHistoryViewModel : ObservableObject, IBillHistoryViewModel, IRecipient<LoginMessage>, IRecipient<TokenCancelMessage>
     {
         private readonly IBillingService billingService;
         private readonly ILocalizationService localizationService;
@@ -44,6 +45,8 @@ namespace WPFClientExample.ViewModels
         [ObservableProperty]
         private string searchText = string.Empty;
 
+        private CancellationTokenSource? cancelToken;
+
         public BillHistoryViewModel(IBillingService billingService, ILocalizationService localizationService)
         {
             this.billingService = billingService;
@@ -65,11 +68,21 @@ namespace WPFClientExample.ViewModels
         private void SettingMessage()
         {
             WeakReferenceMessenger.Default.Register<LoginMessage>(this);
+            WeakReferenceMessenger.Default.Register<TokenCancelMessage>(this);
+
         }
 
         public void Receive(LoginMessage message)
         {
             InitSetting();
+        }
+
+        public void Receive(TokenCancelMessage message)
+        {
+            if (cancelToken != null && !cancelToken.Token.IsCancellationRequested)
+            {
+                cancelToken?.Cancel();
+            }
         }
 
         private void InitSetting()
@@ -83,8 +96,26 @@ namespace WPFClientExample.ViewModels
         [RelayCommand]
         private async Task Search()
         {
-            BillHistoryInfos?.Clear();
-            BillHistoryInfos = [.. await billingService.GetBillHistoryInfoAsync(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate)];
+            try
+            {
+                BillHistoryInfos?.Clear();
+                cancelToken?.Cancel();
+                cancelToken = new CancellationTokenSource();
+                var token = cancelToken.Token;
+
+                var result = await Task.Run(() =>
+                billingService.GetBillHistoryInfo(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate, token)
+                );
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    BillHistoryInfos = [.. result];
+                });
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("Task Was Cancelled.");
+            }
         }
     }
 }

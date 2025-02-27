@@ -21,7 +21,7 @@ namespace WPFClientExample.ViewModels
         IAsyncRelayCommand SearchCommand { get; }
     }
 
-    public partial class ChatLogViewModel : ObservableObject, IChatLogViewModel, IRecipient<LoginMessage>
+    public partial class ChatLogViewModel : ObservableObject, IChatLogViewModel, IRecipient<LoginMessage>, IRecipient<TokenCancelMessage>
     {
         private readonly IMonitoringService monitoringService;
         private readonly ILocalizationService localizationService;
@@ -44,6 +44,7 @@ namespace WPFClientExample.ViewModels
         [ObservableProperty]
         ObservableCollection<ChatLogInfo> targetChatLogInfo = [];
 
+        private CancellationTokenSource? cancelToken;
         public ChatLogViewModel(IMonitoringService monitoringService, ILocalizationService localizationService)
         {
             this.monitoringService = monitoringService;
@@ -55,6 +56,7 @@ namespace WPFClientExample.ViewModels
         private void SettingMessage()
         {
             WeakReferenceMessenger.Default.Register<LoginMessage>(this);
+            WeakReferenceMessenger.Default.Register<TokenCancelMessage>(this);
         }
 
         public void Receive(LoginMessage message)
@@ -64,6 +66,14 @@ namespace WPFClientExample.ViewModels
             SelectedSearchType = SearchType.First().Key;
             SearchText = string.Empty;
             TargetChatLogInfo?.Clear();
+        }
+
+        public void Receive(TokenCancelMessage message)
+        {
+            if (cancelToken != null && !cancelToken.Token.IsCancellationRequested)
+            {
+                cancelToken?.Cancel();
+            }
         }
 
         private void Initialize()
@@ -83,7 +93,19 @@ namespace WPFClientExample.ViewModels
             try
             {
                 TargetChatLogInfo?.Clear();
-                TargetChatLogInfo = [.. await monitoringService.GetChatLogInfosAsync(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate)];
+
+                cancelToken?.Cancel();
+                cancelToken = new CancellationTokenSource();
+                var token = cancelToken.Token;
+
+                var result = await Task.Run(() =>
+                monitoringService.GetChatLogInfos(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate, token)
+                );
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    TargetChatLogInfo = [.. result];
+                });
             }
             catch (Exception ex)
             {

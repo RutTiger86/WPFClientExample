@@ -81,7 +81,7 @@ namespace WPFClientExample.ViewModels
         {
             this.monitoringService = monitoringService;
             realTimeCcuTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
-            realTimeCcuTimer.Tick += async (s, e) => await UpdateCCUData();
+            realTimeCcuTimer.Tick += (s, e) => UpdateCCUData();
             SettingMessage();
         }
 
@@ -134,7 +134,7 @@ namespace WPFClientExample.ViewModels
             serverCcuData = [];
 
             var getServerListTask = Task.Run(() => monitoringService.GetServers());
-            var getCcuInfosTask = monitoringService.GetCcuSeriesAsync(startDate, endDate);
+            var getCcuInfosTask = Task.Run(() => monitoringService.GetCcuSeries(startDate, endDate));
 
             await Task.WhenAll(getServerListTask, getCcuInfosTask);
 
@@ -182,9 +182,9 @@ namespace WPFClientExample.ViewModels
         }
 
 
-        private async Task UpdateCCUData()
+        private void UpdateCCUData()
         {
-            var newData = await monitoringService.GetCcuSeriesAsync(DateTime.Now.AddMinutes(-1), DateTime.Now);
+            var newData = monitoringService.GetCcuSeries(DateTime.Now.AddMinutes(-1), DateTime.Now);
 
             if (newData == null || newData.Count == 0) return;
 

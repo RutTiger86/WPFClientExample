@@ -15,7 +15,7 @@ namespace WPFClientExample.ViewModels.UserInfo
         DateTime SearchStartDate { get; set; }
         DateTime SearchEndDate { get; set; }
         ObservableCollection<InventoryHistoryLogInfo> TargetInventoryHistory { get; }
-        IAsyncRelayCommand SearchCommand { get; }
+        IRelayCommand SearchCommand { get; }
 
     }
     public partial class InventoryLogViewModel : ObservableObject, IInventoryLogViewModel, IRecipient<LoginMessage>, IRecipient<SelectedCharacterMessage>
@@ -67,14 +67,15 @@ namespace WPFClientExample.ViewModels.UserInfo
         }
 
         [RelayCommand]
-        private async Task Search()
+        private void Search()
         {
             try
             {
                 if (selectedCharacterInfo != null)
                 {
                     TargetInventoryHistory?.Clear();
-                    TargetInventoryHistory = [.. await gameLogService.GetInventoryHistoryLogAsync(selectedCharacterInfo.CharacterId, SearchStartDate, SearchEndDate)];
+                    TargetInventoryHistory = [.. gameLogService.GetInventoryHistoryLog(selectedCharacterInfo.CharacterId, SearchStartDate, SearchEndDate)];
+
                 }
             }
             catch (Exception ex)

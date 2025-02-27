@@ -66,47 +66,32 @@ namespace WPFClientExample.ViewModels.UserInfo
         public void Receive(SelectedCharacterMessage message)
         {
             SelectedCharacter = message.Value;
-            SetCharacterInfoAsync();
+            Task.FromResult(SetCharacterInfoAsync());
         }
 
-        private async void SetCharacterInfoAsync()
-        {
-            await Task.WhenAll(
-                SetCharacterDetailInfo(),
-                SetEquippedItemsAsync(),
-                SetRecenChatAsync(),
-                SetQuestListAsync()
-            );
-        }
-
-        private async Task SetCharacterDetailInfo()
+        private async Task SetCharacterInfoAsync()
         {
             if (SelectedCharacter != null)
             {
-                TargetCharacterDetailInfo = await Task.Run(() => gameLogService.GetCharacterInfoDetailInfoAsync(SelectedCharacter.CharacterId));
-            }
-        }
+                var characterDetailTask = Task.Run(() => gameLogService.GetCharacterInfoDetailInfo(SelectedCharacter.CharacterId));
+                var characterEquipeedsTask = Task.Run(() => gameLogService.GetCharacterEquipeedInfo(SelectedCharacter.CharacterId));
+                var chatLogInfosTask = Task.Run(() => gameLogService.GetChatLogInfoByCharacterId(SelectedCharacter.CharacterId));
+                var characterQuestsTask = Task.Run(() => gameLogService.GetCharacterQuestInfoByCharacterId(SelectedCharacter.CharacterId));
 
-        private async Task SetEquippedItemsAsync()
-        {
-            if (SelectedCharacter != null)
-            {
-                TargetCharacterEquipeedInfo = [.. await Task.Run(() => gameLogService.GetCharacterEquipeedInfoAsync(SelectedCharacter.CharacterId))];
-            }
-        }
-        private async Task SetRecenChatAsync()
-        {
-            if (SelectedCharacter != null)
-            {
-                TargetChatLogInfo = [.. await Task.Run(() => gameLogService.GetChatLogInfoByCharacterIdAsync(SelectedCharacter.CharacterId))];
-            }
-        }
+                await Task.WhenAll(
+                    characterDetailTask,
+                    characterEquipeedsTask,
+                    chatLogInfosTask,
+                    characterQuestsTask
+                );
 
-        private async Task SetQuestListAsync()
-        {
-            if (SelectedCharacter != null)
-            {
-                TargetCharacterQuestInfo = [.. await Task.Run(() => gameLogService.GetCharacterQuestInfoByCharacterIdAsync(SelectedCharacter.CharacterId))];
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    TargetCharacterDetailInfo = characterDetailTask.Result;
+                    TargetCharacterEquipeedInfo = [.. characterEquipeedsTask.Result];
+                    TargetChatLogInfo = [.. chatLogInfosTask.Result];
+                    TargetCharacterQuestInfo = [.. characterQuestsTask.Result];
+                });
             }
         }
 

@@ -95,12 +95,16 @@ namespace WPFClientExample.ViewModels
         {
             try
             {
-                TargetAccountInfo = await gameLogService.GetAccountInfoAsync(SelectedSearchType, SearchText);
-
-                if (TargetAccountInfo != null)
+                await Task.Run(() =>
                 {
-                    CharacterInfos = [.. await gameLogService.GetCharacterInfoListAsync(TargetAccountInfo.AccountId)];
+                    TargetAccountInfo = gameLogService.GetAccountInfo(SelectedSearchType, SearchText);
+
+                    if (TargetAccountInfo != null)
+                    {
+                        CharacterInfos = [.. gameLogService.GetCharacterInfoList(TargetAccountInfo.AccountId)];
+                    }
                 }
+                );
             }
             catch (Exception ex)
             {

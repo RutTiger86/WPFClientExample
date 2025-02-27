@@ -6,7 +6,7 @@ namespace WPFClientExample.Services
 {
     public interface IBillingService
     {
-        public Task<List<BillHistoryInfo>> GetBillHistoryInfoAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate);
+        public List<BillHistoryInfo> GetBillHistoryInfo(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate, CancellationToken token);
     }
 
     public class BillingService(IBillingRepository billingRepository, IUserRepository userRepository, ILocalizationService localizationService) : IBillingService
@@ -15,7 +15,7 @@ namespace WPFClientExample.Services
         private readonly IUserRepository userRepository = userRepository;
         private readonly ILocalizationService localizationService = localizationService;
 
-        public async Task<List<BillHistoryInfo>> GetBillHistoryInfoAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate)
+        public List<BillHistoryInfo> GetBillHistoryInfo(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate, CancellationToken token)
         {
             long accountID = 0;
 
@@ -49,7 +49,18 @@ namespace WPFClientExample.Services
                 }
             }
 
-            return await Task.Run(() => billingRepository.GetBillHistories(accountID, startDate.ToUniversalTime(), endDate.ToUniversalTime()));
+            int asyncTest = 0;
+            while (asyncTest < 5)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    return [];
+                }
+                asyncTest++;
+                Thread.Sleep(1000);
+            }
+
+            return billingRepository.GetBillHistories(accountID, startDate.ToUniversalTime(), endDate.ToUniversalTime());
         }
     }
 }
