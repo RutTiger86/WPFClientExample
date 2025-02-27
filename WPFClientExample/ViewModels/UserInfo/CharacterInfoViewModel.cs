@@ -32,6 +32,7 @@ namespace WPFClientExample.ViewModels.UserInfo
     public partial class CharacterInfoViewModel:ObservableObject, ICharacterInfoViewModel, IRecipient<SelectedCharacterMessage>, IRecipient<LoginMessage>
     {
         private readonly IGameLogService gameLogService;
+        private readonly ILocalizationService localizationService;
 
         [ObservableProperty]
         private CharacterInfo? selectedCharacter;
@@ -48,9 +49,10 @@ namespace WPFClientExample.ViewModels.UserInfo
         [ObservableProperty]
         List<CharacterQuestInfo>? targetCharacterQuestInfo;
 
-        public CharacterInfoViewModel(IGameLogService gameLogService)
+        public CharacterInfoViewModel(IGameLogService gameLogService, ILocalizationService localizationService)
         {
             this.gameLogService = gameLogService;
+            this.localizationService = localizationService;
             SettingMessage();
         }
 
@@ -123,7 +125,7 @@ namespace WPFClientExample.ViewModels.UserInfo
         [RelayCommand] 
         private  void ItemDetailShow(long itemID)
         {
-            MessageBox.Show($"[ ItemID : {itemID}]{Environment.NewLine}The item details view function is under development.");
+            MessageBox.Show(localizationService.GetString("MessageItemDetails"));
         }
     }
 }

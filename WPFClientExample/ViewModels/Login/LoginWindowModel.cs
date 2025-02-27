@@ -21,13 +21,15 @@ namespace WPFClientExample.ViewModels.Login
     public partial class LoginWindowModel : ObservableObject, ILoginWindowModel
     {
         private readonly IAuthService authService;
+        private readonly ILocalizationService localizationService;
 
         [ObservableProperty]
         private string authUserId = "";
 
-        public LoginWindowModel(IAuthService authService)
+        public LoginWindowModel(IAuthService authService, ILocalizationService localizationService)
         {
             this.authService = authService;
+            this.localizationService = localizationService;
         }
 
         [RelayCommand]
@@ -41,7 +43,7 @@ namespace WPFClientExample.ViewModels.Login
             }
             else
             {
-                MessageBox.Show("Invalid Username or Password!", "Login Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(localizationService.GetString("MessageLogInFailed"), localizationService.GetString("MessageLogInFailedCaption"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
             AuthUserId = string.Empty;
             param.Password = string.Empty;

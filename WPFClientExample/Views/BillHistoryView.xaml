@@ -22,34 +22,34 @@
                       SelectedValuePath="Key" DisplayMemberPath="Value" SelectedValue="{Binding SelectedSearchType, Mode= TwoWay}">
             </ComboBox>
             <TextBox Width="200" Margin="5" x:Name="SearchTextBox" Text="{Binding SearchText}" VerticalContentAlignment="Center"/>
-            <Button Content="Search" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
-            <Label Content="(AccountID : 12345678, AccountName : TestAccount)" FontSize="12"/>
+            <Button Content="{DynamicResource Search}" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
+            <Label Content="{DynamicResource TestAccount}" FontSize="12"/>
         </StackPanel>
 
 
         <DataGrid Grid.Row="1" ItemsSource="{Binding BillHistoryInfos}" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Bill Tx ID" Binding="{Binding BillTxId}" Width="Auto"/>
-                <DataGridTextColumn Header="Bill Tx Type" Binding="{Binding BillTxType}" Width="Auto"/>
-                <DataGridTextColumn Header="Bill Tx Status" Binding="{Binding BillTxStatus}" Width="Auto"/>
-                <DataGridTextColumn Header="Purchase Token" Binding="{Binding PurchaseToken}" Width="Auto"/>
-                <DataGridTextColumn Header="IsDone" Binding="{Binding IsDone}" Width="Auto"/>
-                <DataGridTextColumn Header="Product ID" Binding="{Binding ProductId}" Width="Auto"/>
-                <DataGridTextColumn Header="Account ID" Binding="{Binding AccountId}" Width="Auto"/>
-                <DataGridTextColumn Header="Char ID" Binding="{Binding CharId}" Width="Auto"/>
-                <DataGridTextColumn Header="CharName" Binding="{Binding CharName}" Width="Auto"/>
-                <DataGridTextColumn Header="BillProductType" Binding="{Binding BillProductType}" Width="Auto"/>
-                <DataGridTextColumn Header="CreateDate" Binding="{Binding CreateDate}" Width="Auto"/>
-                <DataGridTextColumn Header="UpdateDate" Binding="{Binding UpdateDate}" Width="Auto"/>
-                <DataGridTextColumn Header="Product Key" Binding="{Binding ProductKey}" Width="Auto"/>
-                <DataGridTextColumn Header="Product Name" Binding="{Binding ProductName}" Width="Auto"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="Auto"/>
-                <DataGridTextColumn Header="Product Types" Binding="{Binding ProductTypes}" Width="Auto"/>
-                <DataGridTextColumn Header="GameItem ID" Binding="{Binding GameItemId}" Width="Auto"/>
-                <DataGridTextColumn Header="GameItem Volume" Binding="{Binding GameItemVolume}" Width="Auto"/>
-                <DataGridTextColumn Header="ItemName" Binding="{Binding ItemName}" Width="Auto"/>
-                <DataGridTextColumn Header="Grade" Binding="{Binding Grade}" Width="Auto"/>
-                <DataGridTextColumn Header="Item Type" Binding="{Binding ItemType}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource BillTxID}" Binding="{Binding BillTxId}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource BillTxType}" Binding="{Binding BillTxType}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource BillTxStatus}" Binding="{Binding BillTxStatus}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource PurchaseToken}" Binding="{Binding PurchaseToken}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource IsDone}" Binding="{Binding IsDone}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ProductID}" Binding="{Binding ProductId}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource AccountID}" Binding="{Binding AccountId}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource CharacterID}" Binding="{Binding CharId}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource CharName}" Binding="{Binding CharName}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource BillProductType}" Binding="{Binding BillProductType}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource CreateDate}" Binding="{Binding CreateDate}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource UpdateDate}" Binding="{Binding UpdateDate}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ProductKey}" Binding="{Binding ProductKey}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ProductName}" Binding="{Binding ProductName}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource Price}" Binding="{Binding Price}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ProductTypes}" Binding="{Binding ProductTypes}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource GameItemID}" Binding="{Binding GameItemId}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource GameItemVolume}" Binding="{Binding GameItemVolume}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ItemName}" Binding="{Binding ItemName}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource Grade}" Binding="{Binding Grade}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ItemType}" Binding="{Binding ItemType}" Width="Auto"/>
             </DataGrid.Columns>
         </DataGrid>
 

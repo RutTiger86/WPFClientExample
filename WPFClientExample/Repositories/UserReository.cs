@@ -174,11 +174,11 @@ namespace WPFClientExample.Repositories
                     {
                         QuestId = cq.Id,
                         CharacterId = cq.CharacterId,
-                        CancledTime = cq.CancledTime,
+                        CanceledTime = cq.CanceledTime,
                         CompletionTime = cq.CompletionTime,
                         CurrentCount = cq.CurrentCount,
                         CurrentStep = cq.CurrentStep,
-                        IsCancled = cq.IsCancled,
+                        IsCanceled = cq.IsCanceled,
                         QuestName = q.QuestName,
                         QuestStatus = (QUEST_STATUES) cq.QuestStatus,
                         QuestType = (QUEST_TYPE) q.QuestType,

@@ -15,10 +15,10 @@ namespace WPFClientExample.Models.DataBase
 
         public int CurrentStep { get; set; } // 현재 진행 단계
         public int CurrentCount { get; set; } // 목표 달성 개수
-        public bool IsCancled { get; set; }
+        public bool IsCanceled { get; set; }
         public DateTime StartTime { get; set; } = DateTime.UtcNow; // 퀘스트 시작 시간
         public DateTime? CompletionTime { get; set; } // 퀘스트 완료 시간 (완료 시 업데이트)
-        public DateTime? CancledTime { get; set; } // 퀘스트 취소 시간 (취소 시 업데이트)
+        public DateTime? CanceledTime { get; set; } // 퀘스트 취소 시간 (취소 시 업데이트)
     }
 
 }

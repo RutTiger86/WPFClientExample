@@ -2,7 +2,153 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="Login">로그인</sys:String>
+    <sys:String x:Key="Logout">로그아웃</sys:String>
+    <sys:String x:Key="TestAuthAccount">(admin / 1234)</sys:String>
+    <sys:String x:Key="ID">ID</sys:String>
     <sys:String x:Key="Password">비밀번호</sys:String>
-    <sys:String x:Key="Username">사용자 이름</sys:String>
-    <sys:String x:Key="Submit">제출</sys:String>
+
+    <sys:String x:Key="MainProgramName">WPF 클라이언트 예제</sys:String>
+    <sys:String x:Key="Search">검색</sys:String>
+    <sys:String x:Key="TestAccount">(계정ID : 12345678, 계정명 : TestAccount)</sys:String>
+    <sys:String x:Key="AcountID">계정ID</sys:String>
+    <sys:String x:Key="AccountName">계정명</sys:String>
+    <sys:String x:Key="AccountStatus">계정상태</sys:String>
+    <sys:String x:Key="LastLoginTime">마지막 로그인</sys:String>
+    <sys:String x:Key="IsOnLine">접속여부</sys:String>
+    <sys:String x:Key="LastLocation">마지막 위치</sys:String>
+    <sys:String x:Key="LastLoginIP">마지막 접속 IP</sys:String>
+    <sys:String x:Key="CreateDate">생성일</sys:String>
+    <sys:String x:Key="LastKnownLocation">마지막 접속 국가</sys:String>
+    <sys:String x:Key="TotalPlayTime">총 플레이시간</sys:String>
+    <sys:String x:Key="JoinDate">회원가입일</sys:String>
+    <sys:String x:Key="AccountRestriction">계정 제제</sys:String>
+    <sys:String x:Key="ServerID">서버ID</sys:String>
+    <sys:String x:Key="ServerName">서버명</sys:String>
+    <sys:String x:Key="CharacterID">캐릭터ID</sys:String>
+    <sys:String x:Key="CharacterName">캐릭터명</sys:String>
+    <sys:String x:Key="CharacterInfo">캐릭터 정보</sys:String>
+    <sys:String x:Key="InventoryLog">가방 정보</sys:String>
+
+    <sys:String x:Key="Language">언어</sys:String>
+    <sys:String x:Key="Thema">테마</sys:String>
+    <sys:String x:Key="Font">글씨체</sys:String>
+    <sys:String x:Key="Save">저장</sys:String>
+    <sys:String x:Key="UI">화면</sys:String>
+    <sys:String x:Key="General">일반</sys:String>
+
+    <sys:String x:Key="TestCharacter">(캐릭터ID : 1,2,3,4, 캐릭터명 : Character1,2,3)</sys:String>
+    <sys:String x:Key="ChatID">채팅ID</sys:String>
+    <sys:String x:Key="ChatType">채팅 구분</sys:String>
+    <sys:String x:Key="SentTime">보낸시간</sys:String>
+    <sys:String x:Key="ChatRoomID">채팅룸ID</sys:String>
+    <sys:String x:Key="SenderCharacterID">보낸 캐릭터 ID</sys:String>
+    <sys:String x:Key="SenderName">보낸 캐릭명</sys:String>
+    <sys:String x:Key="ReceiverCharacterID">받은 캐릭터 ID</sys:String>
+    <sys:String x:Key="ReceiverName">받은 캐릭명</sys:String>
+    <sys:String x:Key="Message">내용</sys:String>
+
+    <sys:String x:Key="SelectDate">일자</sys:String>
+    <sys:String x:Key="SelectTime">시간</sys:String>
+    <sys:String x:Key="RealTimeCCU">실시간 CCU</sys:String>
+    <sys:String x:Key="MaxCCU">최대 CCU</sys:String>
+    <sys:String x:Key="MinCCU">최소 CCU</sys:String>
+    <sys:String x:Key="LastCCU">마지막 CCU</sys:String>
+    <sys:String x:Key="LastTime">마지막 시간</sys:String>
+    <sys:String x:Key="Time">시간</sys:String>
+    <sys:String x:Key="CCUCount">CCU</sys:String>
+
+
+    <sys:String x:Key="BillTxID">거래 Tx ID</sys:String>
+    <sys:String x:Key="BillTxType">거래 타입</sys:String>
+    <sys:String x:Key="BillTxStatus">거래 상태</sys:String>
+    <sys:String x:Key="PurchaseToken">구매 토큰</sys:String>
+    <sys:String x:Key="IsDone">완료여부</sys:String>
+    <sys:String x:Key="ProductID">상품ID</sys:String>
+    <sys:String x:Key="AccountID">계정ID</sys:String>
+    <sys:String x:Key="CharID">캐릭터 ID</sys:String>
+    <sys:String x:Key="CharName">캐릭터 명</sys:String>
+    <sys:String x:Key="BillProductType">거래 상품 타입</sys:String>
+    <sys:String x:Key="UpdateDate">수정일</sys:String>
+    <sys:String x:Key="ProductKey">상품 키</sys:String>
+    <sys:String x:Key="ProductName">상품명</sys:String>
+    <sys:String x:Key="Price">가격</sys:String>
+    <sys:String x:Key="ProductTypes">상품 타입</sys:String>
+    <sys:String x:Key="GameItemID">아이템 ID</sys:String>
+    <sys:String x:Key="GameItemVolume">수량</sys:String>
+    <sys:String x:Key="ItemName">아이템 명</sys:String>
+    <sys:String x:Key="Grade">등급</sys:String>
+    <sys:String x:Key="ItemType">아이템 타입</sys:String>
+
+
+    <sys:String x:Key="LogID">로그ID</sys:String>
+    <sys:String x:Key="ChangeType">변경 구분e</sys:String>
+    <sys:String x:Key="Timestamp">일자</sys:String>
+    <sys:String x:Key="ItemID">아이템ID</sys:String>
+    <sys:String x:Key="BeforQuantity">이전 수량</sys:String>
+    <sys:String x:Key="QuantityChange">변경 수량</sys:String>
+    <sys:String x:Key="AfterQuantity">이후 수량</sys:String>
+
+
+
+    <sys:String x:Key="CharacterStatus">능력치</sys:String>
+    <sys:String x:Key="CharacterLevel">레벨</sys:String>
+    <sys:String x:Key="CharacterClass">직업</sys:String>
+    <sys:String x:Key="CharacterRace">종족</sys:String>
+    <sys:String x:Key="Guild">길드</sys:String>
+    <sys:String x:Key="AttackPower">공격력</sys:String>
+    <sys:String x:Key="Defense">방어력</sys:String>
+    <sys:String x:Key="MagicPower">주문력</sys:String>
+    <sys:String x:Key="Accuracy">명중</sys:String>
+    <sys:String x:Key="Health">체력</sys:String>
+    <sys:String x:Key="Mana">마나</sys:String>
+    <sys:String x:Key="Requtation">명예</sys:String>
+    <sys:String x:Key="Experience">경험치</sys:String>
+
+
+    <sys:String x:Key="ItemDetail">아이템 정보</sys:String>
+    <sys:String x:Key="EquippedItems">장착 장비</sys:String>
+    <sys:String x:Key="RecentChat">채팅 기록</sys:String>
+    <sys:String x:Key="QuestList">퀘스트</sys:String>
+    <sys:String x:Key="Slot">부위</sys:String>
+    <sys:String x:Key="ViewDetails">상세 정보</sys:String>
+    <sys:String x:Key="LiveStatus">상태</sys:String>
+    <sys:String x:Key="LastPosition">마지막 위치</sys:String>
+    <sys:String x:Key="CurrentChannel">현재 채널</sys:String>
+    <sys:String x:Key="PartyID">파티 ID</sys:String>
+    <sys:String x:Key="PvPMode">PvP 상태</sys:String>
+
+
+    <sys:String x:Key="QuestID">퀘스트ID</sys:String>
+    <sys:String x:Key="QuestName">퀘스트명</sys:String>
+    <sys:String x:Key="QuestType">퀘스트타입</sys:String>
+    <sys:String x:Key="QuestStatus">상태</sys:String>
+    <sys:String x:Key="CurrentStep">진행도</sys:String>
+    <sys:String x:Key="CurrentCount">현재수량</sys:String>
+    <sys:String x:Key="IsCanceled">취소여부</sys:String>
+    <sys:String x:Key="StartTime">시작시간</sys:String>
+    <sys:String x:Key="CompletionTime">완료시간</sys:String>
+    <sys:String x:Key="CanceledTime">취소시간</sys:String>
+
+    <sys:String x:Key="MenuGameLogs">게임 로그</sys:String>
+    <sys:String x:Key="MenuUserInfo">사용자 정보</sys:String>
+    <sys:String x:Key="MenuMonitoring">모니터링</sys:String>
+    <sys:String x:Key="MenuChatLog">채팅 로그</sys:String>
+    <sys:String x:Key="MenuCCU">CCU</sys:String>
+    <sys:String x:Key="MenuBilling">거래</sys:String>
+    <sys:String x:Key="MenuBillHistory">거래 기록</sys:String>
+    <sys:String x:Key="MenuSetting">설정</sys:String>
+    <sys:String x:Key="MenuClientSetting">클라이언트 설정</sys:String>
+
+    <sys:String x:Key="ErrorCaption">오류</sys:String>
+
+    <sys:String x:Key="MessageAccountRestriction">계정 제재창은 개발중입니다.</sys:String>
+    <sys:String x:Key="MessageAccountIsNull">계정이 없습니다. 계정검색을 먼저 해주세요 </sys:String>
+    <sys:String x:Key="MessageItemDetails">아이템 상세보기창은 개발중입니다.</sys:String>
+    <sys:String x:Key="MessageLogInFailed">접속정보가 다릅니다.</sys:String>
+    <sys:String x:Key="MessageLogInFailedCaption">로그인 실패</sys:String>
+
+    <sys:String x:Key="MessageInvalidDateRange">기간 설정이 잘못되었습니다.</sys:String>
+    <sys:String x:Key="MessageCharacterNameNotExist">캐릭터 명이 존재하지 않습니다.</sys:String>
+    <sys:String x:Key="MessageCharacterIdParseFaile">캐릭터 ID가 잘못되었습니다. 숫자여야 합니다.</sys:String>
+    <sys:String x:Key="MessageNeedAccountID">계정 ID가 필요합니다.</sys:String>
 </ResourceDictionary>

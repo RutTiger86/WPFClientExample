@@ -18,21 +18,21 @@
             <Label Content="~" Margin="0,5,0,5"/>
             <DatePicker VerticalAlignment="Center" SelectedDate="{Binding SearchEndDate, Mode=TwoWay}"/>
             
-            <Button Content="Search" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
+            <Button Content="{DynamicResource Search}" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
         </StackPanel>
 
         <!-- InventoryHistory 리스트 -->
         <DataGrid Grid.Row="1" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True"
           Margin="5" Grid.Column="0" ItemsSource="{Binding TargetInventoryHistory, Mode= OneWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Log ID" Binding="{Binding LogId}" Width="auto"/>
-                <DataGridTextColumn Header="Character Name" Binding="{Binding ChangeType}" Width="auto"/>
-                <DataGridTextColumn Header="Timestamp" Binding="{Binding Timestamp}" Width="auto"/>
-                <DataGridTextColumn Header="Item ID" Binding="{Binding ItemId}" Width="auto"/>
-                <DataGridTextColumn Header="ItemName" Binding="{Binding ItemName}" Width="auto"/>
-                <DataGridTextColumn Header="Befor Quantity" Binding="{Binding BeforeQuantity}" Width="auto"/>
-                <DataGridTextColumn Header="Quantity Change" Binding="{Binding QuantityChange}" Width="auto"/>
-                <DataGridTextColumn Header="After Quantity" Binding="{Binding AfterQuantity}" Width="auto"/>
+                <DataGridTextColumn Header="{DynamicResource LogID}" Binding="{Binding LogId}" Width="auto"/>
+                <DataGridTextColumn Header="{DynamicResource ChangeType}" Binding="{Binding ChangeType}" Width="auto"/>
+                <DataGridTextColumn Header="{DynamicResource Timestamp}" Binding="{Binding Timestamp}" Width="auto"/>
+                <DataGridTextColumn Header="{DynamicResource ItemID}" Binding="{Binding ItemId}" Width="auto"/>
+                <DataGridTextColumn Header="{DynamicResource ItemName}" Binding="{Binding ItemName}" Width="auto"/>
+                <DataGridTextColumn Header="{DynamicResource BeforQuantity}" Binding="{Binding BeforeQuantity}" Width="auto"/>
+                <DataGridTextColumn Header="{DynamicResource QuantityChange}" Binding="{Binding QuantityChange}" Width="auto"/>
+                <DataGridTextColumn Header="{DynamicResource AfterQuantity}" Binding="{Binding AfterQuantity}" Width="auto"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

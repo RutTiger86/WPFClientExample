@@ -24,9 +24,10 @@ namespace WPFClientExample.Services
         public Task<List<InventoryHistoryLogInfo>?> GetInventoryHistoryLogAsync(long characterId, DateTime startDate, DateTime endDate);
     }
 
-    public class GameLogService(IUserRepository userRepository) : IGameLogService
+    public class GameLogService(IUserRepository userRepository, ILocalizationService localizationService) : IGameLogService
     {
         private readonly IUserRepository userRepository = userRepository;
+        private readonly ILocalizationService localizationService = localizationService;
 
         public Task<AccountInfo?> GetAccountInfoAsync(USER_SEARCH_TYPE searchType, string searchData)
         {
@@ -50,13 +51,13 @@ namespace WPFClientExample.Services
                     }
                     else
                     {
-                        throw new Exception("Account ID can only be numbers.");
+                        throw new Exception(localizationService.GetString("MessageCharacterIdParseFaile"));
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Need Account ID","Error",MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(localizationService.GetString("MessageNeedAccountID"),localizationService.GetString("ErrorCaption"),MessageBoxButton.OK, MessageBoxImage.Error);
                 return Task.FromResult< AccountInfo?>(null);
             }
         }
@@ -99,8 +100,8 @@ namespace WPFClientExample.Services
         public Task<List<InventoryHistoryLogInfo>?> GetInventoryHistoryLogAsync(long characterId, DateTime startDate, DateTime endDate)
         {
             if (endDate < startDate)
-            {
-                throw new Exception("Invalid date range setting");
+            {   
+                throw new Exception(localizationService.GetString("MessageInvalidDateRange"));
             }
 
             var InventoryInfos = userRepository.GetInventoryHistoryLog(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime());

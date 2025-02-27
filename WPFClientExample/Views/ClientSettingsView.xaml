@@ -13,25 +13,25 @@
         </Grid.RowDefinitions>
 
         <StackPanel Margin="10">
-            <GroupBox Header="General" Margin="10">
+            <GroupBox Header="{DynamicResource General}" Margin="10">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="Language : " HorizontalAlignment="Right"/>
+                    <Label Grid.Column="0" Content="{DynamicResource Language}" ContentStringFormat="{}{0} : " HorizontalAlignment="Right"/>
                     <ComboBox  Grid.Column="1" Width="250" HorizontalAlignment="Left" ItemsSource="{Binding Language}"
-                               SelectedValuePath="Key" DisplayMemberPath="Value" SelectedValue="{Binding selectedLanguage}" />
+                               SelectedValuePath="Key" DisplayMemberPath="Value" SelectedValue="{Binding SelectedLanguage}" />
                 </Grid>
             </GroupBox>
-            <GroupBox Header="UI" Margin="10">                
+            <GroupBox Header="{DynamicResource UI}" Margin="10">                
                 <StackPanel Margin="10" Orientation="Vertical">
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Thema : " HorizontalAlignment="Right"></Label>
+                        <Label Grid.Column="0" Content="{DynamicResource Thema}" ContentStringFormat="{}{0} : " HorizontalAlignment="Right"></Label>
                         <ComboBox  Grid.Column="1" Width="250" HorizontalAlignment="Left" ItemsSource="{Binding Theme}"
                                SelectedValuePath="Key" DisplayMemberPath="Value" SelectedValue="{Binding SelectedTheme}"/>
                     </Grid>
@@ -40,7 +40,7 @@
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0" Content="Font : " HorizontalAlignment="Right"></Label>
+                        <Label Grid.Column="0" Content="{DynamicResource Thema}" ContentStringFormat="{}{0} : " HorizontalAlignment="Right"></Label>
                         <ComboBox  Grid.Column="1" Width="250" HorizontalAlignment="Left" ItemsSource="{Binding FontFamilies}"
                                SelectedValue="{Binding SelectedFontFamily}"/>
                     </Grid>
@@ -48,9 +48,8 @@
             </GroupBox>
         </StackPanel>
         
-        <!-- 저장/취소 버튼 -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="Save" Command="{Binding SaveCommand}" Width="100" Margin="5"/>
+            <Button Content="{DynamicResource Save}" Command="{Binding SaveCommand}" Width="100" Margin="5"/>
         </StackPanel>
     </Grid>
 </UserControl>

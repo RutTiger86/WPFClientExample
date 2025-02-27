@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFClientExample.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Margin="10">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -22,22 +22,22 @@
                       SelectedValuePath="Key" DisplayMemberPath="Value" SelectedValue="{Binding SelectedSearchType, Mode= TwoWay}">
             </ComboBox>
             <TextBox Width="200" Margin="5" x:Name="SearchTextBox" Text="{Binding SearchText}" VerticalContentAlignment="Center"/>
-            <Button Content="Search" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
-            <Label Content="(CharacterID : 1,2,3,4, AccountName : TestAccount)" FontSize="12"/>
+            <Button Content="{DynamicResource Search}" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}"/>
+            <Label Content="{DynamicResource TestCharacter}" FontSize="12"/>
         </StackPanel>
 
 
         <DataGrid Grid.Row="1" ItemsSource="{Binding TargetChatLogInfo}" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Chat ID" Binding="{Binding Id}" Width="Auto"/>
-                <DataGridTextColumn Header="Chat Type" Binding="{Binding ChatType}" Width="Auto"/>
-                <DataGridTextColumn Header="Sent Time" Binding="{Binding SentTime}" Width="Auto"/>
-                <DataGridTextColumn Header="Chat Room Id" Binding="{Binding ChatRoomId}" Width="Auto"/>
-                <DataGridTextColumn Header="Sender Character Id" Binding="{Binding SenderCharacterId}" Width="Auto"/>
-                <DataGridTextColumn Header="Sender Name" Binding="{Binding SenderName}" Width="Auto"/>
-                <DataGridTextColumn Header="Receiver Character Id" Binding="{Binding ReceiverCharacterId}" Width="Auto"/>
-                <DataGridTextColumn Header="Receiver Name" Binding="{Binding ReceiverName}" Width="Auto"/>
-                <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ChatID}" Binding="{Binding Id}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ChatType}" Binding="{Binding ChatType}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource SentTime}" Binding="{Binding SentTime}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ChatRoomID}" Binding="{Binding ChatRoomId}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource SenderCharacterID}" Binding="{Binding SenderCharacterId}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource SenderName}" Binding="{Binding SenderName}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ReceiverCharacterID}" Binding="{Binding ReceiverCharacterId}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource ReceiverName}" Binding="{Binding ReceiverName}" Width="Auto"/>
+                <DataGridTextColumn Header="{DynamicResource Message}" Binding="{Binding Message}" Width="Auto"/>
             </DataGrid.Columns>
         </DataGrid>
 

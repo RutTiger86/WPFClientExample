@@ -63,7 +63,6 @@ namespace WPFClientExample
                 services.AddScoped<IGameLogService, GameLogService>();
                 services.AddScoped<IMonitoringService, MonitoringService>();
                 services.AddScoped<IBillingService, BillingService>();
-                services.AddScoped<ISettingService, SettingService>();
                 services.AddSingleton<ILocalizationService, LocalizationService>();
 
 
@@ -87,7 +86,7 @@ namespace WPFClientExample
 
 
                 //WindowModel 등록
-                services.AddSingleton<IMainWindowModel,MainWindowModel>();
+                services.AddSingleton<IMainWindowModel, MainWindowModel>();
                 services.AddSingleton<ILoginWindowModel, LoginWindowModel>();
 
                 //Window 등록
@@ -115,7 +114,15 @@ namespace WPFClientExample
         {
 
             var localizationService = host.Services.GetRequiredService<ILocalizationService>();
-            localizationService.ChangeLanguage("en-US");
+            ClientLanguage clientLanguage = JsonConfigurationManager.GetLanguage();
+            if (clientLanguage == ClientLanguage.ENGLISH)
+            {
+                localizationService.ChangeLanguage("en-US");
+            }
+            else
+            {
+                localizationService.ChangeLanguage("ko-KR");
+            }
 
             ClientTheme savedTheme = JsonConfigurationManager.GetTheme();
             if (savedTheme == ClientTheme.DARK)
@@ -130,6 +137,9 @@ namespace WPFClientExample
             {
                 dictionary["GlobalFont"] = new FontFamily(savedFont);
             }
+
+            var navigationService = host.Services.GetRequiredService<INavigationService>();
+            navigationService.InitializeTreeViewItems();
 
         }
 

@@ -6,6 +6,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using WPFClientExample.Models.DataBase;
+using WPFClientExample.Services;
+using WPFClientExample.Views;
 
 namespace WPFClientExample.Repositories
 {
@@ -15,44 +17,52 @@ namespace WPFClientExample.Repositories
     }
     public class MenuRepository : IMenuRepository
     {
+        private readonly ILocalizationService localizationService;
+
+        public MenuRepository(ILocalizationService localizationService)
+        {
+            this.localizationService = localizationService;
+        }
+
         public ObservableCollection<MenuItemModel> GetMenuItems()
         {
+            
             return
             [
                 new MenuItemModel
                 {
                     Id = 1,
-                    Title = "Game Logs",
+                    Title = localizationService.GetString("MenuGameLogs"),
                     Children =
                     [
-                        new() { Id = 2, Title = "User Info", ViewName = "UserInfo" },
+                        new() { Id = 2, Title = localizationService.GetString("MenuUserInfo"), ViewName =  typeof(UserInfoView).Name },
                     ]
                 },
                 new MenuItemModel
                 {
                     Id = 4,
-                    Title = "Monitoring",
+                    Title = localizationService.GetString("MenuMonitoring"),
                     Children =
                     [
-                        new () { Id = 5, Title = "ChatLog", ViewName = "ChatLog" },
-                        new () { Id = 6, Title = "CCU", ViewName = "CCUMonitoring" }
+                        new () { Id = 5, Title = localizationService.GetString("MenuChatLog"), ViewName = typeof(ChatLogView).Name },
+                        new () { Id = 6, Title = localizationService.GetString("MenuCCU"), ViewName = typeof(CcuMonitoringView).Name}
                     ]
                 },
                 new MenuItemModel
                 {
                     Id = 7,
-                    Title = "Billing",
+                    Title = localizationService.GetString("MenuBilling"),
                     Children =
                     [
-                        new() { Id = 8, Title = "Bill History", ViewName = "BillHistory" },
+                        new() { Id = 8, Title = localizationService.GetString("MenuBillHistory"), ViewName = typeof(BillHistoryView).Name},
                     ]
                 },new MenuItemModel
                 {
                     Id = 10,
-                    Title = "Setting",
+                    Title = localizationService.GetString("MenuSetting"),
                     Children =
                     [
-                        new() { Id = 11, Title = "Client Setting", ViewName = "Setting" },
+                        new() { Id = 11, Title = localizationService.GetString("MenuClientSetting"), ViewName = typeof(ClientSettingsView).Name},
                     ]
                 }
             ];

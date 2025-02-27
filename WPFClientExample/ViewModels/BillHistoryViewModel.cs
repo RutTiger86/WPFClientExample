@@ -28,6 +28,8 @@ namespace WPFClientExample.ViewModels
     public partial class BillHistoryViewModel:ObservableObject, IBillHistoryViewModel, IRecipient<LoginMessage>
     {
         private readonly IBillingService billingService;
+        private readonly ILocalizationService  localizationService;
+
 
         [ObservableProperty]
         List<BillHistoryInfo>? billHistoryInfos;
@@ -47,9 +49,10 @@ namespace WPFClientExample.ViewModels
         [ObservableProperty]
         private string searchText = string.Empty;
 
-        public BillHistoryViewModel(IBillingService billingService)
+        public BillHistoryViewModel(IBillingService billingService, ILocalizationService localizationService)
         {
             this.billingService = billingService;
+            this.localizationService = localizationService;
             Initialize();
             SettingMessage();
         }
@@ -57,8 +60,8 @@ namespace WPFClientExample.ViewModels
         {
             SearchType =
             [
-                new(USER_SEARCH_TYPE.ID, "Account ID"),
-                new(USER_SEARCH_TYPE.NAME, "Account Name")
+                new(USER_SEARCH_TYPE.ID, localizationService.GetString("AccountID")),
+                new(USER_SEARCH_TYPE.NAME, localizationService.GetString("AccountName"))
             ];
 
             SelectedSearchType = SearchType.First().Key;

@@ -41,6 +41,7 @@ namespace WPFClientExample.ViewModels
     {
         private readonly IGameLogService gameLogService;
         private readonly IServiceProvider serviceProvider;
+        private readonly ILocalizationService localizationService;
 
         [ObservableProperty]
         private KeyValuePair<USER_SEARCH_TYPE, string>[]? searchType;
@@ -63,10 +64,11 @@ namespace WPFClientExample.ViewModels
         [ObservableProperty]
         private AccountInfo? targetAccountInfo;
 
-        public UserInfoViewModel(IGameLogService gameLogService, IServiceProvider serviceProvider)
+        public UserInfoViewModel(IGameLogService gameLogService, IServiceProvider serviceProvider, ILocalizationService localizationService)
         {
             this.gameLogService = gameLogService;
             this.serviceProvider = serviceProvider;
+            this.localizationService = localizationService;
 
             SettingMessage();
             Initialize();
@@ -88,8 +90,8 @@ namespace WPFClientExample.ViewModels
         {
             SearchType =
             [
-                new(USER_SEARCH_TYPE.ID, "Account ID"),
-                new(USER_SEARCH_TYPE.NAME, "Account Name")
+                new(USER_SEARCH_TYPE.ID, localizationService.GetString("AccountID")),
+                new(USER_SEARCH_TYPE.NAME, localizationService.GetString("AccountName"))
             ];
 
             SelectedSearchType = SearchType.First().Key;
@@ -116,7 +118,7 @@ namespace WPFClientExample.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "SearchError", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, localizationService.GetString("ErrorCaption"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -134,11 +136,11 @@ namespace WPFClientExample.ViewModels
         {
             if (TargetAccountInfo != null)
             {
-                MessageBox.Show($"[ AccountId : {TargetAccountInfo.AccountId}]{Environment.NewLine}The account restriction view function is under development.");
+                MessageBox.Show(localizationService.GetString("MessageAccountRestriction"));
             }
             else
             {
-                MessageBox.Show($"Account Is Null, please Account Search First");
+                MessageBox.Show(localizationService.GetString("MessageAccountIsNull"));
             }
         }
 

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFClientExample"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"     
         mc:Ignorable="d"
-        Title="WPF Client Example" Height="600" Width="1000" WindowState="Maximized" MinWidth="1000" MinHeight="500">
+        Title="{DynamicResource MainProgramName}" Height="600" Width="1000" WindowState="Maximized" MinWidth="1024" MinHeight="768">
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -30,7 +30,7 @@
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
                 <TextBlock Text="{Binding LoginAuthUser.AuthId}" FontWeight="Bold" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                <Button Content="Logout" Command="{Binding LogoutCommand}" Foreground="Red"/>
+                <Button Content="{DynamicResource Logout}" Command="{Binding LogoutCommand}"/>
             </StackPanel>
             
             <ContentControl Grid.Row="1" Content="{Binding CurrentView}" Grid.Column="1"/>

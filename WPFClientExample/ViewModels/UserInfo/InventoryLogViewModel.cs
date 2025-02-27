@@ -26,6 +26,7 @@ namespace WPFClientExample.ViewModels.UserInfo
     public partial class InventoryLogViewModel:ObservableObject, IInventoryLogViewModel,IRecipient<LoginMessage>, IRecipient<SelectedCharacterMessage>
     {
         private readonly IGameLogService gameLogService;
+        private readonly ILocalizationService localizationService;
 
         [ObservableProperty]
         DateTime searchStartDate;
@@ -38,9 +39,10 @@ namespace WPFClientExample.ViewModels.UserInfo
 
         private CharacterInfo? selectedCharacterInfo; 
 
-        public InventoryLogViewModel(IGameLogService gameLogService)
+        public InventoryLogViewModel(IGameLogService gameLogService, ILocalizationService localizationService)
         {
             this.gameLogService = gameLogService;
+            this.localizationService = localizationService;
             SettingMessage();
         }
 
@@ -84,7 +86,7 @@ namespace WPFClientExample.ViewModels.UserInfo
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, localizationService.GetString("ErrorCaption"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

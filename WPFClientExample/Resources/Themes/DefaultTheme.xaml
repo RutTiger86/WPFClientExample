@@ -7,14 +7,14 @@
     <SolidColorBrush x:Key="AccentColor" Color="LightGray"/>
     <SolidColorBrush x:Key="SelectedBackgroundColor" Color="#FFCCE5FF"/>
     
-    <SolidColorBrush x:Key="MainColor" Color="DimGray"/>
+    <SolidColorBrush x:Key="MainColor" Color="Black"/>
     <SolidColorBrush x:Key="MainColorLight" Color="LightGray"/>
     <SolidColorBrush x:Key="MainColorDark" Color="DarkGray"/>
     
     <SolidColorBrush x:Key="BorderDarkMainBrush" Color="#C0C0C0"/>
     
     <SolidColorBrush x:Key="BackgroundGrayDark" Color="#FFEFEFEF"/>
-    <SolidColorBrush x:Key="BackgroundGrayLight" Color="#F5F5F5"/>
+    <SolidColorBrush x:Key="BackgroundGrayLight" Color="OrangeRed"/>
 
     <SolidColorBrush x:Key="ForegroundDisabledBrush" Color="White"/>
 

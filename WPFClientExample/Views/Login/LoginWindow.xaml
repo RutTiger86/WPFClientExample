@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WPFClientExample.Views.Login"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"     
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800">
+        Title="{DynamicResource Login}" Height="450" Width="800">
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -16,7 +16,7 @@
     
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="{DynamicResource LoginPage}" FontSize="24" HorizontalAlignment="Center"/>
+            <TextBlock Text="{DynamicResource MainProgramName}" FontSize="24" HorizontalAlignment="Center"/>
             <TextBlock Text="{DynamicResource TestAuthAccount}" FontSize="12" HorizontalAlignment="Center"/>
             <Grid >
                 <Grid.RowDefinitions >
@@ -34,7 +34,7 @@
                 <Label Grid.Row="1" Grid.Column="0" Content="{DynamicResource Password}" ContentStringFormat="{}{0} : " HorizontalAlignment="Right"/>
                 <PasswordBox Grid.Row="1" Grid.Column="1" x:Name="pb_LoginPassword" Width="200" Height="30" VerticalContentAlignment="Center"/>                
             </Grid>
-            <Button Content="{StaticResource Login}" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=pb_LoginPassword}" Width="100" Height="30" Margin="10"/>
+            <Button Content="{DynamicResource Login}" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=pb_LoginPassword}" Width="100" Height="30" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>

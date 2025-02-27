@@ -23,11 +23,13 @@ namespace WPFClientExample.Services
     {
         private readonly IUserRepository userRepository;
         private readonly IServerRepository serverRepository;
+        private readonly ILocalizationService localizationService;
 
-        public MonitoringService(IUserRepository userRepository, IServerRepository serverRepository)
+        public MonitoringService(IUserRepository userRepository, IServerRepository serverRepository , ILocalizationService localizationService)
         {
             this.userRepository = userRepository;
             this.serverRepository = serverRepository;
+            this.localizationService = localizationService;
         }
 
         public Task<List<Server>> GetServers()
@@ -40,7 +42,7 @@ namespace WPFClientExample.Services
 
             if(endDate < startDate)
             {
-                throw new Exception("Invalid date range setting");
+                throw new Exception(localizationService.GetString("MessageInvalidDateRange"));
             }
 
             if (!String.IsNullOrWhiteSpace(searchData))
@@ -55,14 +57,14 @@ namespace WPFClientExample.Services
                     }
                     else
                     {
-                        throw new Exception("Character name that does not exist ");
+                        throw new Exception(localizationService.GetString("MessageCharacterNameNotExist"));
                     }
                 }
                 else
                 {
                     if (!long.TryParse(searchData, out characterId))
                     {
-                        throw new Exception("Character ID can only be numbers.");
+                        throw new Exception(localizationService.GetString("MessageCharacterIdParseFaile"));
                     }
 
                 }

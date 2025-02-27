@@ -7,7 +7,7 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"     
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Margin="10">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,11 +16,11 @@
         </Grid.RowDefinitions>
 
         <!-- 검색 필터 -->
-        <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Top">
-            <Label Content="Select Date:"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+            <Label Content="{DynamicResource SelectDate}" ContentStringFormat="{}{0} : "/>
             <DatePicker VerticalAlignment="Center" SelectedDate="{Binding SelectedDate, Mode=TwoWay}" IsEnabled="{Binding ElementName=chb_RealTime,Path=IsChecked, Converter={StaticResource InverseBoolConverter}}"/>
 
-            <Label Content="Select Time:" Margin="0,10,0,0"/>
+            <Label Content="{DynamicResource SelectTime}" ContentStringFormat="{}{0} : "/>
             <StackPanel Orientation="Horizontal">
                 <ComboBox ItemsSource="{StaticResource HourItemsSource}"
                           Style="{StaticResource TimeComboBoxStyle}"
@@ -37,9 +37,9 @@
                           SelectedItem="{Binding SelectedSecond, Mode=TwoWay}"
                           IsEnabled="{Binding ElementName=chb_RealTime,Path=IsChecked, Converter={StaticResource InverseBoolConverter}}"/>
             </StackPanel>
-            <Button Content="Search" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}" IsEnabled="{Binding ElementName=chb_RealTime,Path=IsChecked, Converter={StaticResource InverseBoolConverter}}"/>
+            <Button Content="{DynamicResource Search}" Width="80" Margin="5" x:Name="SearchButton"  Command="{Binding SearchCommand}" IsEnabled="{Binding ElementName=chb_RealTime,Path=IsChecked, Converter={StaticResource InverseBoolConverter}}"/>
 
-            <CheckBox x:Name="chb_RealTime"  Content="RealTime CCU" VerticalAlignment="Center" IsChecked="{Binding RealTimeChecked}"/>
+            <CheckBox x:Name="chb_RealTime"  Content="{DynamicResource RealTimeCCU}" VerticalAlignment="Center" IsChecked="{Binding RealTimeChecked}"/>
 
         </StackPanel>
 
@@ -53,14 +53,14 @@
             </ComboBox>
 
             <StackPanel Orientation="Horizontal" Grid.Row="1">
-                <TextBlock Text="Max CCU : " Margin="10,0,0,0"/>
-                <TextBlock Text="{Binding SelectedServerMaxCcu}" Margin="0,0,10,0"/>
-                <TextBlock Text="Min CCU : " Margin="10,0,0,0"/>
-                <TextBlock Text="{Binding SelectedServerMinCcu}" Margin="0,0,10,0"/>
-                <TextBlock Text="Last CCU : " Margin="10,0,0,0"/>
-                <TextBlock Text="{Binding SelectedServerLastCcu}" Margin="0,0,10,0"/>
-                <TextBlock Text="Last Time : " Margin="10,0,0,0"/>
-                <TextBlock Text="{Binding SelectedServerLastTime}" Margin="0,0,10,0"/>
+                <Label Content="{DynamicResource MaxCCU}" ContentStringFormat="{}{0} : "/>
+                <TextBlock Text="{Binding SelectedServerMaxCcu}" VerticalAlignment="Center"/>
+                <Label Content="{DynamicResource MinCCU}" ContentStringFormat="{}{0} : " />
+                <TextBlock Text="{Binding SelectedServerMinCcu}" VerticalAlignment="Center"/>
+                <Label Content="{DynamicResource LastCCU}" ContentStringFormat="{}{0} : " />
+                <TextBlock Text="{Binding SelectedServerLastCcu}" VerticalAlignment="Center"/>
+                <Label Content="{DynamicResource LastTime}" ContentStringFormat="{}{0} : " />
+                <TextBlock Text="{Binding SelectedServerLastTime}" VerticalAlignment="Center"/>
             </StackPanel>
 
         </Grid>
@@ -68,14 +68,12 @@
         <lvc:CartesianChart Grid.Row="2" Name="CCUChart" 
                     Series="{Binding CcuSeries, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Time" Labels="{Binding TimeLables, Mode=OneWay}" />
+                <lvc:Axis Title="{DynamicResource Time}" Labels="{Binding TimeLables, Mode=OneWay}" />
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="CCU Count"  MaxValue="12000" MinValue="0"/>
+                <lvc:Axis Title="{DynamicResource CCUCount}"  MaxValue="12000" MinValue="0"/>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
-
-
 
     </Grid>
 </UserControl>

@@ -33,6 +33,7 @@ namespace WPFClientExample.ViewModels
     public partial class ChatLogViewModel:ObservableObject, IChatLogViewModel, IRecipient<LoginMessage>
     {
         private readonly IMonitoringService monitoringService;
+        private readonly ILocalizationService localizationService;
 
         [ObservableProperty]
         private KeyValuePair<USER_SEARCH_TYPE, string>[]? searchType;
@@ -52,9 +53,10 @@ namespace WPFClientExample.ViewModels
         [ObservableProperty]
         List<ChatLogInfo>? targetChatLogInfo;
 
-        public ChatLogViewModel(IMonitoringService monitoringService)
+        public ChatLogViewModel(IMonitoringService monitoringService, ILocalizationService localizationService)
         {
             this.monitoringService = monitoringService;
+            this.localizationService = localizationService;
             Initialize();
             SettingMessage();
         }
@@ -77,8 +79,8 @@ namespace WPFClientExample.ViewModels
         {
             SearchType =
             [
-                new(USER_SEARCH_TYPE.ID, "Character ID"),
-                new(USER_SEARCH_TYPE.NAME, "Character Name")
+                new(USER_SEARCH_TYPE.ID,  localizationService.GetString("CharacterID")),
+                new(USER_SEARCH_TYPE.NAME, localizationService.GetString("CharacterName"))
             ];
 
             SelectedSearchType = SearchType.First().Key;
@@ -95,7 +97,7 @@ namespace WPFClientExample.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, localizationService.GetString("ErrorCaption"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

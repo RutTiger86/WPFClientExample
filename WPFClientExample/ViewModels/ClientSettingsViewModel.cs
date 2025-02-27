@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using WPFClientExample.Commons.Enums;
 using WPFClientExample.Commons.Statics;
+using WPFClientExample.Services;
 using WPFClientExample.Views;
 using static WPFClientExample.Commons.Enums.SettingEnum;
 
@@ -34,6 +35,7 @@ namespace WPFClientExample.ViewModels
 
     public partial class ClientSettingsViewModel:ObservableObject, IClientSettingsViewModel
     {
+        private readonly ILocalizationService localizationService;
         [ObservableProperty]
         List<KeyValuePair<ClientLanguage, string>> language;
         [ObservableProperty]
@@ -53,8 +55,9 @@ namespace WPFClientExample.ViewModels
         ObservableCollection<KeyValuePair<String, UserControl>> categories;
 
 
-        public ClientSettingsViewModel()
+        public ClientSettingsViewModel(ILocalizationService localizationService)
         {
+            this.localizationService = localizationService;
             Initialize();
         }
 
@@ -95,8 +98,18 @@ namespace WPFClientExample.ViewModels
 
         private void ApplySettings()
         {
-            // 글로벌 폰트 적용
-            var dictionary = Application.Current.Resources.MergedDictionaries.FirstOrDefault(d => d.Source?.OriginalString == "Resources/Styles.xaml");
+            //다국어적용
+            if (SelectedLanguage == ClientLanguage.ENGLISH)
+            {
+                localizationService.ChangeLanguage("en-US");
+            }
+            else
+            {
+                localizationService.ChangeLanguage("ko-KR");
+            }
+
+                // 글로벌 폰트 적용
+                var dictionary = Application.Current.Resources.MergedDictionaries.FirstOrDefault(d => d.Source?.OriginalString == "Resources/Styles.xaml");
             if (dictionary != null)
             {
                 dictionary["GlobalFont"] = SelectedFontFamily;

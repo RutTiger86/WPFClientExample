@@ -13,86 +13,79 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <!-- Character Info & Stats -->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Character Info -->
-            <GroupBox Header="Character Info">
+            <GroupBox Header="{DynamicResource CharacterInfo}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Character Name: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource CharacterName}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.CharacterName}" />
-                        <TextBlock Text="Level: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource CharacterLevel}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.CharacterLevel}" />
-                        <TextBlock Text="Class: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource CharacterClass}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.CharacterClass}" />
-                        <TextBlock Text="Race: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource CharacterRace}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.CharacterRace}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        <TextBlock Text="Server ID: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource ServerID}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.ServerId}" />
-                        <TextBlock Text="Server Name: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource ServerName}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.ServerName}" />
-                        <TextBlock Text="Guild: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource Guild}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.GuildName}" />
                     </StackPanel>
                 </Grid>
             </GroupBox>
 
-            <!-- Status -->
-            <GroupBox Header="Status" Grid.Column="1">
+            <GroupBox Header="{DynamicResource CharacterStatus}" Grid.Column="1">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Attack Power: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource AttackPower}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.AttackPower}" />
-                        <TextBlock Text="Defense: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource Defense}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.Defense}" />
-                        <TextBlock Text="Magic Power: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding TargetCharacterDetailInfo.Defense}" />
-                        <TextBlock Text="Accuracy: " FontWeight="Bold"/>
-                        <TextBlock Text="{Binding TargetCharacterDetailInfo.Defense}" />
+                        <Label Content="{DynamicResource MagicPower}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding TargetCharacterDetailInfo.MagicPower}" />
+                        <Label Content="{DynamicResource Accuracy}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
+                        <TextBlock Text="{Binding TargetCharacterDetailInfo.Accuracy}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        <TextBlock Text="Health: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource Health}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.Health}" />
-                        <TextBlock Text="Mana: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource Mana}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.Mana}" />
-                        <TextBlock Text="Requtation: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource Requtation}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.Requtation}" />
-                        <TextBlock Text="Experience: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource Experience}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.TotalExperience}" />
                     </StackPanel>
                 </Grid>
             </GroupBox>
         </Grid>
 
-        <!-- Equipped Items & Live Status -->
         <Grid  Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Equipped Items -->
-            <GroupBox Header="Equipped Items" Grid.Column="0">
+            <GroupBox Header="{DynamicResource EquippedItems}" Grid.Column="0">
                 <Grid>
-                    <!-- RowDefinition을 사용하여 DataGrid가 GroupBox를 초과하지 않도록 설정 -->
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <!-- DataGrid가 최대한 공간을 차지하되 GroupBox 내에서만 확장 -->
                     </Grid.RowDefinitions>
 
                     <!-- DataGrid -->
@@ -104,18 +97,18 @@
                   VerticalAlignment="Stretch"
                   Grid.Row="0">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Slot" Binding="{Binding SlotType}" Width="Auto"/>
-                            <DataGridTextColumn Header="Grade" Binding="{Binding ItemGrade}" Width="Auto"/>
-                            <DataGridTextColumn Header="Item ID" Binding="{Binding ItemId}" Width="Auto"/>
-                            <DataGridTextColumn Header="Item Name" Binding="{Binding ItemName}" Width="*" />
+                            <DataGridTextColumn Header="{DynamicResource Slot}" Binding="{Binding SlotType}" Width="Auto"/>
+                            <DataGridTextColumn Header="{DynamicResource Grade}" Binding="{Binding ItemGrade}" Width="Auto"/>
+                            <DataGridTextColumn Header="{DynamicResource ItemID}" Binding="{Binding ItemId}" Width="Auto"/>
+                            <DataGridTextColumn Header="{DynamicResource ItemName}" Binding="{Binding ItemName}" Width="*" />
 
                             <!-- Detail Button -->
-                            <DataGridTemplateColumn Header="Item Detail" Width="Auto">
+                            <DataGridTemplateColumn Header="{DynamicResource ItemDetail}" Width="Auto">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Content="View Details"
-                                    Command="{Binding DataContext.ItemDetailShowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    CommandParameter="{Binding ItemId}"/>
+                                        <Button Content="{DynamicResource ViewDetails}"
+                                                Command="{Binding DataContext.ItemDetailShowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding ItemId}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -125,23 +118,22 @@
             </GroupBox>
 
 
-            <!-- Live Status -->
-            <GroupBox Header="Live Status" Grid.Column="1">
+            <GroupBox Header="{DynamicResource LiveStatus}" Grid.Column="1">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Last Position: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource LastPosition}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.ZoneName}" />
-                        <TextBlock Text="Current Channel: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource CurrentChannel}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.CurrentChannel}" />
                     </StackPanel>
                     <StackPanel Grid.Column="1">
-                        <TextBlock Text="Party ID: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource PartyID}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.PartyId}" />
-                        <TextBlock Text="PvP Mode: " FontWeight="Bold"/>
+                        <Label Content="{DynamicResource PvPMode}" ContentStringFormat="{}{0} : " FontWeight="Bold"/>
                         <TextBlock Text="{Binding TargetCharacterDetailInfo.PvpMode}" />
                     </StackPanel>
                 </Grid>
@@ -150,32 +142,32 @@
 
         <!-- Recent Chat & Quest List -->
         <TabControl Grid.Row="2">
-            <TabItem Header="Recent Chat">
+            <TabItem Header="{DynamicResource RecentChat}">
                 <DataGrid ItemsSource="{Binding TargetChatLogInfo}" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Chat ID" Binding="{Binding Id}" Width="Auto"/>
-                        <DataGridTextColumn Header="Chat Type" Binding="{Binding ChatType}" Width="Auto"/>
-                        <DataGridTextColumn Header="Chat Room Id" Binding="{Binding ChatRoomId}" Width="Auto"/>
-                        <DataGridTextColumn Header="Receiver Character Id" Binding="{Binding ReceiverCharacterId}" Width="Auto"/>
-                        <DataGridTextColumn Header="Receiver Name" Binding="{Binding ReceiverName}" Width="Auto"/>
-                        <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="Auto"/>
-                        <DataGridTextColumn Header="Sent Time" Binding="{Binding SentTime}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource ChatID}" Binding="{Binding Id}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource ChatType}" Binding="{Binding ChatType}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource ChatRoomID}" Binding="{Binding ChatRoomId}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource ReceiverCharacterID}" Binding="{Binding ReceiverCharacterId}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource ReceiverName}" Binding="{Binding ReceiverName}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource Message}" Binding="{Binding Message}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource SentTime}" Binding="{Binding SentTime}" Width="Auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Quest List">
+            <TabItem Header="{DynamicResource QuestList}">
                 <DataGrid ItemsSource="{Binding TargetCharacterQuestInfo}" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Quest ID" Binding="{Binding QuestId}" Width="Auto"/>
-                        <DataGridTextColumn Header="Quest Name" Binding="{Binding QuestName}" Width="Auto"/>
-                        <DataGridTextColumn Header="Quest Type" Binding="{Binding QuestType}" Width="Auto"/>
-                        <DataGridTextColumn Header="Quest Status" Binding="{Binding QuestStatus}" Width="Auto"/>
-                        <DataGridTextColumn Header="Current Step" Binding="{Binding CurrentStep}" Width="Auto"/>
-                        <DataGridTextColumn Header="Current Count" Binding="{Binding CurrentCount}" Width="Auto"/>
-                        <DataGridTextColumn Header="Is Cancled" Binding="{Binding IsCancled}" Width="Auto"/>
-                        <DataGridTextColumn Header="Start Time" Binding="{Binding StartTime}" Width="Auto"/>
-                        <DataGridTextColumn Header="Completion Time" Binding="{Binding CompletionTime}" Width="Auto"/>
-                        <DataGridTextColumn Header="Cancled Time" Binding="{Binding CancledTime}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource QuestID}" Binding="{Binding QuestId}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource QuestName}" Binding="{Binding QuestName}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource QuestType}" Binding="{Binding QuestType}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource QuestStatus}" Binding="{Binding QuestStatus}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource CurrentStep}" Binding="{Binding CurrentStep}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource CurrentCount}" Binding="{Binding CurrentCount}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource IsCanceled}" Binding="{Binding IsCancled}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource StartTime}" Binding="{Binding StartTime}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource CompletionTime}" Binding="{Binding CompletionTime}" Width="Auto"/>
+                        <DataGridTextColumn Header="{DynamicResource CanceledTime}" Binding="{Binding CancledTime}" Width="Auto"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>

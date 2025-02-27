@@ -5,6 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Localization/Strings.xaml"/>
                 <ResourceDictionary Source="Resources/Styles.xaml"/>
                 <ResourceDictionary Source="Resources/Themes/DefaultTheme.xaml"/>
                 <ResourceDictionary Source="/Resources/TimePickerStyles.xaml"/>

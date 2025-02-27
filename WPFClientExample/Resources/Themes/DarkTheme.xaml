@@ -7,9 +7,9 @@
     <SolidColorBrush x:Key="AccentColor" Color="#2E2E2E"/>
     <SolidColorBrush x:Key="SelectedBackgroundColor" Color="#FF444444"/>
 
-    <SolidColorBrush x:Key="MainColor" Color="DeepSkyBlue"/>
-    <SolidColorBrush x:Key="MainColorLight" Color="LightSkyBlue"/>
-    <SolidColorBrush x:Key="MainColorDark" Color="#00A7DF"/>
+    <SolidColorBrush x:Key="MainColor" Color="Black"/>
+    <SolidColorBrush x:Key="MainColorLight" Color="DimGray"/>
+    <SolidColorBrush x:Key="MainColorDark" Color="DimGray"/>
 
     <SolidColorBrush x:Key="BorderDarkMainBrush" Color="#C0C0C0"/>
 

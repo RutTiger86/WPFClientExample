@@ -19,6 +19,8 @@ namespace WPFClientExample.Services
         void NavigateTo(int menuId);
 
         event Action<UserControl?>? OnViewChanged;
+
+        void InitializeTreeViewItems();
     }
 
     public class NavigationService : INavigationService
@@ -47,10 +49,9 @@ namespace WPFClientExample.Services
                 { 11, serviceProvider.GetRequiredService<ClientSettingsView>() },
             };
             treeViews = [];
-            InitializeTreeViewItems();
         }
 
-        private void InitializeTreeViewItems()
+        public void InitializeTreeViewItems()
         {
             var menuItems = menuRepository.GetMenuItems();
             TreeViewItems.Clear();

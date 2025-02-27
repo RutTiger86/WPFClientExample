@@ -551,19 +551,19 @@ namespace WPFClientExample.Commons.Statics
             TestCharacterQuests =
                 [
                     // Character 1
-                    new CharacterQuestProgress { Id = 1, CharacterId = 1, QuestId = 1001, QuestStatus = (int)QUEST_STATUES.IN_PROGRESS, CurrentStep = 1, CurrentCount = 0, IsCancled = false, StartTime = DateTime.UtcNow.AddHours(-2) },
-                    new CharacterQuestProgress { Id = 2, CharacterId = 1, QuestId = 1003, QuestStatus = (int)QUEST_STATUES.COMPLETED, CurrentStep = 1, CurrentCount = 1, IsCancled = false, StartTime = DateTime.UtcNow.AddHours(-3), CompletionTime = DateTime.UtcNow.AddHours(-1) },
-                    new CharacterQuestProgress { Id = 3, CharacterId = 1, QuestId = 1006, QuestStatus = (int)QUEST_STATUES.CANCLE, CurrentStep = 1, CurrentCount = 0, IsCancled = true, StartTime = DateTime.UtcNow.AddHours(-4), CancledTime = DateTime.UtcNow.AddHours(-2) },
+                    new CharacterQuestProgress { Id = 1, CharacterId = 1, QuestId = 1001, QuestStatus = (int)QUEST_STATUES.IN_PROGRESS, CurrentStep = 1, CurrentCount = 0, IsCanceled = false, StartTime = DateTime.UtcNow.AddHours(-2) },
+                    new CharacterQuestProgress { Id = 2, CharacterId = 1, QuestId = 1003, QuestStatus = (int)QUEST_STATUES.COMPLETED, CurrentStep = 1, CurrentCount = 1, IsCanceled = false, StartTime = DateTime.UtcNow.AddHours(-3), CompletionTime = DateTime.UtcNow.AddHours(-1) },
+                    new CharacterQuestProgress { Id = 3, CharacterId = 1, QuestId = 1006, QuestStatus = (int)QUEST_STATUES.CANCLE, CurrentStep = 1, CurrentCount = 0, IsCanceled = true, StartTime = DateTime.UtcNow.AddHours(-4), CanceledTime = DateTime.UtcNow.AddHours(-2) },
 
                     // Character 2
-                    new CharacterQuestProgress { Id = 4, CharacterId = 2, QuestId = 1002, QuestStatus = (int)QUEST_STATUES.IN_PROGRESS, CurrentStep = 1, CurrentCount = 3, IsCancled = false, StartTime = DateTime.UtcNow.AddHours(-1) },
-                    new CharacterQuestProgress { Id = 5, CharacterId = 2, QuestId = 1004, QuestStatus = (int)QUEST_STATUES.COMPLETED, CurrentStep = 1, CurrentCount = 10, IsCancled = false, StartTime = DateTime.UtcNow.AddHours(-5), CompletionTime = DateTime.UtcNow.AddHours(-2) },
-                    new CharacterQuestProgress { Id = 6, CharacterId = 2, QuestId = 1007, QuestStatus = (int)QUEST_STATUES.FAILED, CurrentStep = 1, CurrentCount = 0, IsCancled = false, StartTime = DateTime.UtcNow.AddHours(-6) },
+                    new CharacterQuestProgress { Id = 4, CharacterId = 2, QuestId = 1002, QuestStatus = (int)QUEST_STATUES.IN_PROGRESS, CurrentStep = 1, CurrentCount = 3, IsCanceled = false, StartTime = DateTime.UtcNow.AddHours(-1) },
+                    new CharacterQuestProgress { Id = 5, CharacterId = 2, QuestId = 1004, QuestStatus = (int)QUEST_STATUES.COMPLETED, CurrentStep = 1, CurrentCount = 10, IsCanceled = false, StartTime = DateTime.UtcNow.AddHours(-5), CompletionTime = DateTime.UtcNow.AddHours(-2) },
+                    new CharacterQuestProgress { Id = 6, CharacterId = 2, QuestId = 1007, QuestStatus = (int)QUEST_STATUES.FAILED, CurrentStep = 1, CurrentCount = 0, IsCanceled = false, StartTime = DateTime.UtcNow.AddHours(-6) },
 
                     // Character 3
-                    new CharacterQuestProgress { Id = 7, CharacterId = 3, QuestId = 1005, QuestStatus = (int)QUEST_STATUES.IN_PROGRESS, CurrentStep = 1, CurrentCount = 0, IsCancled = false, StartTime = DateTime.UtcNow.AddMinutes(-45) },
-                    new CharacterQuestProgress { Id = 8, CharacterId = 3, QuestId = 1008, QuestStatus = (int)QUEST_STATUES.IN_PROGRESS, CurrentStep = 1, CurrentCount = 5, IsCancled = false, StartTime = DateTime.UtcNow.AddMinutes(-90) },
-                    new CharacterQuestProgress { Id = 9, CharacterId = 3, QuestId = 1009, QuestStatus = (int)QUEST_STATUES.COMPLETED, CurrentStep = 1, CurrentCount = 1, IsCancled = false, StartTime = DateTime.UtcNow.AddHours(-4), CompletionTime = DateTime.UtcNow.AddMinutes(-30) }
+                    new CharacterQuestProgress { Id = 7, CharacterId = 3, QuestId = 1005, QuestStatus = (int)QUEST_STATUES.IN_PROGRESS, CurrentStep = 1, CurrentCount = 0, IsCanceled = false, StartTime = DateTime.UtcNow.AddMinutes(-45) },
+                    new CharacterQuestProgress { Id = 8, CharacterId = 3, QuestId = 1008, QuestStatus = (int)QUEST_STATUES.IN_PROGRESS, CurrentStep = 1, CurrentCount = 5, IsCanceled = false, StartTime = DateTime.UtcNow.AddMinutes(-90) },
+                    new CharacterQuestProgress { Id = 9, CharacterId = 3, QuestId = 1009, QuestStatus = (int)QUEST_STATUES.COMPLETED, CurrentStep = 1, CurrentCount = 1, IsCanceled = false, StartTime = DateTime.UtcNow.AddHours(-4), CompletionTime = DateTime.UtcNow.AddMinutes(-30) }
                 ];
         }
 

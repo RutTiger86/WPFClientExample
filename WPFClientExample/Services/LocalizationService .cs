@@ -15,11 +15,10 @@ namespace WPFClientExample.Services
 
     public class LocalizationService : ILocalizationService
     {
-        private readonly ResourceDictionary resourceDictionary;
+        private ResourceDictionary resourceDictionary;
 
         public LocalizationService()
         {
-            resourceDictionary = new ResourceDictionary();
             LoadLanguage("en-US"); // 기본 언어 설정
         }
 
@@ -38,7 +37,7 @@ namespace WPFClientExample.Services
         {
             string resourcePath = "Resources/Localization/Strings.xaml"; 
             if (culture == "ko-KR")
-                resourcePath = "Resources/Localization/Strings.ko.xaml";
+                resourcePath = "Resources/Localization/Strings.kr.xaml";
 
             var existingResource = Application.Current.Resources.MergedDictionaries
                 .FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("Strings"));
@@ -46,8 +45,8 @@ namespace WPFClientExample.Services
             if (existingResource != null)
                 Application.Current.Resources.MergedDictionaries.Remove(existingResource);
 
-            var newResource = new ResourceDictionary { Source = new Uri(resourcePath, UriKind.Relative) };
-            Application.Current.Resources.MergedDictionaries.Add(newResource);
+            resourceDictionary = new ResourceDictionary { Source = new Uri(resourcePath, UriKind.Relative) };
+            Application.Current.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
 

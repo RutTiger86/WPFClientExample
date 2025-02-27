@@ -1,11 +1,155 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-  <sys:String x:Key="Login">Login</sys:String>
-  <sys:String x:Key="LoginPage">Login Page</sys:String>
-  <sys:String x:Key="TestAuthAccount">(admin / 1234)</sys:String>
-  <sys:String x:Key="ID">ID</sys:String>
-  <sys:String x:Key="Password">PW</sys:String>
-  <sys:String x:Key="Username">Username</sys:String>
-  <sys:String x:Key="Submit">Submit</sys:String>
+    <sys:String x:Key="Login">Login</sys:String>
+    <sys:String x:Key="Logout">Logout</sys:String>
+    <sys:String x:Key="TestAuthAccount">(admin / 1234)</sys:String>
+    <sys:String x:Key="ID">ID</sys:String>
+    <sys:String x:Key="Password">PW</sys:String>
+    
+    <sys:String x:Key="MainProgramName">WPF Client Example</sys:String>
+    <sys:String x:Key="Search">Search</sys:String>
+    <sys:String x:Key="TestAccount">(AccountID : 12345678, AccountName : TestAccount)</sys:String>
+    <sys:String x:Key="AcountID">AccountID</sys:String>
+    <sys:String x:Key="AccountName">Account Name</sys:String>
+    <sys:String x:Key="AccountStatus">Account Status</sys:String>
+    <sys:String x:Key="LastLoginTime">Last LoginTime</sys:String>
+    <sys:String x:Key="IsOnLine">IsOnLine</sys:String>
+    <sys:String x:Key="LastLocation">Last Location</sys:String>
+    <sys:String x:Key="LastLoginIP">Last Login IP</sys:String>
+    <sys:String x:Key="CreateDate">Create Date</sys:String>
+    <sys:String x:Key="LastKnownLocation">Last Known Location</sys:String>
+    <sys:String x:Key="TotalPlayTime">Total Play Time</sys:String>
+    <sys:String x:Key="JoinDate">JoinDate</sys:String>
+    <sys:String x:Key="AccountRestriction">Account Restriction</sys:String>
+    <sys:String x:Key="ServerID">Server ID</sys:String>
+    <sys:String x:Key="ServerName">Server Name</sys:String>
+    <sys:String x:Key="CharacterID">Character ID</sys:String>
+    <sys:String x:Key="CharacterName">Character Name</sys:String>
+    <sys:String x:Key="CharacterInfo">Character Info</sys:String>
+    <sys:String x:Key="InventoryLog">Inventory Log</sys:String>
+    
+    <sys:String x:Key="Language">Language</sys:String>
+    <sys:String x:Key="Thema">Thema</sys:String>
+    <sys:String x:Key="Font">Font</sys:String>
+    <sys:String x:Key="Save">Save</sys:String>
+    <sys:String x:Key="UI">UI</sys:String>
+    <sys:String x:Key="General">General</sys:String>
+    
+    <sys:String x:Key="TestCharacter">(CharacterID : 1,2,3,4, CharacterName : Character1,2,3)</sys:String>
+    <sys:String x:Key="ChatID">ChatID</sys:String>
+    <sys:String x:Key="ChatType">Chat Type</sys:String>
+    <sys:String x:Key="SentTime">Sent Time</sys:String>
+    <sys:String x:Key="ChatRoomID">Chat Room ID</sys:String>
+    <sys:String x:Key="SenderCharacterID">Sender Character ID</sys:String>
+    <sys:String x:Key="SenderName">Sender Name</sys:String>
+    <sys:String x:Key="ReceiverCharacterID">Receiver Character ID</sys:String>
+    <sys:String x:Key="ReceiverName">Receiver Name</sys:String>
+    <sys:String x:Key="Message">Message</sys:String>
+
+    <sys:String x:Key="SelectDate">Select Date</sys:String>
+    <sys:String x:Key="SelectTime">Select Time</sys:String>
+    <sys:String x:Key="RealTimeCCU">RealTime CCU</sys:String>
+    <sys:String x:Key="MaxCCU">Max CCU</sys:String>
+    <sys:String x:Key="MinCCU">Min CCU</sys:String>
+    <sys:String x:Key="LastCCU">Last CCU</sys:String>
+    <sys:String x:Key="LastTime">Last Time</sys:String>
+    <sys:String x:Key="Time">Time</sys:String>
+    <sys:String x:Key="CCUCount">CCU Count</sys:String>
+
+
+    <sys:String x:Key="BillTxID">Bill Tx ID</sys:String>
+    <sys:String x:Key="BillTxType">Bill Tx Type</sys:String>
+    <sys:String x:Key="BillTxStatus">Bill Tx Status</sys:String>
+    <sys:String x:Key="PurchaseToken">Purchase Token</sys:String>
+    <sys:String x:Key="IsDone">IsDone</sys:String>
+    <sys:String x:Key="ProductID">Product ID</sys:String>
+    <sys:String x:Key="AccountID">Account ID</sys:String>
+    <sys:String x:Key="CharID">Char ID</sys:String>
+    <sys:String x:Key="CharName">Char Name</sys:String>
+    <sys:String x:Key="BillProductType">Bill Product Type</sys:String>
+    <sys:String x:Key="UpdateDate">Update Date</sys:String>
+    <sys:String x:Key="ProductKey">Product Key</sys:String>
+    <sys:String x:Key="ProductName">Product Name</sys:String>
+    <sys:String x:Key="Price">Price</sys:String>
+    <sys:String x:Key="ProductTypes">Product Types</sys:String>
+    <sys:String x:Key="GameItemID">GameItem ID</sys:String>
+    <sys:String x:Key="GameItemVolume">GameItem Volume</sys:String>
+    <sys:String x:Key="ItemName">Item Name</sys:String>
+    <sys:String x:Key="Grade">Grade</sys:String>
+    <sys:String x:Key="ItemType">Item Type</sys:String>
+
+
+    <sys:String x:Key="LogID">Log ID</sys:String>
+    <sys:String x:Key="ChangeType">Change Type</sys:String>
+    <sys:String x:Key="Timestamp">Timestamp</sys:String>
+    <sys:String x:Key="ItemID">Item ID</sys:String>
+    <sys:String x:Key="BeforQuantity">Befor Quantity</sys:String>
+    <sys:String x:Key="QuantityChange">Quantity Change</sys:String>
+    <sys:String x:Key="AfterQuantity">After Quantity</sys:String>
+
+
+
+    <sys:String x:Key="CharacterStatus">Status</sys:String>
+    <sys:String x:Key="CharacterLevel">Level</sys:String>
+    <sys:String x:Key="CharacterClass">Class</sys:String>
+    <sys:String x:Key="CharacterRace">Race</sys:String>
+    <sys:String x:Key="Guild">Guild</sys:String>
+    <sys:String x:Key="AttackPower">Attack Power</sys:String>
+    <sys:String x:Key="Defense">Defense</sys:String>
+    <sys:String x:Key="MagicPower">Magic Power</sys:String>
+    <sys:String x:Key="Accuracy">Accuracy</sys:String>
+    <sys:String x:Key="Health">Health</sys:String>
+    <sys:String x:Key="Mana">Mana</sys:String>
+    <sys:String x:Key="Requtation">Requtation</sys:String>
+    <sys:String x:Key="Experience">Experience</sys:String>
+
+
+    <sys:String x:Key="ItemDetail">Item Detail</sys:String>
+    <sys:String x:Key="EquippedItems">Equipped Items</sys:String>
+    <sys:String x:Key="RecentChat">Recent Chat</sys:String>
+    <sys:String x:Key="QuestList">Quest List</sys:String>
+    <sys:String x:Key="Slot">Slot</sys:String>
+    <sys:String x:Key="ViewDetails">View Details</sys:String>
+    <sys:String x:Key="LiveStatus">Live Status</sys:String>
+    <sys:String x:Key="LastPosition">Last Position</sys:String>
+    <sys:String x:Key="CurrentChannel">Current Channel</sys:String>
+    <sys:String x:Key="PartyID">Party ID</sys:String>
+    <sys:String x:Key="PvPMode">PvP Mode</sys:String>
+
+
+    <sys:String x:Key="QuestID">Quest ID</sys:String>
+    <sys:String x:Key="QuestName">Quest Name</sys:String>
+    <sys:String x:Key="QuestType">Quest Type</sys:String>
+    <sys:String x:Key="QuestStatus">Quest Status</sys:String>
+    <sys:String x:Key="CurrentStep">Current Step</sys:String>
+    <sys:String x:Key="CurrentCount">Current Count</sys:String>
+    <sys:String x:Key="IsCanceled">Is Canceled</sys:String>
+    <sys:String x:Key="StartTime">Start Time</sys:String>
+    <sys:String x:Key="CompletionTime">Completion Time</sys:String>
+    <sys:String x:Key="CanceledTime">Canceled Time</sys:String>
+
+    <sys:String x:Key="MenuGameLogs">Game Logs</sys:String>
+    <sys:String x:Key="MenuUserInfo">User Info</sys:String>
+    <sys:String x:Key="MenuMonitoring">Monitoring</sys:String>
+    <sys:String x:Key="MenuChatLog">ChatLog</sys:String>
+    <sys:String x:Key="MenuCCU">CCU</sys:String>
+    <sys:String x:Key="MenuBilling">Billing</sys:String>
+    <sys:String x:Key="MenuBillHistory">Bill History</sys:String>
+    <sys:String x:Key="MenuSetting">Setting</sys:String>
+    <sys:String x:Key="MenuClientSetting">Client Setting</sys:String>
+
+    <sys:String x:Key="ErrorCaption">Error</sys:String>
+
+    <sys:String x:Key="MessageAccountRestriction">The account restriction view function is under development.</sys:String>
+    <sys:String x:Key="MessageAccountIsNull">Account Is Null, please Account Search First.</sys:String>
+    <sys:String x:Key="MessageItemDetails">The item details view function is under development.</sys:String>
+    <sys:String x:Key="MessageLogInFailed">Invalid Username or Password!</sys:String>
+    <sys:String x:Key="MessageLogInFailedCaption">Login Failed</sys:String>
+
+    <sys:String x:Key="MessageInvalidDateRange">Invalid date range setting.</sys:String>
+    <sys:String x:Key="MessageCharacterNameNotExist">Character name that does not exist.</sys:String>
+    <sys:String x:Key="MessageCharacterIdParseFaile">Character ID can only be numbers.</sys:String>
+    <sys:String x:Key="MessageNeedAccountID">Need Account ID.</sys:String>
+
 </ResourceDictionary>
