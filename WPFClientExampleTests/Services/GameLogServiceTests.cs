@@ -31,7 +31,7 @@ namespace WPFClientExampleTests.Services
         }
 
         [TestMethod()]
-        public void GetAccountInfoAsyncTest_ByName()
+        public void GetAccountInfoTest_ByName()
         {
             // Arrange
             string accountName = "TestUser";
@@ -51,7 +51,7 @@ namespace WPFClientExampleTests.Services
         }
 
         [TestMethod()]
-        public void GetAccountInfoAsyncTest_ById()
+        public void GetAccountInfoTest_ById()
         {
             // Arrange
             long accountId = 123;
@@ -75,7 +75,7 @@ namespace WPFClientExampleTests.Services
         [DataRow(USER_SEARCH_TYPE.ID, "")]
         [DataRow(USER_SEARCH_TYPE.NAME, null)]
         [DataRow(USER_SEARCH_TYPE.NAME, "")]
-        public void  GetAccountInfoAsyncTest_SearchTextNull(USER_SEARCH_TYPE searchType, string? searchData)
+        public void  GetAccountInfoTest_SearchTextNull(USER_SEARCH_TYPE searchType, string? searchData)
         {
             // Arrange
 
@@ -90,7 +90,7 @@ namespace WPFClientExampleTests.Services
 
         [TestMethod()]
         [ExpectedException(typeof(Exception))]
-        public void GetAccountInfoAsyncTest_Exception()
+        public void GetAccountInfoTest_Exception()
         {
             // Arrange
 
@@ -103,39 +103,114 @@ namespace WPFClientExampleTests.Services
         }
 
         [TestMethod()]
-        public void GetCharacterInfoListAsyncTest()
+        public void GetCharacterInfoListTest()
         {
-            Assert.Fail();
+            // Arrange
+            long accountId = 123;
+            userRepositoryMock.Setup(repo => repo.GetCharacterInfoList(accountId)).Returns([]);
+
+            // Act
+            var result = gameLogService.GetCharacterInfoList(accountId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            userRepositoryMock.Verify(p => p.GetCharacterInfoList(accountId), Times.Once);
         }
 
         [TestMethod()]
-        public void GetCharacterInfoDetailInfoAsyncTest()
+        public void GetCharacterInfoDetailInfoTest()
         {
-            Assert.Fail();
+            // Arrange
+            long characterId = 123;
+            userRepositoryMock.Setup(repo => repo.GetCharacterDetailInfo(characterId)).Returns(new CharacterDetailInfo() { CharacterName  = "", ServerName = ""});
+
+            // Act
+            var result = gameLogService.GetCharacterInfoDetailInfo(characterId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            userRepositoryMock.Verify(p => p.GetCharacterDetailInfo(characterId), Times.Once);
         }
 
         [TestMethod()]
-        public void GetCharacterEquipeedInfoAsyncTest()
+        public void GetCharacterEquipeedInfoTest()
         {
-            Assert.Fail();
+            // Arrange
+            long characterId = 123;
+            userRepositoryMock.Setup(repo => repo.GetCharacterEquipeedInfo(characterId)).Returns([]);
+
+            // Act
+            var result = gameLogService.GetCharacterEquipeedInfo(characterId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            userRepositoryMock.Verify(p => p.GetCharacterEquipeedInfo(characterId), Times.Once);
         }
 
         [TestMethod()]
-        public void GetChatLogInfoByCharacterIdAsyncTest()
+        public void GetChatLogInfoByCharacterIdTest()
         {
-            Assert.Fail();
+            // Arrange
+            long characterId = 123;
+            userRepositoryMock.Setup(repo => repo.GetChatLogInfosByCharacterId(characterId)).Returns([]);
+
+            // Act
+            var result = gameLogService.GetChatLogInfoByCharacterId(characterId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            userRepositoryMock.Verify(p => p.GetChatLogInfosByCharacterId(characterId), Times.Once);
         }
 
         [TestMethod()]
-        public void GetCharacterQuestInfoByCharacterIdAsyncTest()
+        public void GetCharacterQuestInfoByCharacterIdTest()
         {
-            Assert.Fail();
+            // Arrange
+            long characterId = 123;
+            userRepositoryMock.Setup(repo => repo.GetCharacterQuestInfoByCharacterId(characterId)).Returns([]);
+
+            // Act
+            var result = gameLogService.GetCharacterQuestInfoByCharacterId(characterId);
+
+            // Assert
+            Assert.IsNotNull(result);
+            userRepositoryMock.Verify(p => p.GetCharacterQuestInfoByCharacterId(characterId), Times.Once);
         }
 
         [TestMethod()]
-        public void GetInventoryHistoryLogAsyncTest()
+        public void GetInventoryHistoryLogTest()
         {
-            Assert.Fail();
+            // Arrange
+            long characterId = 123;
+            DateTime startDate = DateTime.Now.AddDays(-1);
+            DateTime endDate = DateTime.Now;
+
+            userRepositoryMock.Setup(repo => repo.GetInventoryHistoryLog(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime())).Returns([]);
+
+            // Act
+            var result = gameLogService.GetInventoryHistoryLog(characterId, startDate, endDate);
+
+            // Assert
+            Assert.IsNotNull(result);
+            userRepositoryMock.Verify(p => p.GetInventoryHistoryLog(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime()), Times.Once);
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(Exception))]
+        public void GetInventoryHistoryLogTest_Exception()
+        {
+            // Arrange
+            long characterId = 123;
+            DateTime startDate = DateTime.Now.AddDays(+1);
+            DateTime endDate = DateTime.Now;
+
+            userRepositoryMock.Setup(repo => repo.GetInventoryHistoryLog(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime())).Returns([]);
+
+            // Act
+            var result = gameLogService.GetInventoryHistoryLog(characterId, startDate, endDate);
+
+            // Assert
+            userRepositoryMock.Verify(p => p.GetInventoryHistoryLog(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime()), Times.Never);
         }
     }
 }
