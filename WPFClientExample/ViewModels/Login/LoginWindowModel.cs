@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CSharp.WPF.MVVM.Messages;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using WPFClientExample.Commons.Messages;
@@ -36,7 +35,7 @@ namespace WPFClientExample.ViewModels.Login
         private void Login(PasswordBox param)
         {
 
-            (bool authResult , AuthAccount? user ) = authService.Authenticate(AuthUserId, param.Password);
+            (bool authResult, AuthAccount? user) = authService.Authenticate(AuthUserId, param.Password);
             if (authResult)
             {
                 WeakReferenceMessenger.Default.Send(new LoginMessage(user));

@@ -1,13 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CSharp.WPF.MVVM.Messages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.Pkcs;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Commons.Messages.UserInfo;
@@ -29,7 +22,7 @@ namespace WPFClientExample.ViewModels.UserInfo
         IRelayCommand<long> ItemDetailShowCommand { get; }
     }
 
-    public partial class CharacterInfoViewModel:ObservableObject, ICharacterInfoViewModel, IRecipient<SelectedCharacterMessage>, IRecipient<LoginMessage>
+    public partial class CharacterInfoViewModel : ObservableObject, ICharacterInfoViewModel, IRecipient<SelectedCharacterMessage>, IRecipient<LoginMessage>
     {
         private readonly IGameLogService gameLogService;
         private readonly ILocalizationService localizationService;
@@ -89,7 +82,7 @@ namespace WPFClientExample.ViewModels.UserInfo
 
         private async Task SetCharacterDetailInfo()
         {
-            if (SelectedCharacter!= null)
+            if (SelectedCharacter != null)
             {
                 TargetCharacterDetailInfo = await Task.Run(() => gameLogService.GetCharacterInfoDetailInfoAsync(SelectedCharacter.CharacterId)
                 ).ConfigureAwait(false);
@@ -122,8 +115,8 @@ namespace WPFClientExample.ViewModels.UserInfo
             }
         }
 
-        [RelayCommand] 
-        private  void ItemDetailShow(long itemID)
+        [RelayCommand]
+        private void ItemDetailShow(long itemID)
         {
             MessageBox.Show(localizationService.GetString("MessageItemDetails"));
         }

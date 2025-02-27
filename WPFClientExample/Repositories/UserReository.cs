@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
-using WPFClientExample.Commons.Enums;
+﻿using WPFClientExample.Commons.Enums;
 using WPFClientExample.Commons.Statics;
 using WPFClientExample.Models;
-using WPFClientExample.Models.DataBase;
 using WPFClientExample.Models.GameLog;
 
 namespace WPFClientExample.Repositories
 {
     public interface IUserRepository
     {
-        public AccountInfo? GetAccountInfo( long accountID);
+        public AccountInfo? GetAccountInfo(long accountID);
         public AccountInfo? GetAccountInfoByName(string accountName);
         public List<CharacterInfo> GetCharacterInfoList(long accountId);
         public CharacterInfo? GetCharacterInfoByCharacterName(string charName);
@@ -49,7 +40,7 @@ namespace WPFClientExample.Repositories
 
         public CharacterInfo? GetCharacterInfoByCharacterName(string charName)
         {
-            return (from tc in TestDataFactory.TestCharacters 
+            return (from tc in TestDataFactory.TestCharacters
                     join si in TestDataFactory.TestServers on tc.ServerID equals si.Id
                     where tc.CharacterName == charName
                     select new CharacterInfo()
@@ -139,7 +130,7 @@ namespace WPFClientExample.Repositories
                     select new CharacterEquipeedInfo()
                     {
                         CharEquipId = tce.Id,
-                        ItemGrade = (ITEM_GRADE) ti.Grade,
+                        ItemGrade = (ITEM_GRADE)ti.Grade,
                         ItemId = tce.ItemId,
                         ItemName = ti.ItemName,
                         SlotType = (EQUIP_SLOT_TYPE)tce.SlotType,
@@ -180,8 +171,8 @@ namespace WPFClientExample.Repositories
                         CurrentStep = cq.CurrentStep,
                         IsCanceled = cq.IsCanceled,
                         QuestName = q.QuestName,
-                        QuestStatus = (QUEST_STATUES) cq.QuestStatus,
-                        QuestType = (QUEST_TYPE) q.QuestType,
+                        QuestStatus = (QUEST_STATUES)cq.QuestStatus,
+                        QuestType = (QUEST_TYPE)q.QuestType,
                         StartTime = cq.StartTime
                     }).ToList();
         }
@@ -191,7 +182,7 @@ namespace WPFClientExample.Repositories
 
             return (from tih in TestDataFactory.TestInventoryHistoryLogs
                     where tih.CharacterId == characterId
-                    && (tih.Timestamp >=startDate)
+                    && (tih.Timestamp >= startDate)
                     && (tih.Timestamp <= endDate)
                     select new InventoryHistoryLogInfo()
                     {
@@ -204,16 +195,16 @@ namespace WPFClientExample.Repositories
                         CharacterId = tih.CharacterId,
                         ItemId = tih.ItemId,
                         QuantityChange = tih.QuantityChange,
-                    }).OrderByDescending(p=> p.Timestamp).ToList();
+                    }).OrderByDescending(p => p.Timestamp).ToList();
         }
 
         public List<ChatLogInfo>? GetChatLogInfosByCharacterId(long characterId, DateTime startDate, DateTime endDate)
         {
             return (from tcl in TestDataFactory.TestChatlogs
-                    where 
+                    where
                     (
                         characterId == 0
-                        || tcl.SenderCharacterId == characterId 
+                        || tcl.SenderCharacterId == characterId
                         || tcl.ReceiverCharacterId == characterId
                     )
                     && tcl.SentTime >= startDate
@@ -229,7 +220,7 @@ namespace WPFClientExample.Repositories
                         SenderCharacterId = tcl.SenderCharacterId,
                         SenderName = tcl.SenderName,
                         SentTime = tcl.SentTime
-                    }).OrderByDescending(p=> p.SentTime).ToList();
+                    }).OrderByDescending(p => p.SentTime).ToList();
         }
     }
 }

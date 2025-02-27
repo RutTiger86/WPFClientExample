@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
 namespace WPFClientExample.Services
 {
@@ -35,7 +30,7 @@ namespace WPFClientExample.Services
 
         private void LoadLanguage(string culture)
         {
-            string resourcePath = "Resources/Localization/Strings.xaml"; 
+            string resourcePath = "Resources/Localization/Strings.xaml";
             if (culture == "ko-KR")
                 resourcePath = "Resources/Localization/Strings.kr.xaml";
 

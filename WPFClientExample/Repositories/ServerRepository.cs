@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPFClientExample.Commons.Statics;
+﻿using WPFClientExample.Commons.Statics;
 using WPFClientExample.Models.DataBase;
 using WPFClientExample.Models.Monitoring;
 
@@ -15,7 +10,7 @@ namespace WPFClientExample.Repositories
         List<CcuInfo> GetServerCcu(int serverID, DateTime startDate, DateTime endDate);
     }
 
-    public class ServerRepository:IServerRepository
+    public class ServerRepository : IServerRepository
     {
         public List<Server> GetServers()
         {
@@ -26,12 +21,12 @@ namespace WPFClientExample.Repositories
         {
             List<CcuInfo> result = [];
             Random random = new();
-            for(DateTime targetDate = startDate; targetDate<=endDate; targetDate =targetDate.AddMinutes(1))
+            for (DateTime targetDate = startDate; targetDate <= endDate; targetDate = targetDate.AddMinutes(1))
             {
                 result.Add(new CcuInfo()
                 {
                     ServerId = serverID,
-                    CcuValue = new KeyValuePair<DateTime, int>(targetDate, random.Next(1000,10000))
+                    CcuValue = new KeyValuePair<DateTime, int>(targetDate, random.Next(1000, 10000))
                 });
             }
 

@@ -1,15 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WPFClientExample.Commons.Enums;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Models.Billing;
-using WPFClientExample.Models.DataBase;
 using WPFClientExample.Services;
 
 namespace WPFClientExample.ViewModels
@@ -21,14 +15,14 @@ namespace WPFClientExample.ViewModels
         DateTime SearchEndDate { get; set; }
         IAsyncRelayCommand SearchCommand { get; }
         KeyValuePair<USER_SEARCH_TYPE, string>[]? SearchType { get; set; }
-         USER_SEARCH_TYPE SelectedSearchType { get; set; }
+        USER_SEARCH_TYPE SelectedSearchType { get; set; }
         string SearchText { get; set; }
     }
 
-    public partial class BillHistoryViewModel:ObservableObject, IBillHistoryViewModel, IRecipient<LoginMessage>
+    public partial class BillHistoryViewModel : ObservableObject, IBillHistoryViewModel, IRecipient<LoginMessage>
     {
         private readonly IBillingService billingService;
-        private readonly ILocalizationService  localizationService;
+        private readonly ILocalizationService localizationService;
 
 
         [ObservableProperty]

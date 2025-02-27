@@ -1,19 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using WPFClientExample.Commons.Enums;
 using WPFClientExample.Commons.Statics;
 using WPFClientExample.Services;
-using WPFClientExample.Views;
 using static WPFClientExample.Commons.Enums.SettingEnum;
 
 namespace WPFClientExample.ViewModels
@@ -33,7 +25,7 @@ namespace WPFClientExample.ViewModels
         IRelayCommand SaveCommand { get; }
     }
 
-    public partial class ClientSettingsViewModel:ObservableObject, IClientSettingsViewModel
+    public partial class ClientSettingsViewModel : ObservableObject, IClientSettingsViewModel
     {
         private readonly ILocalizationService localizationService;
         [ObservableProperty]
@@ -63,7 +55,7 @@ namespace WPFClientExample.ViewModels
 
         private void Initialize()
         {
-            Language  =
+            Language =
             [
                 new(ClientLanguage.ENGLISH, "English"),
                 new(ClientLanguage.KOREAN, "한국어")
@@ -108,8 +100,8 @@ namespace WPFClientExample.ViewModels
                 localizationService.ChangeLanguage("ko-KR");
             }
 
-                // 글로벌 폰트 적용
-                var dictionary = Application.Current.Resources.MergedDictionaries.FirstOrDefault(d => d.Source?.OriginalString == "Resources/Styles.xaml");
+            // 글로벌 폰트 적용
+            var dictionary = Application.Current.Resources.MergedDictionaries.FirstOrDefault(d => d.Source?.OriginalString == "Resources/Styles.xaml");
             if (dictionary != null)
             {
                 dictionary["GlobalFont"] = SelectedFontFamily;

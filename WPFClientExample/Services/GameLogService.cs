@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using WPFClientExample.Commons.Enums;
 using WPFClientExample.Models;
-using WPFClientExample.Models.DataBase;
 using WPFClientExample.Models.GameLog;
 using WPFClientExample.Repositories;
 
@@ -57,8 +50,8 @@ namespace WPFClientExample.Services
             }
             else
             {
-                MessageBox.Show(localizationService.GetString("MessageNeedAccountID"),localizationService.GetString("ErrorCaption"),MessageBoxButton.OK, MessageBoxImage.Error);
-                return Task.FromResult< AccountInfo?>(null);
+                MessageBox.Show(localizationService.GetString("MessageNeedAccountID"), localizationService.GetString("ErrorCaption"), MessageBoxButton.OK, MessageBoxImage.Error);
+                return Task.FromResult<AccountInfo?>(null);
             }
         }
 
@@ -100,7 +93,7 @@ namespace WPFClientExample.Services
         public Task<List<InventoryHistoryLogInfo>?> GetInventoryHistoryLogAsync(long characterId, DateTime startDate, DateTime endDate)
         {
             if (endDate < startDate)
-            {   
+            {
                 throw new Exception(localizationService.GetString("MessageInvalidDateRange"));
             }
 

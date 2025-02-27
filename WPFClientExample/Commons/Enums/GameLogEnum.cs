@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WPFClientExample.Commons.Enums
+﻿namespace WPFClientExample.Commons.Enums
 {
     public enum USER_SEARCH_TYPE
     {
@@ -23,15 +17,15 @@ namespace WPFClientExample.Commons.Enums
 
     public enum CHARACTER_CLASS
     {
-        NONE =0,
-        WARRIOR,           
-        MAGE,        
-        ARCHER,           
+        NONE = 0,
+        WARRIOR,
+        MAGE,
+        ARCHER,
     }
 
     public enum CHARACTER_RACE
     {
-        NONE =0,
+        NONE = 0,
         HUMAN,
         ELF,
         DWARF,

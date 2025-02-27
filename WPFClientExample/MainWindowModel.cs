@@ -2,23 +2,17 @@
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CSharp.WPF.MVVM.Messages;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Models.DataBase;
 using WPFClientExample.Repositories;
 using WPFClientExample.Services;
-using WPFClientExample.ViewModels;
 
 namespace WPFClientExample
 {
     public interface IMainWindowModel
-    { 
+    {
         UserControl? CurrentView { get; set; }
 
         AuthAccount? LoginAuthUser { get; set; }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using WPFClientExample.Models.DataBase;
 using WPFClientExample.Repositories;
 
@@ -27,7 +23,7 @@ namespace WPFClientExample.Services
                 return (false, null);
 
             string inputHash = HashPassword(password, storedSalt);
-            return (inputHash == storedHash, inputHash == storedHash?userRepository.GetAuthInfo(userId):null);
+            return (inputHash == storedHash, inputHash == storedHash ? userRepository.GetAuthInfo(userId) : null);
         }
 
         private static string HashPassword(string password, string salt)

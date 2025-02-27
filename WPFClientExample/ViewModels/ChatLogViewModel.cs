@@ -1,21 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using WPFClientExample.Commons.Enums;
-using WPFClientExample.Commons.Messages.UserInfo;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Models;
-using WPFClientExample.Models.GameLog;
-using WPFClientExample.Views.UserInfo;
 using WPFClientExample.Services;
-using System.Windows;
-using WPFClientExample.Models.Monitoring;
 
 namespace WPFClientExample.ViewModels
 {
@@ -23,14 +13,14 @@ namespace WPFClientExample.ViewModels
     {
         KeyValuePair<USER_SEARCH_TYPE, string>[]? SearchType { get; set; }
         USER_SEARCH_TYPE SelectedSearchType { get; set; }
-        string SearchText { get; set; }               
+        string SearchText { get; set; }
         DateTime SearchStartDate { get; set; }
         DateTime SearchEndDate { get; set; }
         List<ChatLogInfo>? TargetChatLogInfo { get; set; }
         IAsyncRelayCommand SearchCommand { get; }
 
     }
-    public partial class ChatLogViewModel:ObservableObject, IChatLogViewModel, IRecipient<LoginMessage>
+    public partial class ChatLogViewModel : ObservableObject, IChatLogViewModel, IRecipient<LoginMessage>
     {
         private readonly IMonitoringService monitoringService;
         private readonly ILocalizationService localizationService;

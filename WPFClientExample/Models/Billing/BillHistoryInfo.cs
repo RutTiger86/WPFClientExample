@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPFClientExample.Commons.Enums;
+﻿using WPFClientExample.Commons.Enums;
 
 namespace WPFClientExample.Models.Billing
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using WPFClientExample.Commons.Enums;
+﻿using WPFClientExample.Commons.Enums;
 using WPFClientExample.Models;
 using WPFClientExample.Models.DataBase;
 using WPFClientExample.Models.Monitoring;
@@ -19,13 +13,13 @@ namespace WPFClientExample.Services
         Task<List<CcuInfo>> GetCcuSeriesAsync(DateTime startDate, DateTime endDate);
     }
 
-    public class MonitoringService: IMonitoringService
+    public class MonitoringService : IMonitoringService
     {
         private readonly IUserRepository userRepository;
         private readonly IServerRepository serverRepository;
         private readonly ILocalizationService localizationService;
 
-        public MonitoringService(IUserRepository userRepository, IServerRepository serverRepository , ILocalizationService localizationService)
+        public MonitoringService(IUserRepository userRepository, IServerRepository serverRepository, ILocalizationService localizationService)
         {
             this.userRepository = userRepository;
             this.serverRepository = serverRepository;
@@ -40,7 +34,7 @@ namespace WPFClientExample.Services
         {
             long characterId = 0;
 
-            if(endDate < startDate)
+            if (endDate < startDate)
             {
                 throw new Exception(localizationService.GetString("MessageInvalidDateRange"));
             }

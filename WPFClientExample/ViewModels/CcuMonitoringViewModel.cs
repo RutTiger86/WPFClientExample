@@ -3,21 +3,10 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using LiveCharts;
 using LiveCharts.Wpf;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using WPFClientExample.Commons.Messages;
-using WPFClientExample.Models;
-using WPFClientExample.Models.Billing;
-using WPFClientExample.Models.DataBase;
 using WPFClientExample.Models.Monitoring;
 using WPFClientExample.Services;
 
@@ -132,7 +121,7 @@ namespace WPFClientExample.ViewModels
                 endDate = DateTime.Now;
             }
 
-            SetCcuChart(searchDate, endDate);           
+            SetCcuChart(searchDate, endDate);
         }
 
         private async void SetCcuChart(DateTime startDate, DateTime endDate)

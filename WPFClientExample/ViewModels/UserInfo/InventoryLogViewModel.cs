@@ -1,17 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPFClientExample.Commons.Messages.UserInfo;
+using System.Windows;
 using WPFClientExample.Commons.Messages;
+using WPFClientExample.Commons.Messages.UserInfo;
 using WPFClientExample.Models.GameLog;
 using WPFClientExample.Services;
-using System.Net.NetworkInformation;
-using System.Windows;
 
 namespace WPFClientExample.ViewModels.UserInfo
 {
@@ -23,7 +17,7 @@ namespace WPFClientExample.ViewModels.UserInfo
         IAsyncRelayCommand SearchCommand { get; }
 
     }
-    public partial class InventoryLogViewModel:ObservableObject, IInventoryLogViewModel,IRecipient<LoginMessage>, IRecipient<SelectedCharacterMessage>
+    public partial class InventoryLogViewModel : ObservableObject, IInventoryLogViewModel, IRecipient<LoginMessage>, IRecipient<SelectedCharacterMessage>
     {
         private readonly IGameLogService gameLogService;
         private readonly ILocalizationService localizationService;
@@ -37,7 +31,7 @@ namespace WPFClientExample.ViewModels.UserInfo
         [ObservableProperty]
         List<InventoryHistoryLogInfo>? targetInventoryHistory;
 
-        private CharacterInfo? selectedCharacterInfo; 
+        private CharacterInfo? selectedCharacterInfo;
 
         public InventoryLogViewModel(IGameLogService gameLogService, ILocalizationService localizationService)
         {

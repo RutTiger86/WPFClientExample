@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using WPFClientExample.Commons.Enums;
+﻿using WPFClientExample.Commons.Enums;
 using WPFClientExample.Models.DataBase;
 
 namespace WPFClientExample.Commons.Statics
@@ -28,7 +22,7 @@ namespace WPFClientExample.Commons.Statics
         public static List<BillDetail>? TestBillDetails { get; set; }
         public static List<Product>? TestProducts { get; set; }
         public static List<ProductGameItem>? TestProductGameItems { get; set; }
-        
+
         public static void InitTestData()
         {
             CreateSystemTestData();
@@ -507,7 +501,7 @@ namespace WPFClientExample.Commons.Statics
         }
 
         private static void CreateChatTestData()
-        { 
+        {
             TestChatlogs =
                 [
                     new ChatLog { Id = 1, ChatType = 0, ChatRoomId = 0, SenderCharacterId = 1, SenderName = "Character1", Message = "Hello everyone!", SentTime = DateTime.UtcNow.AddMinutes(-1) },
@@ -636,7 +630,7 @@ namespace WPFClientExample.Commons.Statics
                 Id = i,
                 BillTxId = random.Next(1, 50),
                 ProductId = random.Next(1, 50),
-                AccountId = 12345678, 
+                AccountId = 12345678,
                 CharId = random.Next(1, 2) == 1 ? random.Next(1, 3) : null,
                 CharName = $"Char_{i}",
                 BillProductType = random.Next(0, 3),
@@ -650,7 +644,7 @@ namespace WPFClientExample.Commons.Statics
                 Id = i,
                 ProductId = random.Next(1, 50),
                 ProductTypes = random.Next(0, 3),
-                GameItemId = TestGameItems[random.Next(TestGameItems.Count)].Id, 
+                GameItemId = TestGameItems[random.Next(TestGameItems.Count)].Id,
                 GameItemVolume = random.Next(1, 10),
                 IsUse = true,
                 CreateDate = baseTime.AddDays(-random.Next(1, 30)),

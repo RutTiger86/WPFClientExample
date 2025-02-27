@@ -1,12 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
+using WPFClientExample.Commons.Messages;
 using WPFClientExample.Models.DataBase;
 using WPFClientExample.Repositories;
 using WPFClientExample.Views;
@@ -29,7 +25,7 @@ namespace WPFClientExample.Services
         private readonly IMenuRepository menuRepository;
 
         private readonly Dictionary<int, UserControl> views;
-        private Dictionary<int, TreeViewItem> treeViews ;
+        private Dictionary<int, TreeViewItem> treeViews;
 
         public ObservableCollection<TreeViewItem> TreeViewItems { get; } = new();
 
@@ -66,7 +62,7 @@ namespace WPFClientExample.Services
             var treeViewItem = new TreeViewItem
             {
                 Header = menuItem.Title,
-                Tag = menuItem.Id               
+                Tag = menuItem.Id
             };
             treeViews.Add(menuItem.Id, treeViewItem);
             foreach (var child in menuItem.Children)
@@ -79,18 +75,22 @@ namespace WPFClientExample.Services
 
         public void NavigateTo(int menuId)
         {
-            if(menuId == 0)
+            if (menuId == 0)
             {
                 var firstView = views.FirstOrDefault();
                 ExpandToRoot(treeViews[firstView.Key]);
                 treeViews[firstView.Key].IsSelected = true;
                 OnViewChanged?.Invoke(firstView.Value);
-            } else if (views.ContainsKey(menuId))
+            }
+            else if (views.ContainsKey(menuId))
             {
                 ExpandToRoot(treeViews[menuId]);
                 treeViews[menuId].IsSelected = true;
+                WeakReferenceMessenger.Default.Send(new TokenCancelMessage());
                 OnViewChanged?.Invoke(views[menuId]);
             }
+
+
         }
 
         private void ExpandToRoot(TreeViewItem? item)

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPFClientExample.Commons.Enums;
+﻿using WPFClientExample.Commons.Enums;
 
 namespace WPFClientExample.Models.GameLog
 {
@@ -21,7 +16,7 @@ namespace WPFClientExample.Models.GameLog
         public CHARACTER_CLASS CharacterClass { get; set; }
 
         public CHARACTER_RACE CharacterRace { get; set; }
-        
+
         public long AttackPower { get; set; }
 
         public long Defense { get; set; }

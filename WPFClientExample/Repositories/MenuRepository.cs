@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using WPFClientExample.Models.DataBase;
 using WPFClientExample.Services;
 using WPFClientExample.Views;
@@ -26,7 +20,7 @@ namespace WPFClientExample.Repositories
 
         public ObservableCollection<MenuItemModel> GetMenuItems()
         {
-            
+
             return
             [
                 new MenuItemModel

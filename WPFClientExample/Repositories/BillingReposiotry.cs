@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPFClientExample.Commons.Enums;
+﻿using WPFClientExample.Commons.Enums;
 using WPFClientExample.Commons.Statics;
 using WPFClientExample.Models.Billing;
-using WPFClientExample.Models.DataBase;
-using WPFClientExample.Models.GameLog;
 
 namespace WPFClientExample.Repositories
 {
     public interface IBillingRepository
     {
-        public List<BillHistoryInfo>? GetBillHistories(long accountID ,DateTime startDate, DateTime endDate);
+        public List<BillHistoryInfo>? GetBillHistories(long accountID, DateTime startDate, DateTime endDate);
     }
 
-    public class BillingReposiotry:IBillingRepository
+    public class BillingReposiotry : IBillingRepository
     {
         public List<BillHistoryInfo>? GetBillHistories(long accountID, DateTime startDate, DateTime endDate)
         {
@@ -30,14 +23,14 @@ namespace WPFClientExample.Repositories
                     from tc in tcJoin.DefaultIfEmpty()
                     where tbd.CreateDate >= startDate
                     && tbd.CreateDate <= endDate
-                    && (accountID ==0 || ta.Id == accountID)
+                    && (accountID == 0 || ta.Id == accountID)
                     select new BillHistoryInfo()
                     {
                         AccountId = ta.Id,
                         BillProductType = (BILL_PRODUCT_TYPE)tbd.BillProductType,
                         BillTxId = tb.Id,
-                        BillTxStatus = (BILL_TX_STATUS) tb.TxStatus,
-                        BillTxType = (BILL_TX_TYPES) tb.TxType,
+                        BillTxStatus = (BILL_TX_STATUS)tb.TxStatus,
+                        BillTxType = (BILL_TX_TYPES)tb.TxType,
                         CharId = tc?.Id,
                         CharName = tc?.CharacterName,
                         CreateDate = tbd.CreateDate,
@@ -53,7 +46,7 @@ namespace WPFClientExample.Repositories
                         ProductName = tp.ProductName,
                         ProductTypes = (PRODUCT_TYPE)tpgi.ProductTypes,
                         PurchaseToken = tb.PurchaseToken,
-                        UpdateDate = tbd.UpdateDate                  
+                        UpdateDate = tbd.UpdateDate
                     }).ToList();
         }
     }
