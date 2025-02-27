@@ -21,11 +21,10 @@ namespace WPFClientExample.Services
 
     public class NavigationService : INavigationService
     {
-        private readonly IServiceProvider serviceProvider;
         private readonly IMenuRepository menuRepository;
 
         private readonly Dictionary<int, UserControl> views;
-        private Dictionary<int, TreeViewItem> treeViews;
+        private Dictionary<int, TreeViewItem> treeViews = [];
 
         public ObservableCollection<TreeViewItem> TreeViewItems { get; } = new();
 
@@ -34,7 +33,6 @@ namespace WPFClientExample.Services
 
         public NavigationService(IServiceProvider serviceProvider, IMenuRepository menuRepository)
         {
-            this.serviceProvider = serviceProvider;
             this.menuRepository = menuRepository;
             views = new Dictionary<int, UserControl>
             {
@@ -44,7 +42,6 @@ namespace WPFClientExample.Services
                 { 8, serviceProvider.GetRequiredService<BillHistoryView>() },
                 { 11, serviceProvider.GetRequiredService<ClientSettingsView>() },
             };
-            treeViews = [];
         }
 
         public void InitializeTreeViewItems()
@@ -89,8 +86,6 @@ namespace WPFClientExample.Services
                 WeakReferenceMessenger.Default.Send(new TokenCancelMessage());
                 OnViewChanged?.Invoke(views[menuId]);
             }
-
-
         }
 
         private void ExpandToRoot(TreeViewItem? item)

@@ -9,28 +9,21 @@ namespace WPFClientExample.Services
     public interface IMonitoringService
     {
         Task<List<Server>> GetServers();
-        Task<List<ChatLogInfo>?> GetChatLogInfosAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate);
+        Task<List<ChatLogInfo>> GetChatLogInfosAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate);
         Task<List<CcuInfo>> GetCcuSeriesAsync(DateTime startDate, DateTime endDate);
     }
 
-    public class MonitoringService : IMonitoringService
+    public class MonitoringService(IUserRepository userRepository, IServerRepository serverRepository, ILocalizationService localizationService) : IMonitoringService
     {
-        private readonly IUserRepository userRepository;
-        private readonly IServerRepository serverRepository;
-        private readonly ILocalizationService localizationService;
+        private readonly IUserRepository userRepository = userRepository;
+        private readonly IServerRepository serverRepository = serverRepository;
+        private readonly ILocalizationService localizationService = localizationService;
 
-        public MonitoringService(IUserRepository userRepository, IServerRepository serverRepository, ILocalizationService localizationService)
+        public async Task<List<Server>> GetServers()
         {
-            this.userRepository = userRepository;
-            this.serverRepository = serverRepository;
-            this.localizationService = localizationService;
+            return await Task.Run(() => serverRepository.GetServers());
         }
-
-        public Task<List<Server>> GetServers()
-        {
-            return Task.FromResult(serverRepository.GetServers());
-        }
-        public Task<List<ChatLogInfo>?> GetChatLogInfosAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate)
+        public async Task<List<ChatLogInfo>> GetChatLogInfosAsync(USER_SEARCH_TYPE searchType, string searchData, DateTime startDate, DateTime endDate)
         {
             long characterId = 0;
 
@@ -64,11 +57,10 @@ namespace WPFClientExample.Services
                 }
             }
 
-            var chatLogInfos = userRepository.GetChatLogInfosByCharacterId(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime());
-            return Task.FromResult(chatLogInfos);
+            return await Task.Run(() => userRepository.GetChatLogInfosByCharacterId(characterId, startDate.ToUniversalTime(), endDate.ToUniversalTime()));
         }
 
-        public Task<List<CcuInfo>> GetCcuSeriesAsync(DateTime startDate, DateTime endDate)
+        public async Task<List<CcuInfo>> GetCcuSeriesAsync(DateTime startDate, DateTime endDate)
         {
             List<Server> servers = serverRepository.GetServers();
 
@@ -76,9 +68,9 @@ namespace WPFClientExample.Services
 
             foreach (var server in servers)
             {
-                result.AddRange(serverRepository.GetServerCcu(server.Id, startDate, endDate));
+                result.AddRange(await Task.Run(() => serverRepository.GetServerCcu(server.Id, startDate, endDate)));
             }
-            return Task.FromResult(result);
+            return result;
         }
     }
 }

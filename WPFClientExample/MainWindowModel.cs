@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Models.DataBase;
-using WPFClientExample.Repositories;
 using WPFClientExample.Services;
 
 namespace WPFClientExample
@@ -26,9 +25,6 @@ namespace WPFClientExample
         IRelayCommand WindowClosedCommand { get; }
 
         IRelayCommand<int> NavigateToCommand { get; }
-
-        void Receive(LoginMessage message);
-
     }
 
     public partial class MainWindowModel : ObservableObject, IMainWindowModel, IRecipient<LoginMessage>
@@ -41,14 +37,16 @@ namespace WPFClientExample
         [ObservableProperty]
         private AuthAccount? loginAuthUser;
 
-        public ObservableCollection<TreeViewItem> TreeViewItems => navigationService.TreeViewItems;
+        [ObservableProperty]
+        public ObservableCollection<TreeViewItem> treeViewItems;
 
         [ObservableProperty]
-        private MenuItemModel? selectedMenuItem; // 선택된 메뉴 항목
+        private MenuItemModel? selectedMenuItem;
 
-        public MainWindowModel(INavigationService navigationService, IMenuRepository menuRepository)
+        public MainWindowModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+            TreeViewItems = navigationService.TreeViewItems;
             navigationService.OnViewChanged += NavigationService_OnViewChanged;
             SettingMessage();
         }

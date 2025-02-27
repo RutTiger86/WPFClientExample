@@ -13,7 +13,7 @@ namespace WPFClientExample.Commons.Statics
     public static class JsonConfigurationManager
     {
         private static readonly string ConfigFilePath = "appsettings.json";
-        private static ClientSettings settings;
+        private static ClientSettings settings = new();
 
         static JsonConfigurationManager()
         {

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
 using System.Windows;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Commons.Messages.UserInfo;
@@ -13,7 +14,7 @@ namespace WPFClientExample.ViewModels.UserInfo
     {
         DateTime SearchStartDate { get; set; }
         DateTime SearchEndDate { get; set; }
-        List<InventoryHistoryLogInfo>? TargetInventoryHistory { get; set; }
+        ObservableCollection<InventoryHistoryLogInfo> TargetInventoryHistory { get; }
         IAsyncRelayCommand SearchCommand { get; }
 
     }
@@ -29,7 +30,7 @@ namespace WPFClientExample.ViewModels.UserInfo
         DateTime searchEndDate;
 
         [ObservableProperty]
-        List<InventoryHistoryLogInfo>? targetInventoryHistory;
+        ObservableCollection<InventoryHistoryLogInfo> targetInventoryHistory = [];
 
         private CharacterInfo? selectedCharacterInfo;
 
@@ -51,7 +52,6 @@ namespace WPFClientExample.ViewModels.UserInfo
             InitData();
         }
 
-
         public void Receive(SelectedCharacterMessage message)
         {
             InitData();
@@ -62,7 +62,7 @@ namespace WPFClientExample.ViewModels.UserInfo
         {
             SearchStartDate = DateTime.Now.AddDays(-1);
             SearchEndDate = DateTime.Now.AddDays(1); ;
-            TargetInventoryHistory = null;
+            TargetInventoryHistory?.Clear();
             selectedCharacterInfo = null;
         }
 
@@ -73,9 +73,8 @@ namespace WPFClientExample.ViewModels.UserInfo
             {
                 if (selectedCharacterInfo != null)
                 {
-                    TargetInventoryHistory = null;
-                    TargetInventoryHistory = await Task.Run(() => gameLogService.GetInventoryHistoryLogAsync(selectedCharacterInfo.CharacterId, SearchStartDate, SearchEndDate)
-                    ).ConfigureAwait(false);
+                    TargetInventoryHistory?.Clear();
+                    TargetInventoryHistory = [.. await gameLogService.GetInventoryHistoryLogAsync(selectedCharacterInfo.CharacterId, SearchStartDate, SearchEndDate)];
                 }
             }
             catch (Exception ex)

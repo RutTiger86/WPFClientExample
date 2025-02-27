@@ -6,25 +6,24 @@ using LiveCharts.Wpf;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Threading;
+using WPFClientExample.Commons.Extensions;
 using WPFClientExample.Commons.Messages;
-using WPFClientExample.Models.Monitoring;
 using WPFClientExample.Services;
 
 namespace WPFClientExample.ViewModels
 {
     public interface ICcuMonitoringViewModel
     {
-        ObservableCollection<KeyValuePair<long, string>>? Servers { get; set; }
+        ObservableCollection<KeyValuePair<long, string>> Servers { get; }
         long SelectedServer { get; set; }
-
         DateTime SelectedDate { get; set; }
         int SelectedHour { get; set; }
         int SelectedMinute { get; set; }
         int SelectedSecond { get; set; }
         bool? RealTimeChecked { get; set; }
-        SeriesCollection? CcuSeries { get; set; }
-        List<string>? TimeLables { get; set; }
-        IAsyncRelayCommand SearchCommand { get; }
+        SeriesCollection CcuSeries { get; }
+        List<string> TimeLables { get; }
+        IRelayCommand SearchCommand { get; }
 
         int SelectedServerMaxCcu { get; set; }
         int SelectedServerMinCcu { get; set; }
@@ -48,20 +47,23 @@ namespace WPFClientExample.ViewModels
         int selectedSecond;
 
         [ObservableProperty]
-        SeriesCollection? ccuSeries;
+        SeriesCollection ccuSeries = [];
 
         [ObservableProperty]
-        List<string>? timeLables;
+        List<string> timeLables = [];
 
         [ObservableProperty]
         bool? realTimeChecked = false;
 
         [ObservableProperty]
         int selectedServerMaxCcu;
+
         [ObservableProperty]
         int selectedServerMinCcu;
+
         [ObservableProperty]
         int selectedServerLastCcu;
+
         [ObservableProperty]
         string? selectedServerLastTime;
 
@@ -72,9 +74,9 @@ namespace WPFClientExample.ViewModels
         long selectedServer;
 
         private const int maxDataPoint = 60;
-
         private readonly DispatcherTimer realTimeCcuTimer;
-        private Dictionary<long, ChartValues<int>> serverCcuData; // 서버별 CCU 데이터 저장
+        private Dictionary<long, ChartValues<int>> serverCcuData = [];
+
         public CcuMonitoringViewModel(IMonitoringService monitoringService)
         {
             this.monitoringService = monitoringService;
@@ -95,13 +97,14 @@ namespace WPFClientExample.ViewModels
 
         private void InitSetting()
         {
+            CcuSeries?.Clear();
+            Servers?.Clear();
+            TimeLables?.Clear();
             SelectedDate = DateTime.Now;
             SelectedHour = 0;
             SelectedMinute = 0;
             SelectedSecond = 0;
-            CcuSeries?.Clear();
             RealTimeChecked = false;
-            Servers.Clear();
             SelectedServer = 0;
             SelectedServerMinCcu = 0;
             SelectedServerMaxCcu = 0;
@@ -111,9 +114,9 @@ namespace WPFClientExample.ViewModels
 
 
         [RelayCommand]
-        private async Task Search()
+        private void Search()
         {
-            DateTime searchDate = new DateTime(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day,
+            DateTime searchDate = new(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day,
                                     SelectedHour, SelectedMinute, SelectedSecond);
             DateTime endDate = searchDate.AddHours(1);
             if (endDate > DateTime.Now)
@@ -126,16 +129,17 @@ namespace WPFClientExample.ViewModels
 
         private async void SetCcuChart(DateTime startDate, DateTime endDate)
         {
-            CcuSeries = new SeriesCollection();  // 새로운 SeriesCollection 인스턴스 생성
-            TimeLables = new List<string>();
-            serverCcuData = new Dictionary<long, ChartValues<int>>();
+            CcuSeries = [];
+            TimeLables = [];
+            serverCcuData = [];
 
+            var getServerListTask = Task.Run(() => monitoringService.GetServers());
+            var getCcuInfosTask = monitoringService.GetCcuSeriesAsync(startDate, endDate);
 
-            var serverList = await Task.Run(() => monitoringService.GetServers()
-            ).ConfigureAwait(false);
+            await Task.WhenAll(getServerListTask, getCcuInfosTask);
 
-            List<CcuInfo> ccuInfos = await Task.Run(() => monitoringService.GetCcuSeriesAsync(startDate, endDate)
-            ).ConfigureAwait(false);
+            var serverList = getServerListTask.Result;
+            var ccuInfos = getCcuInfosTask.Result;
 
             if (ccuInfos.Count == 0)
             {
@@ -143,80 +147,66 @@ namespace WPFClientExample.ViewModels
             }
 
             var ccuGroups = ccuInfos.GroupBy(p => p.ServerId);
-
             var baseGroup = ccuGroups.First();
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (var data in baseGroup.OrderBy(p => p.CcuValue.Key))
-                {
-                    TimeLables.Add(data.CcuValue.Key.ToString("yy-MM-dd HH:mm:ss"));
-                }
+                TimeLables.AddRange(baseGroup.OrderBy(p => p.CcuValue.Key)
+                                             .Select(data => data.CcuValue.Key.ToString("yy-MM-dd HH:mm:ss")));
 
                 foreach (var ccuGroup in ccuGroups)
                 {
-                    ChartValues<int> ccuValues = new ChartValues<int>(ccuGroup.Select(p => p.CcuValue.Value).ToList());
+                    var ccuValues = new ChartValues<int>(ccuGroup.Select(p => p.CcuValue.Value));
                     serverCcuData[ccuGroup.Key] = ccuValues;
 
-                    LineSeries lineSeries = new LineSeries()
+                    CcuSeries.Add(new LineSeries
                     {
                         Name = $"Server{ccuGroup.Key}",
                         Title = $"Server ID : {ccuGroup.Key}",
                         Values = ccuValues,
                         PointGeometrySize = 10,
                         StrokeThickness = 2
-                    };
-                    CcuSeries.Add(lineSeries);
+                    });
                 }
 
                 if (serverList.Count > 0)
                 {
                     Servers.Clear();
                     Servers.Add(new KeyValuePair<long, string>(0, "ALL"));
-                    foreach (var server in serverList)
-                    {
-                        Servers.Add(new KeyValuePair<long, string>(server.Id, server.ServerName));
-                    }
+                    Servers.AddRange(serverList.Select(server => new KeyValuePair<long, string>(server.Id, server.ServerName)));
+
                     SelectedServer = Servers.First().Key;
                     OnPropertyChanged(nameof(SelectedServer));
                 }
             });
         }
 
+
         private async Task UpdateCCUData()
         {
             var newData = await monitoringService.GetCcuSeriesAsync(DateTime.Now.AddMinutes(-1), DateTime.Now);
-            if (newData != null && newData.Count > 0)
+
+            if (newData == null || newData.Count == 0) return;
+
+            var groupedData = newData.GroupBy(c => c.ServerId);
+
+            foreach (var group in groupedData)
             {
-                var groupedData = newData.GroupBy(c => c.ServerId);
+                if (!serverCcuData.TryGetValue(group.Key, out var values)) continue;
 
-                foreach (var group in groupedData)
-                {
-                    long serverId = group.Key;
-                    int latestCcu = group.Last().CcuValue.Value;
+                int latestCcu = group.Last().CcuValue.Value;
 
-                    if (serverCcuData.ContainsKey(serverId))
-                    {
-                        serverCcuData[serverId].Add(latestCcu);
-                        if (serverCcuData[serverId].Count > maxDataPoint)
-                        {
-                            serverCcuData[serverId].RemoveAt(0);
-                        }
-                    }
-                }
-
-                // 시간 라벨 추가 및 삭제
-                TimeLables.Add(DateTime.Now.ToString("yy-MM-dd HH:mm:ss"));
-                if (TimeLables.Count > maxDataPoint)
-                {
-                    TimeLables.RemoveAt(0);
-                }
+                values.Add(latestCcu);
+                if (values.Count > maxDataPoint) values.RemoveAt(0);
             }
+
+            TimeLables.Add(DateTime.Now.ToString("yy-MM-dd HH:mm:ss"));
+            if (TimeLables.Count > maxDataPoint) TimeLables.RemoveAt(0);
         }
 
-        partial void OnRealTimeCheckedChanged(bool? isChecked)
+        partial void OnRealTimeCheckedChanged(bool? value)
         {
-            if (isChecked.HasValue && isChecked == true)
+            if (value.HasValue && value == true)
             {
                 SetCcuChart(DateTime.Now.AddHours(-1), DateTime.Now);
                 realTimeCcuTimer.Start();
@@ -229,26 +219,16 @@ namespace WPFClientExample.ViewModels
 
         partial void OnSelectedServerChanged(long value)
         {
-            if (serverCcuData.ContainsKey(value))
+            if (serverCcuData.TryGetValue(value, out var values))
             {
                 SelectedServerMinCcu = serverCcuData[value].Min();
                 SelectedServerMaxCcu = serverCcuData[value].Max();
                 SelectedServerLastCcu = serverCcuData[value].Last();
-                SelectedServerLastTime = TimeLables?.Last();
-                if (CcuSeries != null)
-                {
-                    foreach (LineSeries item in CcuSeries)
-                    {
-                        if (item.Name.Equals($"Server{value}"))
-                        {
-                            item.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            item.Visibility = Visibility.Collapsed;
-                        }
+                SelectedServerLastTime = TimeLables?.LastOrDefault();
 
-                    }
+                foreach (LineSeries item in CcuSeries)
+                {
+                    item.Visibility = item.Name.Equals($"Server{value}") ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
             else
@@ -256,14 +236,11 @@ namespace WPFClientExample.ViewModels
                 SelectedServerMinCcu = serverCcuData != null ? serverCcuData.Values.SelectMany(p => p).Max() : 0;
                 SelectedServerMaxCcu = serverCcuData != null ? serverCcuData.Values.SelectMany(p => p).Max() : 0;
                 SelectedServerLastCcu = 0;
-                SelectedServerLastTime = TimeLables?.Last();
+                SelectedServerLastTime = TimeLables?.LastOrDefault();
 
-                if (CcuSeries != null)
+                foreach (LineSeries item in CcuSeries)
                 {
-                    foreach (LineSeries item in CcuSeries)
-                    {
-                        item.Visibility = Visibility.Visible;
-                    }
+                    item.Visibility = Visibility.Visible;
                 }
             }
 

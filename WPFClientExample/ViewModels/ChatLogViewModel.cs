@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
 using System.Windows;
 using WPFClientExample.Commons.Enums;
 using WPFClientExample.Commons.Messages;
@@ -11,22 +12,22 @@ namespace WPFClientExample.ViewModels
 {
     public interface IChatLogViewModel
     {
-        KeyValuePair<USER_SEARCH_TYPE, string>[]? SearchType { get; set; }
+        KeyValuePair<USER_SEARCH_TYPE, string>[] SearchType { get; }
         USER_SEARCH_TYPE SelectedSearchType { get; set; }
         string SearchText { get; set; }
         DateTime SearchStartDate { get; set; }
         DateTime SearchEndDate { get; set; }
-        List<ChatLogInfo>? TargetChatLogInfo { get; set; }
+        ObservableCollection<ChatLogInfo> TargetChatLogInfo { get; }
         IAsyncRelayCommand SearchCommand { get; }
-
     }
+
     public partial class ChatLogViewModel : ObservableObject, IChatLogViewModel, IRecipient<LoginMessage>
     {
         private readonly IMonitoringService monitoringService;
         private readonly ILocalizationService localizationService;
 
         [ObservableProperty]
-        private KeyValuePair<USER_SEARCH_TYPE, string>[]? searchType;
+        private KeyValuePair<USER_SEARCH_TYPE, string>[] searchType = [];
 
         [ObservableProperty]
         private USER_SEARCH_TYPE selectedSearchType;
@@ -41,7 +42,7 @@ namespace WPFClientExample.ViewModels
         DateTime searchEndDate;
 
         [ObservableProperty]
-        List<ChatLogInfo>? targetChatLogInfo;
+        ObservableCollection<ChatLogInfo> targetChatLogInfo = [];
 
         public ChatLogViewModel(IMonitoringService monitoringService, ILocalizationService localizationService)
         {
@@ -62,7 +63,7 @@ namespace WPFClientExample.ViewModels
             SearchEndDate = DateTime.Now.AddDays(1); ;
             SelectedSearchType = SearchType.First().Key;
             SearchText = string.Empty;
-            TargetChatLogInfo = null;
+            TargetChatLogInfo?.Clear();
         }
 
         private void Initialize()
@@ -81,9 +82,8 @@ namespace WPFClientExample.ViewModels
         {
             try
             {
-                TargetChatLogInfo = null;
-                TargetChatLogInfo = await Task.Run(() => monitoringService.GetChatLogInfosAsync(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate)
-                ).ConfigureAwait(false);
+                TargetChatLogInfo?.Clear();
+                TargetChatLogInfo = [.. await monitoringService.GetChatLogInfosAsync(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate)];
             }
             catch (Exception ex)
             {

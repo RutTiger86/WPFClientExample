@@ -17,19 +17,13 @@ namespace WPFClientExample.ViewModels.Login
         IRelayCommand WindowClosedCommand { get; }
     }
 
-    public partial class LoginWindowModel : ObservableObject, ILoginWindowModel
+    public partial class LoginWindowModel(IAuthService authService, ILocalizationService localizationService) : ObservableObject, ILoginWindowModel
     {
-        private readonly IAuthService authService;
-        private readonly ILocalizationService localizationService;
+        private readonly IAuthService authService = authService;
+        private readonly ILocalizationService localizationService = localizationService;
 
         [ObservableProperty]
         private string authUserId = "";
-
-        public LoginWindowModel(IAuthService authService, ILocalizationService localizationService)
-        {
-            this.authService = authService;
-            this.localizationService = localizationService;
-        }
 
         [RelayCommand]
         private void Login(PasswordBox param)

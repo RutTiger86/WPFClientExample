@@ -5,23 +5,23 @@ namespace WPFClientExample.Commons.Statics
 {
     public static class TestDataFactory
     {
-        public static List<Account>? TestAccounts { get; set; }
-        public static List<Character>? TestCharacters { get; set; }
-        public static List<CharacterStatus>? TestCharacterStatuses { get; set; }
-        public static List<Server>? TestServers { get; set; }
-        public static List<Zone>? TestZones { get; set; }
-        public static List<Guild>? TestGuilds { get; set; }
-        public static List<GameItem>? TestGameItems { get; set; }
-        public static List<CharacterEquippedItem>? TestCharEquipItems { get; set; }
-        public static List<ChatLog>? TestChatlogs { get; set; }
-        public static List<Quest>? TestQuests { get; set; }
-        public static List<CharacterQuestProgress>? TestCharacterQuests { get; set; }
-        public static List<InventoryHistoryLog>? TestInventoryHistoryLogs { get; set; }
-        public static List<AuthAccount>? TestAuthAcountInfo { get; set; }
-        public static List<BillTx>? TestBillTxs { get; set; }
-        public static List<BillDetail>? TestBillDetails { get; set; }
-        public static List<Product>? TestProducts { get; set; }
-        public static List<ProductGameItem>? TestProductGameItems { get; set; }
+        public static List<Account> TestAccounts { get; set; } = [];
+        public static List<Character> TestCharacters { get; set; } = [];
+        public static List<CharacterStatus> TestCharacterStatuses { get; set; } = [];
+        public static List<Server> TestServers { get; set; } = [];
+        public static List<Zone> TestZones { get; set; } = [];
+        public static List<Guild> TestGuilds { get; set; } = [];
+        public static List<GameItem> TestGameItems { get; set; } = [];
+        public static List<CharacterEquippedItem> TestCharEquipItems { get; set; } = [];
+        public static List<ChatLog> TestChatlogs { get; set; } = [];
+        public static List<Quest> TestQuests { get; set; } = [];
+        public static List<CharacterQuestProgress> TestCharacterQuests { get; set; } = [];
+        public static List<InventoryHistoryLog> TestInventoryHistoryLogs { get; set; } = [];
+        public static List<AuthAccount> TestAuthAcountInfo { get; set; } = [];
+        public static List<BillTx> TestBillTxs { get; set; } = [];
+        public static List<BillDetail> TestBillDetails { get; set; } = [];
+        public static List<Product> TestProducts { get; set; } = [];
+        public static List<ProductGameItem> TestProductGameItems { get; set; } = [];
 
         public static void InitTestData()
         {

@@ -10,7 +10,7 @@ namespace WPFClientExample.Services
 
     public class LocalizationService : ILocalizationService
     {
-        private ResourceDictionary resourceDictionary;
+        private ResourceDictionary resourceDictionary = [];
 
         public LocalizationService()
         {
@@ -25,7 +25,7 @@ namespace WPFClientExample.Services
 
         public string GetString(string key)
         {
-            return resourceDictionary.Contains(key) ? resourceDictionary[key].ToString() : key;
+            return resourceDictionary.Contains(key) ? resourceDictionary[key].ToString() ?? key : key;
         }
 
         private void LoadLanguage(string culture)

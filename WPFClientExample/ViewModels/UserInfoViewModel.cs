@@ -17,12 +17,11 @@ namespace WPFClientExample.ViewModels
     {
         KeyValuePair<USER_SEARCH_TYPE, string>[]? SearchType { get; set; }
         USER_SEARCH_TYPE SelectedSearchType { get; set; }
-        ObservableCollection<CharacterInfo>? CharacterInfos { get; set; }
-        string SearchText { get; set; }
+        ObservableCollection<CharacterInfo>? CharacterInfos { get; }
+        string SearchText { get; }
         CharacterInfoView TabItemCharacterInfoView { get; set; }
         InventoryLogView TabItemInventoryLogView { get; set; }
         AccountInfo? TargetAccountInfo { get; set; }
-
         IAsyncRelayCommand SearchCommand { get; }
         IRelayCommand AccountRestrictionCommand { get; }
         IRelayCommand<CharacterInfo> CharcterSelectionChagedCommand { get; }
@@ -71,7 +70,7 @@ namespace WPFClientExample.ViewModels
 
         public void Receive(LoginMessage message)
         {
-            CharacterInfos = null;
+            CharacterInfos?.Clear();
             TargetAccountInfo = null;
             SearchText = string.Empty;
             SelectedSearchType = USER_SEARCH_TYPE.ID;
@@ -96,15 +95,11 @@ namespace WPFClientExample.ViewModels
         {
             try
             {
-                TargetAccountInfo = await Task.Run(() => gameLogService.GetAccountInfoAsync(SelectedSearchType, SearchText)
-                ).ConfigureAwait(false);
+                TargetAccountInfo = await gameLogService.GetAccountInfoAsync(SelectedSearchType, SearchText);
 
                 if (TargetAccountInfo != null)
                 {
-                    var charcterInfo = await Task.Run(() => gameLogService.GetCharacterInfoListAsync(TargetAccountInfo.AccountId)
-                    ).ConfigureAwait(false);
-
-                    CharacterInfos = new ObservableCollection<CharacterInfo>(charcterInfo);
+                    CharacterInfos = [.. await gameLogService.GetCharacterInfoListAsync(TargetAccountInfo.AccountId)];
                 }
             }
             catch (Exception ex)
@@ -116,10 +111,8 @@ namespace WPFClientExample.ViewModels
         [RelayCommand]
         private void CharcterSelectionChaged(CharacterInfo selectedValue)
         {
-            if (selectedValue != null)
-            {
-                WeakReferenceMessenger.Default.Send(new SelectedCharacterMessage(selectedValue));
-            }
+            if (selectedValue is null) return;
+            WeakReferenceMessenger.Default.Send(new SelectedCharacterMessage(selectedValue));
         }
 
         [RelayCommand]

@@ -27,7 +27,7 @@
         </StackPanel>
 
 
-        <DataGrid Grid.Row="1" ItemsSource="{Binding BillHistoryInfos}" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True">
+        <DataGrid Grid.Row="1" ItemsSource="{Binding BillHistoryInfos}" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" SelectionMode="Single" IsReadOnly="True" Margin="10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource BillTxID}" Binding="{Binding BillTxId}" Width="Auto"/>
                 <DataGridTextColumn Header="{DynamicResource BillTxType}" Binding="{Binding BillTxType}" Width="Auto"/>

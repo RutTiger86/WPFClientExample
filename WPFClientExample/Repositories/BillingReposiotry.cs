@@ -6,12 +6,12 @@ namespace WPFClientExample.Repositories
 {
     public interface IBillingRepository
     {
-        public List<BillHistoryInfo>? GetBillHistories(long accountID, DateTime startDate, DateTime endDate);
+        public List<BillHistoryInfo> GetBillHistories(long accountID, DateTime startDate, DateTime endDate);
     }
 
     public class BillingReposiotry : IBillingRepository
     {
-        public List<BillHistoryInfo>? GetBillHistories(long accountID, DateTime startDate, DateTime endDate)
+        public List<BillHistoryInfo> GetBillHistories(long accountID, DateTime startDate, DateTime endDate)
         {
             return (from tb in TestDataFactory.TestBillTxs
                     join tbd in TestDataFactory.TestBillDetails on tb.Id equals tbd.BillTxId

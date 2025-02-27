@@ -12,11 +12,11 @@ namespace WPFClientExample.Repositories
         public List<CharacterInfo> GetCharacterInfoList(long accountId);
         public CharacterInfo? GetCharacterInfoByCharacterName(string charName);
         public CharacterDetailInfo? GetCharacterDetailInfo(long characterId);
-        public List<CharacterEquipeedInfo>? GetCharacterEquipeedInfo(long characterId);
-        public List<ChatLogInfo>? GetChatLogInfosByCharacterId(long characterId);
-        public List<ChatLogInfo>? GetChatLogInfosByCharacterId(long characterId, DateTime startDate, DateTime endDate);
-        public List<CharacterQuestInfo>? GetCharacterQuestInfoByCharacterId(long characterId);
-        public List<InventoryHistoryLogInfo>? GetInventoryHistoryLog(long characterId, DateTime startDate, DateTime endDate);
+        public List<CharacterEquipeedInfo> GetCharacterEquipeedInfo(long characterId);
+        public List<ChatLogInfo> GetChatLogInfosByCharacterId(long characterId);
+        public List<ChatLogInfo> GetChatLogInfosByCharacterId(long characterId, DateTime startDate, DateTime endDate);
+        public List<CharacterQuestInfo> GetCharacterQuestInfoByCharacterId(long characterId);
+        public List<InventoryHistoryLogInfo> GetInventoryHistoryLog(long characterId, DateTime startDate, DateTime endDate);
     }
 
     public class UserReository : IUserRepository
@@ -122,7 +122,7 @@ namespace WPFClientExample.Repositories
                     }).FirstOrDefault();
         }
 
-        public List<CharacterEquipeedInfo>? GetCharacterEquipeedInfo(long characterId)
+        public List<CharacterEquipeedInfo> GetCharacterEquipeedInfo(long characterId)
         {
             return (from tce in TestDataFactory.TestCharEquipItems
                     join ti in TestDataFactory.TestGameItems on tce.ItemId equals ti.Id
@@ -138,7 +138,7 @@ namespace WPFClientExample.Repositories
         }
 
 
-        public List<ChatLogInfo>? GetChatLogInfosByCharacterId(long characterId)
+        public List<ChatLogInfo> GetChatLogInfosByCharacterId(long characterId)
         {
             return (from tcl in TestDataFactory.TestChatlogs
                     where tcl.SenderCharacterId == characterId
@@ -156,7 +156,7 @@ namespace WPFClientExample.Repositories
                     }).ToList();
         }
 
-        public List<CharacterQuestInfo>? GetCharacterQuestInfoByCharacterId(long characterId)
+        public List<CharacterQuestInfo> GetCharacterQuestInfoByCharacterId(long characterId)
         {
             return (from cq in TestDataFactory.TestCharacterQuests
                     join q in TestDataFactory.TestQuests on cq.QuestId equals q.Id
@@ -177,7 +177,7 @@ namespace WPFClientExample.Repositories
                     }).ToList();
         }
 
-        public List<InventoryHistoryLogInfo>? GetInventoryHistoryLog(long characterId, DateTime startDate, DateTime endDate)
+        public List<InventoryHistoryLogInfo> GetInventoryHistoryLog(long characterId, DateTime startDate, DateTime endDate)
         {
 
             return (from tih in TestDataFactory.TestInventoryHistoryLogs
@@ -198,7 +198,7 @@ namespace WPFClientExample.Repositories
                     }).OrderByDescending(p => p.Timestamp).ToList();
         }
 
-        public List<ChatLogInfo>? GetChatLogInfosByCharacterId(long characterId, DateTime startDate, DateTime endDate)
+        public List<ChatLogInfo> GetChatLogInfosByCharacterId(long characterId, DateTime startDate, DateTime endDate)
         {
             return (from tcl in TestDataFactory.TestChatlogs
                     where

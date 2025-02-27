@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
 using WPFClientExample.Commons.Enums;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Models.Billing;
@@ -10,11 +11,11 @@ namespace WPFClientExample.ViewModels
 {
     public interface IBillHistoryViewModel
     {
-        List<BillHistoryInfo>? BillHistoryInfos { get; set; }
+        ObservableCollection<BillHistoryInfo> BillHistoryInfos { get; }
         DateTime SearchStartDate { get; set; }
         DateTime SearchEndDate { get; set; }
         IAsyncRelayCommand SearchCommand { get; }
-        KeyValuePair<USER_SEARCH_TYPE, string>[]? SearchType { get; set; }
+        KeyValuePair<USER_SEARCH_TYPE, string>[] SearchType { get; }
         USER_SEARCH_TYPE SelectedSearchType { get; set; }
         string SearchText { get; set; }
     }
@@ -26,7 +27,7 @@ namespace WPFClientExample.ViewModels
 
 
         [ObservableProperty]
-        List<BillHistoryInfo>? billHistoryInfos;
+        ObservableCollection<BillHistoryInfo> billHistoryInfos = [];
 
         [ObservableProperty]
         DateTime searchStartDate;
@@ -35,7 +36,7 @@ namespace WPFClientExample.ViewModels
         DateTime searchEndDate;
 
         [ObservableProperty]
-        KeyValuePair<USER_SEARCH_TYPE, string>[]? searchType;
+        KeyValuePair<USER_SEARCH_TYPE, string>[] searchType = [];
 
         [ObservableProperty]
         private USER_SEARCH_TYPE selectedSearchType;
@@ -73,7 +74,7 @@ namespace WPFClientExample.ViewModels
 
         private void InitSetting()
         {
-            BillHistoryInfos = null;
+            BillHistoryInfos?.Clear();
             SearchStartDate = DateTime.Now.AddDays(-30);
             SearchEndDate = DateTime.Now;
             SelectedSearchType = SearchType.First().Key;
@@ -82,10 +83,8 @@ namespace WPFClientExample.ViewModels
         [RelayCommand]
         private async Task Search()
         {
-            BillHistoryInfos = null;
-            BillHistoryInfos = await Task.Run(() =>
-            billingService.GetBillHistoryInfoAsync(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate)
-            ).ConfigureAwait(false);
+            BillHistoryInfos?.Clear();
+            BillHistoryInfos = [.. await billingService.GetBillHistoryInfoAsync(SelectedSearchType, SearchText, SearchStartDate, SearchEndDate)];
         }
     }
 }

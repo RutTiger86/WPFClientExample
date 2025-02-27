@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.ObjectModel;
 using System.Windows;
 using WPFClientExample.Commons.Messages;
 using WPFClientExample.Commons.Messages.UserInfo;
@@ -13,12 +14,10 @@ namespace WPFClientExample.ViewModels.UserInfo
     public interface ICharacterInfoViewModel
     {
         CharacterInfo? SelectedCharacter { get; set; }
-
         CharacterDetailInfo? TargetCharacterDetailInfo { get; set; }
-        List<CharacterEquipeedInfo>? TargetCharacterEquipeedInfo { get; set; }
-        List<ChatLogInfo>? TargetChatLogInfo { get; set; }
-        List<CharacterQuestInfo>? TargetCharacterQuestInfo { get; set; }
-
+        ObservableCollection<CharacterEquipeedInfo> TargetCharacterEquipeedInfo { get; set; }
+        ObservableCollection<ChatLogInfo> TargetChatLogInfo { get; set; }
+        ObservableCollection<CharacterQuestInfo> TargetCharacterQuestInfo { get; set; }
         IRelayCommand<long> ItemDetailShowCommand { get; }
     }
 
@@ -28,19 +27,19 @@ namespace WPFClientExample.ViewModels.UserInfo
         private readonly ILocalizationService localizationService;
 
         [ObservableProperty]
-        private CharacterInfo? selectedCharacter;
+        CharacterInfo? selectedCharacter;
 
         [ObservableProperty]
-        private CharacterDetailInfo? targetCharacterDetailInfo;
+        CharacterDetailInfo? targetCharacterDetailInfo;
 
         [ObservableProperty]
-        private List<CharacterEquipeedInfo>? targetCharacterEquipeedInfo;
+        ObservableCollection<CharacterEquipeedInfo> targetCharacterEquipeedInfo = [];
 
         [ObservableProperty]
-        List<ChatLogInfo>? targetChatLogInfo;
+        ObservableCollection<ChatLogInfo> targetChatLogInfo = [];
 
         [ObservableProperty]
-        List<CharacterQuestInfo>? targetCharacterQuestInfo;
+        ObservableCollection<CharacterQuestInfo> targetCharacterQuestInfo = [];
 
         public CharacterInfoViewModel(IGameLogService gameLogService, ILocalizationService localizationService)
         {
@@ -59,8 +58,9 @@ namespace WPFClientExample.ViewModels.UserInfo
         {
             SelectedCharacter = null;
             TargetCharacterDetailInfo = null;
-            TargetCharacterEquipeedInfo = null;
-            TargetChatLogInfo = null;
+            TargetCharacterEquipeedInfo?.Clear();
+            TargetChatLogInfo?.Clear();
+            TargetCharacterQuestInfo?.Clear();
         }
 
         public void Receive(SelectedCharacterMessage message)
@@ -71,7 +71,6 @@ namespace WPFClientExample.ViewModels.UserInfo
 
         private async void SetCharacterInfoAsync()
         {
-            // Task.WhenAll을 이용하여 병렬 처리
             await Task.WhenAll(
                 SetCharacterDetailInfo(),
                 SetEquippedItemsAsync(),
@@ -84,8 +83,7 @@ namespace WPFClientExample.ViewModels.UserInfo
         {
             if (SelectedCharacter != null)
             {
-                TargetCharacterDetailInfo = await Task.Run(() => gameLogService.GetCharacterInfoDetailInfoAsync(SelectedCharacter.CharacterId)
-                ).ConfigureAwait(false);
+                TargetCharacterDetailInfo = await Task.Run(() => gameLogService.GetCharacterInfoDetailInfoAsync(SelectedCharacter.CharacterId));
             }
         }
 
@@ -93,16 +91,14 @@ namespace WPFClientExample.ViewModels.UserInfo
         {
             if (SelectedCharacter != null)
             {
-                TargetCharacterEquipeedInfo = await Task.Run(() => gameLogService.GetCharacterEquipeedInfoAsync(SelectedCharacter.CharacterId)
-                ).ConfigureAwait(false);
+                TargetCharacterEquipeedInfo = [.. await Task.Run(() => gameLogService.GetCharacterEquipeedInfoAsync(SelectedCharacter.CharacterId))];
             }
         }
         private async Task SetRecenChatAsync()
         {
             if (SelectedCharacter != null)
             {
-                TargetChatLogInfo = await Task.Run(() => gameLogService.GetChatLogInfoByCharacterIdAsync(SelectedCharacter.CharacterId)
-                ).ConfigureAwait(false);
+                TargetChatLogInfo = [.. await Task.Run(() => gameLogService.GetChatLogInfoByCharacterIdAsync(SelectedCharacter.CharacterId))];
             }
         }
 
@@ -110,8 +106,7 @@ namespace WPFClientExample.ViewModels.UserInfo
         {
             if (SelectedCharacter != null)
             {
-                TargetCharacterQuestInfo = await Task.Run(() => gameLogService.GetCharacterQuestInfoByCharacterIdAsync(SelectedCharacter.CharacterId)
-                ).ConfigureAwait(false);
+                TargetCharacterQuestInfo = [.. await Task.Run(() => gameLogService.GetCharacterQuestInfoByCharacterIdAsync(SelectedCharacter.CharacterId))];
             }
         }
 

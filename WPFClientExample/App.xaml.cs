@@ -27,7 +27,7 @@ namespace WPFClientExample
         private static Mutex? mutex;
         private readonly IHost host;
         private const string appMutextName = "WPFClientExample_Mutext";
-
+        private readonly IServiceProvider serviceProvider;
         public App()
         {
             mutex = new Mutex(true, appMutextName, out bool isNewInstance);
@@ -41,6 +41,7 @@ namespace WPFClientExample
             var hostBuilder = Host.CreateDefaultBuilder();
             SetConfigureServices(hostBuilder);
             host = hostBuilder.Build();
+            serviceProvider = host.Services;
         }
 
         private void SetConfigureServices(IHostBuilder hostBuilder)
@@ -111,35 +112,31 @@ namespace WPFClientExample
         private void SettingClient()
         {
 
-            var localizationService = host.Services.GetRequiredService<ILocalizationService>();
-            ClientLanguage clientLanguage = JsonConfigurationManager.GetLanguage();
-            if (clientLanguage == ClientLanguage.ENGLISH)
-            {
-                localizationService.ChangeLanguage("en-US");
-            }
-            else
-            {
-                localizationService.ChangeLanguage("ko-KR");
-            }
+            var localizationService = serviceProvider.GetRequiredService<ILocalizationService>();
+            localizationService.ChangeLanguage(JsonConfigurationManager.GetLanguage() == ClientLanguage.ENGLISH ? "en-US" : "ko-KR");
 
-            ClientTheme savedTheme = JsonConfigurationManager.GetTheme();
-            if (savedTheme == ClientTheme.DARK)
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Resources/Themes/DarkTheme.xaml", UriKind.Relative) });
-            else
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("Resources/Themes/DefaultTheme.xaml", UriKind.Relative) });
+            ApplyTheme(JsonConfigurationManager.GetTheme());
+            ApplyFont(JsonConfigurationManager.GetFontFamily());
 
-            string savedFont = JsonConfigurationManager.GetFontFamily();
+            serviceProvider.GetRequiredService<INavigationService>().InitializeTreeViewItems();
 
+        }
+
+        private void ApplyTheme(ClientTheme theme)
+        {
+            string themeUri = theme == ClientTheme.DARK ? "Resources/Themes/DarkTheme.xaml" : "Resources/Themes/DefaultTheme.xaml";
+            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri(themeUri, UriKind.Relative) });
+        }
+
+        private void ApplyFont(string fontName)
+        {
             var dictionary = Application.Current.Resources.MergedDictionaries.FirstOrDefault(d => d.Source?.OriginalString == "Resources/Styles.xaml");
             if (dictionary != null)
             {
-                dictionary["GlobalFont"] = new FontFamily(savedFont);
+                dictionary["GlobalFont"] = new FontFamily(fontName);
             }
-
-            var navigationService = host.Services.GetRequiredService<INavigationService>();
-            navigationService.InitializeTreeViewItems();
-
         }
+
 
         private void SettingMessage()
         {
@@ -165,20 +162,20 @@ namespace WPFClientExample
 
         private void LogInProcess(AuthAccount? userInfo)
         {
-            host.Services.GetRequiredService<LoginWindow>().Hide();
-            host.Services.GetRequiredService<MainWindow>().Visibility = Visibility.Visible;
+            serviceProvider.GetRequiredService<LoginWindow>().Hide();
+            serviceProvider.GetRequiredService<MainWindow>().Visibility = Visibility.Visible;
         }
 
         private void LogOutProcess()
         {
-            host.Services.GetRequiredService<MainWindow>().Visibility = Visibility.Hidden;
-            host.Services.GetRequiredService<LoginWindow>().Show();
+            serviceProvider.GetRequiredService<MainWindow>().Visibility = Visibility.Hidden;
+            serviceProvider.GetRequiredService<LoginWindow>().Show();
         }
 
         private void ProgramShutdownProcess()
         {
-            host.Services.GetRequiredService<LoginWindow>().Close();
-            host.Services.GetRequiredService<MainWindow>().Close();
+            serviceProvider.GetRequiredService<LoginWindow>().Close();
+            serviceProvider.GetRequiredService<MainWindow>().Close();
             Application.Current.Shutdown();
         }
     }
